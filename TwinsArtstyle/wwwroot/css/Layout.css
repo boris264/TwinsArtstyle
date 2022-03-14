@@ -1,0 +1,109 @@
+:root{
+    --light-blue: #91F2FF;
+    --blue: #3DABC2;
+    --dark-blue-green: #346E75;
+    --nav-bar-shadow-color: #2b2c2d;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;    
+}
+
+body{
+    background-color: var(--blue);
+}
+
+.top-navigation-bar{
+    background-color: var(--light-blue);
+    padding-bottom: 8px;
+    box-shadow: 0 1px 8px var(--nav-bar-shadow-color);
+    background-image: url("../../wwwroot/images/heading-background.png");
+    background-repeat: repeat;
+    background-size: contain;
+}
+
+.top-list-container{
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#top-icon{
+    width: 100px;
+    height: 100px;
+}
+
+#top-heading{
+    color: white;
+    font-family: 'Sansita Swashed', cursive;
+    font-size: 50px;
+    letter-spacing: 6px;
+}
+
+.top-cart-button{
+    padding: 2px 30px 0px 12px;
+    font-size: larger;
+    border-radius: 15px;
+    border-style: none;
+    background-color: var(--blue);
+    color: white;
+    position: relative;
+    top: 5px;
+    right: 50px;
+}
+
+.top-cart-button:hover{
+    cursor: pointer;
+    background-color: var(--dark-blue-green);
+}
+
+#top-cart-icon{
+    width: 20px;
+    height: 20px;
+}
+
+#top-cart{
+    display: inline;
+    position: relative;
+    left: 4px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height:110px;
+    background-color: var(--light-blue);
+}
+
+#bottom-nav-bar{
+    height: 100%;
+    box-shadow: 0 -1px 6px var(--nav-bar-shadow-color);
+}
+
+.bottom-list-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style-type: none;
+    height: 100%;
+}
+
+.bottom-link{
+    text-decoration: none;
+    font-size: 25px;
+    font-family: 'Sansita Swashed', cursive;
+    color: white;
+}
+
+.bottom-link:hover{
+    color: #346E75;
+}
