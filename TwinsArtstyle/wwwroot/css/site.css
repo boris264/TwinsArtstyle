@@ -1,18 +1,64 @@
-.text{
-  font-size: 50px;
-  font-family: "Comic Sans MS";
-  color: white;
-  
+.text {
+    font-size: 20px;
+    font-family: "Comic Sans MS";
+    color: #333;
+    text-decoration: none;
+}
+
+.main-text{
+    font-size: 50px;
+    font-family: "Comic Sans MS";
+    color: white;
+    
 }
 
 li.text{
-  margin-left: 50px;
+    margin-left: 50px;
+  }
+  
+#twins-drawing{
+    width: auto;
+    height: 200px;
+    display: inline;
+    position: relative;
+    left: 50%;
 }
 
-#twins-drawing{
-  width: auto;
-  height: 200px;
-  display: inline;
- position: relative;
- left: 50%;
+.about-contact-card{
+    display: flex;
+    position: relative;
+    top: 100px;
+    margin: 0 15%;
+    width: 800px;
+    background-color: #eee;
+    border-radius: 30px;
+    box-shadow: 2px 3px 9px #333;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.about-us{
+    width: 50%;
+    margin: 30px;
+}
+
+.about-text{
+    text-align: center;
+}
+
+#contact-list{
+    list-style: none;
+}
+
+#contact-list > li{
+    padding: 8px;
+}
+
+.contacts{
+    position: relative;
+    right: 40px;
+}
+
+.icon{
+    padding-right: 10px;
 }

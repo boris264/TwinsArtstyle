@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/css/Layout.css">
     <link rel="stylesheet" href="~/css/site.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@300&family=Space+Mono&display=swap" rel="stylesheet">
     <title>@ViewData["Title"]</title>
 </head>
@@ -24,6 +25,9 @@
                             <img id="top-cart-icon" src="~/images/shopping-cart.png" alt="shopping-cart">
                             <p id="top-cart">Cart</p>
                         </button>
+                        <div>
+                            Cart
+                        </div>
                     </li>
                 </ul>
             </nav>
@@ -31,16 +35,16 @@
         <div class="categories">
             <ul id="categories-container">
                 <li class="category-item">
-                    <a href="#" class="category">Home</a>
+                    <a asp-controller="Home" asp-action="Index" class="category">Home</a>
                 </li>
                 <li class="category-item">
-                    <a href="#" class="category animate-background-color">Принтове</a>
+                    <a asp-controller="Home" asp-action="Index" class="category animate-background-color">Принтове</a>
                 </li>
                 <li class="category-item">
-                    <a href="#" class="category animate-background-color">Платна</a>
+                    <a asp-controller="Home" asp-action="Index" class="category animate-background-color">Платна</a>
                 </li>
                 <li class="category-item">
-                    <a href="#" class="category animate-background-color">Рисунки</a>
+                    <a asp-controller="Home" asp-action="Index" class="category animate-background-color">Рисунки</a>
                 </li>
             </ul>
         </div>
@@ -54,7 +58,7 @@
                         <a class="bottom-link" href="#">Contact Us</a>
                     </li>
                     <li>
-                        <a class="bottom-link" href="#">About Us</a>
+                        <a class="bottom-link" asp-controller="Home" asp-action="About">About Us</a>
                     </li>
                     <li>
                         <a class="bottom-link" href="#">Terms of Service</a>
