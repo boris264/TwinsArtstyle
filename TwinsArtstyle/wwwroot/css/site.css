@@ -1,18 +1,18 @@
-html {
-  font-size: 14px;
+.text{
+  font-size: 50px;
+  font-family: "Comic Sans MS";
+  color: white;
+  
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+li.text{
+  margin-left: 50px;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
+#twins-drawing{
+  width: auto;
+  height: 200px;
+  display: inline;
+ position: relative;
+ left: 50%;
 }

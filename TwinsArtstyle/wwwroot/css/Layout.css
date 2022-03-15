@@ -16,13 +16,14 @@
 
 body{
     background-color: var(--blue);
+    min-height: 100vh;
 }
 
 .top-navigation-bar{
     background-color: var(--light-blue);
     padding-bottom: 8px;
     box-shadow: 0 1px 8px var(--nav-bar-shadow-color);
-    background-image: url("../../wwwroot/images/heading-background.png");
+    background-image: url("../images/heading-background.png");
     background-repeat: repeat;
     background-size: contain;
 }
@@ -61,12 +62,10 @@ body{
     position: relative;
     top: 5px;
     right: 50px;
-    transition: background-color 0.5s;
 }
 
 .top-cart-button:hover{
     cursor: pointer;
-    background-color: var(--dark-blue-green);
 }
 
 #top-cart-icon{
@@ -100,17 +99,16 @@ body{
     color: #333;
     font-family: 'Courier New', Courier, monospace;
     font-size: 30px;
-    transition: background-color 500ms, color 500ms;
+    transition: color 500ms;
 }
 
 .category:hover{
-    background-color: var(--dark-blue-green);
     color: white;
 }
 
 footer{
-    position: absolute;
-    bottom: 0;
+    position: sticky;
+    top: 100%;
     width: 100%;
     height:110px;
     background-color: var(--light-blue);
@@ -138,4 +136,11 @@ footer{
 
 .bottom-link:hover{
     color: #346E75;
+}
+
+.animate-background-color {
+    transition: background-color 0.5s;
+}
+.animate-background-color:hover {
+    background-color: var(--dark-blue-green);
 }

@@ -1,50 +1,69 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TwinsArtstyle</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/TwinsArtstyle.styles.css" asp-append-version="true" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/Layout.css">
+    <link rel="stylesheet" href="~/css/site.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@300&family=Space+Mono&display=swap" rel="stylesheet">
+    <title>@ViewData["Title"]</title>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TwinsArtstyle</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - TwinsArtstyle - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <header>
+            <nav class="top-navigation-bar">
+                <ul class="top-list-container">
+                    <li id="top-icon-item">
+                        <img id="top-icon" src="~/images/wave.ico" alt="wave-icon">
+                    </li>
+                    <li>
+                        <h1 id="top-heading">Twins <br> Artstyle</h1>
+                    </li>
+                    <li>
+                        <button class="top-cart-button animate-background-color">
+                            <img id="top-cart-icon" src="~/images/shopping-cart.png" alt="shopping-cart">
+                            <p id="top-cart">Cart</p>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <div class="categories">
+            <ul id="categories-container">
+                <li class="category-item">
+                    <a href="#" class="category">Home</a>
+                </li>
+                <li class="category-item">
+                    <a href="#" class="category animate-background-color">Принтове</a>
+                </li>
+                <li class="category-item">
+                    <a href="#" class="category animate-background-color">Платна</a>
+                </li>
+                <li class="category-item">
+                    <a href="#" class="category animate-background-color">Рисунки</a>
+                </li>
+            </ul>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+        @RenderBody();
+
+        <footer>
+            <nav id="bottom-nav-bar">
+                <ul class="bottom-list-container">
+                    <li>
+                        <a class="bottom-link" href="#">Contact Us</a>
+                    </li>
+                    <li>
+                        <a class="bottom-link" href="#">About Us</a>
+                    </li>
+                    <li>
+                        <a class="bottom-link" href="#">Terms of Service</a>
+                    </li>
+                    <li>
+                        <a class="bottom-link" href="#">Privacy Policy</a>
+                    </li>
+                </ul>
+            </nav>
+        </footer>
 </body>
 </html>
