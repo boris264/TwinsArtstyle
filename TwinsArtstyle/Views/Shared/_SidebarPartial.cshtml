@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="menu-item">
+        <a href="#">My Profile</a>
+    </div>
+    <div class="menu-item">
+        <a href="#">My Orders</a>
+    </div>
+    <div class="menu-item">
+        <a href="#">My Addresses</a>
+    </div>
+    <div class="menu-item">
+        <a asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+    </div>
+}
+else
+{
+    <div class="menu-item">
+        <a asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </div>
+    <div class="menu-item">
+        <a asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </div>
+}

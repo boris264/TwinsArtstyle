@@ -11,65 +11,70 @@
     <title>@ViewData["Title"]</title>
 </head>
 <body>
-        <header>
-            <nav class="top-navigation-bar">
-                <ul class="top-list-container">
-                    <li id="top-icon-item">
-                        <img id="top-icon" src="~/images/wave.ico" alt="wave-icon">
-                    </li>
-                    <li>
-                        <h1 id="top-heading">Twins <br> Artstyle</h1>
-                    </li>
-                    <li>
-                        <button class="top-cart-button animate-background-color">
-                            <img id="top-cart-icon" src="~/images/shopping-cart.png" alt="shopping-cart">
-                            <p id="top-cart">Cart</p>
-                        </button>
-                    </li>
-                </ul>
-            </nav>
-        </header>
-        <div class="categories">
-            <ul id="categories-container">
-                <li class="category-item">
-                    <i class="bi bi-house-door-fill"></i>
-                    <a asp-controller="Home" asp-action="Index" class="category animate-background-color">Home</a>
+    <header>
+        <nav class="top-navigation-bar">
+            <ul class="top-list-container">
+                <li id="top-icon-item">
+                    <div class="dropdown" dropdown-menu>
+                        <img id="top-icon" src="~/images/wave.ico" alt="wave-icon" dropdown-button>
+                        <div class="menu-sidebar" id="left-menu">
+                            <partial name="_SidebarPartial" />
+                        </div>
+                    </div>
                 </li>
-                <li class="category-item">
-                    <a asp-controller="Home" asp-action="Index" class="category animate-background-color">Принтове</a>
+                <li>
+                    <h1 id="top-heading">Twins <br> Artstyle</h1>
                 </li>
-                <li class="category-item">
-                    <a asp-controller="Home" asp-action="Index" class="category animate-background-color">Платна</a>
-                </li>
-                <li class="category-item">
-                    <a asp-controller="Home" asp-action="Index" class="category animate-background-color">Рисунки</a>
+                <li>
+                    <button class="top-cart-button animate-background-color">
+                        <img id="top-cart-icon" src="~/images/shopping-cart.png" alt="shopping-cart">
+                        <p id="top-cart">Cart</p>
+                    </button>
                 </li>
             </ul>
-        </div>
+        </nav>
+    </header>
+    <div class="categories">
+        <ul id="categories-container">
+            <li class="category-item">
+                <i class="bi bi-house-door-fill"></i>
+                <a asp-controller="Home" asp-action="Index" class="category animate-background-color">Home</a>
+            </li>
+            <li class="category-item">
+                <a asp-controller="Home" asp-action="Index" class="category animate-background-color">Принтове</a>
+            </li>
+            <li class="category-item">
+                <a asp-controller="Home" asp-action="Index" class="category animate-background-color">Платна</a>
+            </li>
+            <li class="category-item">
+                <a asp-controller="Home" asp-action="Index" class="category animate-background-color">Рисунки</a>
+            </li>
+        </ul>
+    </div>
+    <div class="content-wrapper">
+        @RenderBody()
+    </div>
 
-        <div class="content-wrapper">
-            @RenderBody()
-        </div>
+    <footer>
+        <nav id="bottom-nav-bar">
+            <ul class="bottom-list-container">
+                <li>
+                    <a class="bottom-link" href="#">Contact Us</a>
+                </li>
+                <li>
+                    <a class="bottom-link" asp-controller="Home" asp-action="About">About Us</a>
+                </li>
+                <li>
+                    <a class="bottom-link" href="#">Terms of Service</a>
+                </li>
+                <li>
+                    <a class="bottom-link" href="#">Privacy Policy</a>
+                </li>
+            </ul>
+        </nav>
+    </footer>
 
-        <footer>
-            <nav id="bottom-nav-bar">
-                <ul class="bottom-list-container">
-                    <li>
-                        <a class="bottom-link" href="#">Contact Us</a>
-                    </li>
-                    <li>
-                        <a class="bottom-link" asp-controller="Home" asp-action="About">About Us</a>
-                    </li>
-                    <li>
-                        <a class="bottom-link" href="#">Terms of Service</a>
-                    </li>
-                    <li>
-                        <a class="bottom-link" href="#">Privacy Policy</a>
-                    </li>
-                </ul>
-            </nav>
-        </footer>
-
-        @await RenderSectionAsync("Scripts", false)
+    <script src="~/js/site.js" defer></script>
+    @await RenderSectionAsync("Scripts", false)
 </body>
 </html>

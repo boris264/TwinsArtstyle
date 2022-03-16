@@ -149,3 +149,31 @@ footer{
 .animate-background-color:hover {
     background-color: var(--dark-blue-green);
 }
+
+.menu-sidebar{
+    display: none;
+}
+
+.dropdown.active .menu-sidebar{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 90px;
+    background-color: var(--dark-blue-green);
+    gap: 5px;
+    height: 500px;
+    width: 250px;
+}
+
+.menu-item{
+    padding: 3px 6px;
+    border-top: 1.4px solid #333;
+    text-align: center;
+}
+
+.menu-item > a{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
+    text-decoration: none;
+    color: white;
+}
