@@ -1,18 +1,14 @@
-.text {
-    font-size: 20px;
-    font-family: "Comic Sans MS";
-    color: #333;
-    text-decoration: none;
-}
-
-.main-text{
+.welcome-main-text{
     font-size: 50px;
     font-family: "Comic Sans MS";
-    color: white;
-    
+    color: white;    
 }
 
-li.text{
+li.welcome-main-text{
+    margin-left: 4%;
+}
+
+li.about-text{
     margin-left: 50px;
   }
   
@@ -37,13 +33,17 @@ li.text{
     justify-content: space-between;
 }
 
-.about-us{
+.about-us-container{
     width: 50%;
     margin: 30px;
 }
 
 .about-text{
     text-align: center;
+    font-size: 20px;
+    font-family: "Comic Sans MS";
+    color: #333;
+    text-decoration: none;
 }
 
 #contact-list{
