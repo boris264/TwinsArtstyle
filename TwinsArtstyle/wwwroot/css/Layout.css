@@ -100,11 +100,13 @@ body{
 }
 
 .category{
+    padding: 4px;
     text-decoration: none;
     color: #333;
     font-family: 'Courier New', Courier, monospace;
     font-size: 30px;
     transition: color 500ms;
+    border-radius: 8px;
 }
 
 .category:hover{
