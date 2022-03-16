@@ -1,3 +1,8 @@
+.text-danger{
+    padding: 5px 0px;
+    color: red;
+}
+
 .welcome-main-text{
     font-size: 50px;
     font-family: "Comic Sans MS";
@@ -61,4 +66,68 @@ li.about-text{
 
 .icon{
     padding-right: 10px;
+}
+
+.login-card{
+    font-family: "Comic Sans MS";
+    position: relative;
+    top: 50px;
+    width: 20%;
+    margin: 0 auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 10px #333;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.login-card > h2{
+    text-align: center;
+    font-size: 35px;
+}
+
+.form-floating{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.form-label{
+    font-size: 20px;
+}
+
+.form-control{
+    font-size: 20px;
+    padding: 7px 5px 7px 6px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    font-family: "Comic Sans MS";
+    background-color: #eee;
+}
+
+.button-container{
+    margin-top: 15px;
+}
+
+#login-submit{
+    padding: 5px 10px;
+    font-size: 24px;
+    width: 100%;
+    font-family: "Comic Sans MS";
+    background-color: #3DABC2;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+#login-submit:hover{
+    background-color: #346E75;
+    cursor: pointer;
+}
+
+#register-new-user{
+    text-decoration: none;
+    color: #333;
 }
