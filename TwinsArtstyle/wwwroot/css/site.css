@@ -1,3 +1,6 @@
+@import "colors.css";
+
+
 .text-danger{
     padding: 5px 0px;
     color: red;
@@ -69,7 +72,7 @@ li.about-text{
     padding-right: 10px;
 }
 
-.card{
+.account-card{
     font-family: "Comic Sans MS";
     position: relative;
     top: 50px;
@@ -84,7 +87,7 @@ li.about-text{
     gap: 3px;
 }
 
-.card > h2{
+.account-card > h2{
     text-align: center;
     font-size: 35px;
 }
@@ -117,18 +120,70 @@ li.about-text{
     font-size: 24px;
     width: 100%;
     font-family: "Comic Sans MS";
-    background-color: #3DABC2;
+    background-color: var(--blue);
     border: none;
     border-radius: 5px;
     color: white;
 }
 
 .submit:hover{
-    background-color: #346E75;
+    background-color: var(--dark-blue-green);
     cursor: pointer;
 }
 
 #register-new-user{
     text-decoration: none;
+    color: #333;
+}
+
+.product-card{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--light-blue);
+    width: 200px;
+    padding: 10px 30px;
+    margin: 0 auto;
+    border-radius: 15px;
+    box-shadow: 8px 10px 30px #333;
+    font-family: "Comic Sans MS";
+    gap: 3px;
+}
+
+.product-card > img{
+    width: 189px;
+    height: 250px;
+    border: 1px solid #333;
+    border-radius: 2px;
+}
+
+.product-name{
+    text-align: center;
+    font-size: 20px;
+    color: white;
+}
+
+.add-product{
+    display: flex;
+    align-items: center;
+    border: 2px solid white;
+    justify-content: space-between;
+}
+
+.price{
+    color: white; 
+    font-size: larger;
+}
+
+.add-to-cart-button{
+    padding: 7px;
+    color: white;
+    border: none;
+    font-size: 20px;
+    font-family: "Comic Sans MS";
+    background-color: var(--light-blue);
+}
+
+.add-to-cart-button:hover{
+    cursor: pointer;
     color: #333;
 }

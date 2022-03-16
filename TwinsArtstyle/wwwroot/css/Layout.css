@@ -1,9 +1,4 @@
-:root{
-    --light-blue: #91F2FF;
-    --blue: #3DABC2;
-    --dark-blue-green: #346E75;
-    --nav-bar-shadow-color: #2b2c2d;
-}
+@import "colors.css";
 
 *{
     margin: 0;

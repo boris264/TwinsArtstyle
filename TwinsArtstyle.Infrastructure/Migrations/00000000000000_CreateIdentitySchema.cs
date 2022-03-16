@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace TwinsArtstyle.Infrastructure.Data.Migrations
+namespace TwinsArtstyle.Infrastructure.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {
