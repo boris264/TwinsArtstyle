@@ -5,7 +5,7 @@
     ViewData["Title"] = "Log in";
 }
 
-<div class="login-card">
+<div class="login-card card">
     <h2>@ViewData["Title"]</h2>
     <form id="account" method="post">
         <div class="form-floating">
@@ -26,8 +26,8 @@
                 </label>
             </div>
         </div>
-        <div class="button-container">
-            <button id="login-submit" type="submit">Log in</button>
+        <div class="submit-button-container">
+            <button id="login-submit" class="submit" type="submit">Log in</button>
         </div>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div>
