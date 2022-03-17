@@ -15,15 +15,15 @@
         <a href="#">My Addresses</a>
     </div>
     <div class="menu-item">
-        <a asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+        <a asp-action="Logout" asp-controller="User">Logout</a>
     </div>
 }
 else
 {
     <div class="menu-item">
-        <a asp-area="Identity" asp-page="/Account/Login">Login</a>
+        <a asp-controller="User" asp-action="Login">Login</a>
     </div>
     <div class="menu-item">
-        <a asp-area="Identity" asp-page="/Account/Register">Register</a>
+        <a asp-controller="User" asp-action="Register">Register</a>
     </div>
 }
