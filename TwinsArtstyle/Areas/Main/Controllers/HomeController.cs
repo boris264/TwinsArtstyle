@@ -2,8 +2,9 @@
 using System.Diagnostics;
 using TwinsArtstyle.Models;
 
-namespace TwinsArtstyle.Controllers
+namespace TwinsArtstyle.Areas.Main.Controllers
 {
+    [Area("Main")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

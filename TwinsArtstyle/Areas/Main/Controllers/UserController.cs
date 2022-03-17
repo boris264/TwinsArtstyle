@@ -8,8 +8,9 @@ using TwinsArtstyle.Infrastructure.Models;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels;
 
-namespace TwinsArtstyle.Controllers
+namespace TwinsArtstyle.Areas.Main.Controllers
 {
+    [Area("Main")]
     public class UserController : Controller
     {
         private readonly SignInManager<User> _signInManager;
