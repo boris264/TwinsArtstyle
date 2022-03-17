@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using TwinsArtstyle.Infrastructure.Models;
@@ -81,14 +82,18 @@ namespace TwinsArtstyle.Areas.Main.Controllers
             {
                 var user = CreateUser();
                 user.Cart = _cartService.CreateCart();
+
                 await _userStore.SetUserNameAsync(user, registerModel.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, registerModel.Email, CancellationToken.None);
+                user.FirstName = registerModel.FirstName;
+                user.LastName = registerModel.LastName;
 
                 var result = await _userManager.CreateAsync(user, registerModel.Password);
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    await _userManager.AddClaimAsync(user, new Claim("FullName", $"{user.FirstName} {user.LastName}"));
 
                     //var userId = await _userManager.GetUserIdAsync(user);
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

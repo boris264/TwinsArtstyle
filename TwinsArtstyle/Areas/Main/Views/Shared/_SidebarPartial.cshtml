@@ -6,6 +6,9 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <div class="menu-item">
+        <span id="hello-message">Hello, @User.Claims.Where(c => c.Type == "FullName").FirstOrDefault().Value</span>
+    </div>
+    <div class="menu-item">
         <a href="#">My Profile</a>
     </div>
     <div class="menu-item">

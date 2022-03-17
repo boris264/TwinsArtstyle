@@ -168,7 +168,7 @@ footer{
     text-align: center;
 }
 
-.menu-item > a{
+.menu-item > a, #hello-message{
     font-family: 'Courier New', Courier, monospace;
     font-size: 30px;
     text-decoration: none;
