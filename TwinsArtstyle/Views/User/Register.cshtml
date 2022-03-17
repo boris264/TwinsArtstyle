@@ -10,6 +10,16 @@
             <hr />
             <br />
             <div class="form-floating">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" autocomplete="username" aria-required="true" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" autocomplete="username" aria-required="true" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
                 <label asp-for="Email"></label>
                 <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" />
                 <span asp-validation-for="Email" class="text-danger"></span>
