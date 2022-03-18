@@ -1,6 +1,12 @@
-*{
+* {
     margin: 0;
     padding: 0;
+    margin: 0;
+    padding: 0;
+    -webkit-user-select: none; /* Chrome all / Safari all */
+    -moz-user-select: none; /* Firefox all */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none;
 }
 
 .header-container{
@@ -8,13 +14,47 @@
     height: 80px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 h1{
     text-align: center;
     color: white;
     font-size: 40px;
+    margin-left: 12px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-weight:lighter;
+    font-weight: lighter;
+}
+
+.border-right{
+    border-right: 1px solid white;
+}
+
+.inbox:hover{
+    cursor: pointer;
+}
+
+.admin-menu{
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    align-items: center;
+    border: 1px solid white;
+    padding: 5px;
+    margin-right: 6px;
+}
+
+
+.profile:hover{
+    cursor: pointer;
+}
+
+.nav-text{
+    color: white;
+    font-size: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.icon{
+    color: white;
 }
