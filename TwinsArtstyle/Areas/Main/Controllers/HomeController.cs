@@ -4,8 +4,7 @@ using TwinsArtstyle.Models;
 
 namespace TwinsArtstyle.Areas.Main.Controllers
 {
-    [Area("Main")]
-    public class HomeController : Controller
+    public class HomeController : MainController
     {
         private readonly ILogger<HomeController> _logger;
 

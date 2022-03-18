@@ -6,13 +6,13 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using TwinsArtstyle.Infrastructure.Models;
+using TwinsArtstyle.Services.Constants;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels;
 
 namespace TwinsArtstyle.Areas.Main.Controllers
 {
-    [Area("Main")]
-    public class UserController : Controller
+    public class UserController : MainController
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
@@ -93,7 +93,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                    await _userManager.AddClaimAsync(user, new Claim("FullName", $"{user.FirstName} {user.LastName}"));
+                    await _userManager.AddClaimAsync(user, new Claim(ClaimType.FullName, $"{user.FirstName} {user.LastName}"));
 
                     //var userId = await _userManager.GetUserIdAsync(user);
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
