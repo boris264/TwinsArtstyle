@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
@@ -12,6 +13,7 @@ using TwinsArtstyle.Services.ViewModels;
 
 namespace TwinsArtstyle.Areas.Main.Controllers
 {
+    [AutoValidateAntiforgeryToken]
     public class UserController : MainController
     {
         private readonly SignInManager<User> _signInManager;

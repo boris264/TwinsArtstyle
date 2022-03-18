@@ -6,6 +6,11 @@
     color: red;
 }
 
+.text-success{
+    padding: 5px 0px;
+    color: green;
+}
+
 .welcome-main-text{
     font-size: 50px;
     font-family: "Comic Sans MS";
@@ -72,7 +77,7 @@ li.about-text{
     padding-right: 10px;
 }
 
-.account-card{
+.account-card, #profile-card{
     font-family: "Comic Sans MS";
     position: relative;
     top: 50px;
@@ -87,7 +92,7 @@ li.about-text{
     gap: 3px;
 }
 
-.account-card > h2{
+.account-card > h2, #profile-card > h2{
     text-align: center;
     font-size: 35px;
 }

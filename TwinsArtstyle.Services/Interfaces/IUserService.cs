@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using TwinsArtstyle.Services.ViewModels;
 
 namespace TwinsArtstyle.Services.Interfaces
 {
     public interface IUserService
     {
+        public Task<IdentityResult> UpdateUserProfileInfo(UserViewModel userViewModel, ClaimsPrincipal claimsPrincipal);
     }
 }

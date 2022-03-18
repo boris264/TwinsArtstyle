@@ -1,0 +1,41 @@
+﻿@model UserViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<form asp-area="Main" asp-controller="Profile" asp-action="UserProfile">
+    <div id="profile-card">
+        <h2>Profile</h2>
+        <hr />
+        <div class="form-floating">
+            <label class="form-label" asp-for="FirstName"></label>
+            <input class="form-control" asp-for="FirstName" value="@Model.FirstName" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-floating">
+            <label class="form-label" asp-for="LastName"></label>
+            <input class="form-control" asp-for="LastName" value="@Model.LastName" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="form-floating">
+            <label class="form-label" asp-for="Email"></label>
+            <input class="form-control" asp-for="Email" value="@Model.Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-floating">
+            <label class="form-label" asp-for="PhoneNumber"></label>
+            <input class="form-control" asp-for="PhoneNumber" value="@Model.PhoneNumber" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+
+        @if(ViewData["UpdateSuccessfull"] != string.Empty)
+        {
+            <span class="form-label text-success">@ViewData["UpdateSuccessfull"]</span>
+        }
+
+        <div class="submit-button-container">
+            <button id="profile-submit" class="submit" type="submit">Save Profile Changes</button>
+        </div>
+    </div>
+</form>

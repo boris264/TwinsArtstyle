@@ -36,6 +36,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
