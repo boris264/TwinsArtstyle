@@ -28,6 +28,12 @@ builder.Services.AddDefaultIdentity<User>(options =>
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.AccessDeniedPath = "/Main/Home/Index";
+    options.LoginPath = "/Main/User/Login";
+});
+
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddControllersWithViews();
