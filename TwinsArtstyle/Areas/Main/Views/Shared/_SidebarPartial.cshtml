@@ -9,12 +9,14 @@
     <div class="menu-item">
         <span id="hello-message">Hello, @User.Claims.Where(c => c.Type == "Full Name").FirstOrDefault().Value</span>
     </div>
+
     @if (User.IsInRole(RoleType.Admininstrator))
     {
         <div class="menu-item">
             <a asp-area="Admin" asp-action="Index" asp-controller="Home" id="admin-panel">Admin Panel</a>
         </div>
     }
+
     <div class="menu-item">
         <a href="#">My Profile</a>
     </div>

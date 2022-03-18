@@ -179,11 +179,33 @@ li.about-text{
     color: white;
     border: none;
     font-size: 20px;
-    font-family: "Comic Sans MS";
+    font-family: 'Courier New', Courier, monospace;
     background-color: var(--light-blue);
 }
 
 .add-to-cart-button:hover{
     cursor: pointer;
     color: #333;
+}
+
+#access-denied{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin: 70px auto;
+    align-items: center;
+    font-size: 30px;
+    font-family: "";
+    color: white;
+    text-transform: uppercase;
+    gap: 3px;
+}
+
+#status-code{
+    text-align: center;
+}
+
+#access-denied > img{
+    width: 256px;
+    height: 256px;
 }
