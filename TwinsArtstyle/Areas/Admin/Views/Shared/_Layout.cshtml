@@ -14,28 +14,42 @@
     <div class="header-container">
         <h1>Admin</h1>
         <div class="admin-menu">
-            <div class="orders border-right">
+            <div class="orders border-right pointer-cursor">
                 <i class="bi bi-basket-fill icon"></i>
                 <span class="nav-text">Orders</span>
                 <i class="bi bi-arrow-down-short icon"></i>
             </div>
-            <div class="inbox border-right">
+            <div class="inbox border-right pointer-cursor">
                 <i class="bi bi-inbox-fill icon"></i>
                 <span class="nav-text">Inbox</span>
                 <i class="bi bi-arrow-down-short icon"></i>
             </div>
-            <div class="profile">
+            <div class="profile pointer-cursor">
                 <i class="bi bi-person-fill icon" id="profile-icon"></i>
                 <span id="admin-profile" class="nav-text">@User.Identity.Name</span>
             </div>
         </div>
     </div>
+    <div class="left-menu-bar">
+        <div class="item">
+            <span class="left-nav-text pointer-cursor">Users</span>
+        </div>
+        <div class="item">
+            <span class="left-nav-text pointer-cursor">Orders</span>
+        </div>
+        <div class="item">
+            <span class="left-nav-text pointer-cursor">Manage Roles</span>
+        </div>
+        <div class="item">
+            <span class="left-nav-text pointer-cursor">Manage Claims</span>
+        </div>
+        <div class="item">
+            <span class="left-nav-text pointer-cursor">Administrators</span>
+        </div>
+    </div>
 
     <div class="content-wrapper">
         @RenderBody()
-    </div>
-
-    <div class="footer-container">
     </div>
 </body>
 </html>

@@ -9,6 +9,10 @@
     user-select: none;
 }
 
+html, body{
+    height: 100vh;
+}
+
 .header-container{
     background-color: #333;
     height: 80px;
@@ -30,22 +34,18 @@ h1{
     border-right: 1px solid white;
 }
 
-.inbox:hover{
-    cursor: pointer;
-}
-
 .admin-menu{
     display: flex;
     justify-content: center;
     gap: 7px;
     align-items: center;
     border: 1px solid white;
-    padding: 5px;
+    padding: 7px;
     margin-right: 6px;
+    border-radius: 4px;
 }
 
-
-.profile:hover{
+.pointer-cursor:hover{
     cursor: pointer;
 }
 
@@ -57,4 +57,29 @@ h1{
 
 .icon{
     color: white;
+}
+
+.left-menu-bar{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 250px;
+    max-width: 250px;
+    height: calc(100% - 80px);
+    background-color: #333;
+    gap: 7px;
+}
+
+.item{
+    padding: 9px;
+    border-bottom: 1px solid white;
+    width: 100%;
+    text-align: center;
+}
+
+.left-nav-text{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: white;
+    font-weight:100;
+    font-size: 25px;
 }
