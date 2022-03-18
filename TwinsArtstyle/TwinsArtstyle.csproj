@@ -23,8 +23,4 @@
     <ProjectReference Include="..\TwinsArtstyle.Services\TwinsArtstyle.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Admin\" />
-  </ItemGroup>
-
 </Project>
