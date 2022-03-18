@@ -12,7 +12,7 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
         {
         }
 
-        public IActionResult Index()
+        public IActionResult Info()
         {
             return View();
         }

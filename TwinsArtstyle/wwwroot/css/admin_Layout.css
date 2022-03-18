@@ -9,6 +9,10 @@
     user-select: none;
 }
 
+a{
+    text-decoration: none;
+}
+
 html, body{
     height: 100vh;
 }
@@ -43,6 +47,10 @@ h1{
     padding: 7px;
     margin-right: 6px;
     border-radius: 4px;
+}
+
+.top-nav-item{
+    padding: 0px 5px;
 }
 
 .pointer-cursor:hover{

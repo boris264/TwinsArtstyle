@@ -65,6 +65,6 @@ app.UseAuthorization();
 //    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapAreaControllerRoute("Main", "Main", "{area=Main}/{controller=Home}/{action=Index}/{id?}");
-app.MapAreaControllerRoute("Admin", "Admin", "Admin/{controller=Home}/{action=Index}/{id?}");
+app.MapAreaControllerRoute("Admin", "Admin", "Admin/{controller=Home}/{action=Info}/{id?}");
 
 app.Run();

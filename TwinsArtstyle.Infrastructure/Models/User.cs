@@ -17,5 +17,7 @@ namespace TwinsArtstyle.Infrastructure.Models
         public IList<Address> Addresses { get; set; } = new List<Address>();
 
         public IList<Order> Orders { get; set; } = new List<Order>();
+
+        public IList<Message> Messages { get; set; } = new List<Message>();
     }
 }

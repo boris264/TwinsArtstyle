@@ -16,6 +16,8 @@ namespace TwinsArtstyle.Infrastructure.Data
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<Message> Messages{ get; set; }
+
         public DbSet<CartProductCount> CartsProductsCount { get; set; }
 
         public DbSet<OrderProductCount> OrdersProductsCount { get; set; }
