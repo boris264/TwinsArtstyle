@@ -6,7 +6,7 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = RoleType.Admininstrator)]
-    public class AdminController : Controller
+    public abstract class AdminController : Controller
     {
     }
 }

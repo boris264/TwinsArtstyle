@@ -10,6 +10,7 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
     {
         public HomeController(UserManager<User> userManager)
         {
+
         }
 
         public IActionResult Info()

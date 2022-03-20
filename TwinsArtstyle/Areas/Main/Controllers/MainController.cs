@@ -3,7 +3,7 @@
 namespace TwinsArtstyle.Areas.Main.Controllers
 {
     [Area("Main")]
-    public class MainController : Controller
+    public abstract class MainController : Controller
     {
     }
 }

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using TwinsArtstyle.Infrastructure.Interfaces;
 using TwinsArtstyle.Infrastructure.Models;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels;
@@ -14,10 +16,27 @@ namespace TwinsArtstyle.Services.Implementation
     public class UserService : IUserService
     {
         private readonly UserManager<User> _userManager;
+        private readonly IRepository _repository;
 
-        public UserService(UserManager<User> userManager)
+        public UserService(UserManager<User> userManager,
+            IRepository repository)
         {
             _userManager = userManager;
+            _repository = repository;
+        }
+
+        public async Task<IEnumerable<UserViewModel>> GetAllUsers()
+        {
+            IEnumerable<UserViewModel> users = await _repository.All<User>()
+                .Select(u => new UserViewModel()
+                {
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    PhoneNumber = u.PhoneNumber
+                }).ToListAsync();
+
+            return users;
         }
 
         public async Task<IdentityResult> UpdateUserProfileInfo(UserViewModel userViewModel, ClaimsPrincipal claimsPrincipal)

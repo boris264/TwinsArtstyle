@@ -6,10 +6,12 @@ namespace TwinsArtstyle.Services.ViewModels
     {
         [Required]
         [StringLength(40)]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [Required]
         [StringLength(40)]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [Required]
@@ -17,6 +19,7 @@ namespace TwinsArtstyle.Services.ViewModels
         public string Email { get; set; }
 
         [Phone]
+        [Display(Name = "Phone Number")]
         public string? PhoneNumber { get; set; }
     }
 }
