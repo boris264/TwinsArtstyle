@@ -1,0 +1,39 @@
+﻿@model IEnumerable<RoleViewModel>
+
+<div id="roles">
+    <div class="panel">
+        <h3>Roles</h3>
+        <table class="display-table">
+            <thead>
+                <tr class="row">
+                    <th class="display-head">Role Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in Model)
+                {
+                    <tr class="row">
+                        <td class="display-data">@role.Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="add-roles">
+    <form method="post" asp-area="Admin" asp-controller="Roles" asp-action="Manage">
+        <div class="panel">
+            <h3>Add a new role</h3>
+            <div class="form-floating">
+                <label asp-for="FirstOrDefault().Name" class="form-label"></label>
+                <input name="Name" id="Name" class="form-control" type="text" />
+                <span class="text-danger" asp-validation-for="FirstOrDefault().Name"></span>
+            </div>
+            <div class="submit-button-container">
+                <button class="submit">Add</button>
+            </div>
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        </div>
+    </form>
+</div>

@@ -5,7 +5,8 @@
 
 <div id="edit-user">
     <form asp-area="Admin" asp-controller="Users" asp-action="Edit" method="post" asp-route-oldEmail="@Model.Email">
-        <div class="form-floating">
+        <div class="panel">
+            <div class="form-floating">
             <label asp-for="FirstName" class="form-label"></label>
             <input asp-for="FirstName" class="form-control" />
             <span asp-validation-for="FirstName"></span>
@@ -28,6 +29,7 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="submit-button-container">
             <button id="login-submit" class="submit" type="submit">Save Changes</button>
+        </div>
         </div>
     </form>
 </div>

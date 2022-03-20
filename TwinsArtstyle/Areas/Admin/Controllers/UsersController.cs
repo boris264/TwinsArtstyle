@@ -24,7 +24,7 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
         public async Task<IActionResult> Registered()
         {
             IEnumerable<UserViewModel> users = await _userService.GetAllUsers();
-            return View(users);
+            return View(users.Take(20));
         }
 
         public async Task<IActionResult> Edit([FromQuery] string email)
@@ -53,11 +53,14 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(UserViewModel model, [FromQuery] string oldEmail)
         {
-            var result = await _userService.UpdateUserProfileInfo(model, oldEmail);
-
-            if(result.Succeeded)
+            if(ModelState.IsValid)
             {
-                return RedirectToAction("Edit", new {email = model.Email});
+                var result = await _userService.UpdateUserProfileInfo(model, oldEmail);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Edit", new { email = model.Email });
+                }
             }
 
             ModelState.AddModelError(string.Empty, "Something went wrong!");

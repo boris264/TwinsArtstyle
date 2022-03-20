@@ -9,10 +9,13 @@ a {
 }
 
 .content-wrapper{
+    display: flex;
     position:absolute;
     margin-left: 250px;
     width: calc(100% - 250px);
-    height: calc(100% - 80px)
+    height: calc(100% - 80px);
+    justify-content: flex-start;
+    gap: 20px;
 }
 
 #registered-users{
@@ -20,6 +23,7 @@ a {
     top: 30px;
     left: 20px;
     width: 800px;
+    height: calc(100% - 80px);
 }
 
 .panel > h3{
@@ -34,9 +38,10 @@ a {
     background-color: #eee;
     border-radius: 15px;
     border: 1px solid #d6d6d6;
+    box-shadow: 3px 3px 6px #333;
 }
 
-#users{
+.display-table{
     display: table;
     border-collapse: collapse;
     font-size: 20px;
@@ -45,7 +50,7 @@ a {
     width: 100%;
 }
 
-th, td{
+.display-head, .display-data{
     border: 1px solid #868686;
     padding: 5px;
 }
@@ -63,9 +68,6 @@ th, td{
     position: relative;
     top: 50px;
     padding: 15px;
-    border: 1px solid #868686;
-    background-color: #eee;
-    border-radius: 20px;
     margin: 0 auto;
 }
 
@@ -106,4 +108,15 @@ th, td{
 
 .submit:hover{
     cursor: pointer;
+}
+
+#roles{
+    position: relative;
+    width: 200px;
+    text-align: center;
+    
+}
+
+#add-roles{
+    
 }
