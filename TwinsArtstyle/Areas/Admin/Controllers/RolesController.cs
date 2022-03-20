@@ -16,11 +16,7 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
 
         public async Task<IActionResult> Manage()
         {
-            var allRoles = await _roleManager.Roles
-                .Select(r => new RoleViewModel()
-                {
-                    Name = r.Name,
-                }).ToListAsync();
+            var allRoles = await GetAllRoles();
 
             return View(allRoles);
         }
@@ -31,12 +27,10 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
             if(ModelState.IsValid)
             {
                 await _roleManager.CreateAsync(new IdentityRole(roleViewModel.Name));
-                return RedirectToAction("Manage");
+                return RedirectToAction(nameof(Manage));
             }
 
-            var roles = await GetAllRoles();
-
-            return View(roles);
+            return RedirectToAction(nameof(Manage));
         }
 
         private async Task<List<RoleViewModel>> GetAllRoles()

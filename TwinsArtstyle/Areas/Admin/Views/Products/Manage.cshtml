@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ProductViewModel>
+
+<div id="add-product">
+    <form asp-area="Admin" asp-controller="Products" asp-action="Manage" enctype="multipart/form-data" method="post">
+        <div class="panel">
+            <div class="form-floating">
+                <label class="form-label" asp-for="FirstOrDefault().Image"></label>
+                <input class="form-control" asp-for="FirstOrDefault().Image" type="file" />
+                <span class="text-danger" asp-validation-for="FirstOrDefault().Image"></span>
+            </div>
+            <div class="form-floating">
+                <label class="form-label" asp-for="FirstOrDefault().Name"></label>
+                <input class="form-control" asp-for="FirstOrDefault().Name" type="text" />
+                <span asp-validation-for="FirstOrDefault().Name"></span>
+            </div>
+            <div class="form-floating">
+                <label class="form-label" asp-for="FirstOrDefault().Category"></label>
+                <select class="form-control" asp-for="FirstOrDefault().Category">
+                    <option value="Платна">Платна</option>
+                    <option value="Рисунки">Рисунки</option>
+                    <option value="Принтове">Принтове</option>
+                </select>
+            </div>
+            <div class="form-floating">
+                <label class="form-label" asp-for="FirstOrDefault().Description"></label>
+                <input class="form-control" asp-for="FirstOrDefault().Description" type="text" />
+                <span asp-validation-for="FirstOrDefault().Description"></span>
+            </div>
+            <div class="form-floating">
+                <label class="form-label" asp-for="FirstOrDefault().Price"></label>
+                <input class="form-control" asp-for="FirstOrDefault().Price" type="number" />
+                <span asp-validation-for="FirstOrDefault().Price"></span>
+            </div>
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="submit-button-container">
+                <button class="submit" type="submit">Add Product</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@if (Model.Count() > 0)
+{
+    <div id="products">
+        <div class="panel">
+
+            @foreach (var item in Model)
+            {
+                <partial name="_ProductPartial" model="item" />
+            }
+
+        </div>
+    </div>
+}

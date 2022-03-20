@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using TwinsArtstyle.Infrastructure.Data;
 using TwinsArtstyle.Infrastructure.Interfaces;
 using TwinsArtstyle.Infrastructure.Models;
+using TwinsArtstyle.Services.Helpers;
 using TwinsArtstyle.Services.Implementation;
 using TwinsArtstyle.Services.Interfaces;
 
@@ -37,7 +38,9 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddControllersWithViews();
+
 
 var app = builder.Build();
 
@@ -55,7 +58,6 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 
 app.UseAuthentication();

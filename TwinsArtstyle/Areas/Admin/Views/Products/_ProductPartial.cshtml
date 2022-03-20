@@ -1,0 +1,16 @@
+﻿@model ProductViewModel
+
+<div class="product-card">
+    <div class="product-image-container">
+        <img src="@Model.ImageUrl" />
+    </div>
+    <div class="product-name">
+        <span class="form-label">@Model.Name</span>
+    </div>
+    <div class="product-name">
+        <span class="form-label">@Model.Category</span>
+    </div>
+    <div class="order-container">
+        <span class="price form-label">@Model.Price</span>
+    </div>
+</div>
