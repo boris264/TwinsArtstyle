@@ -12,6 +12,10 @@ namespace TwinsArtstyle.Infrastructure.Models
         [StringLength(60)]
         public string Name { get; set; }
 
+        [Required]
+        [Url]
+        public string ImageUrl { get; set; }
+
         public Guid CategoryId { get; set; }
 
         [ForeignKey(nameof(CategoryId))]

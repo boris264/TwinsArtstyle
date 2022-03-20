@@ -119,23 +119,28 @@ a {
 
 #add-product{
     margin: 10px 20px;
-    height: 100% - 80px;
+    height: calc(100% - 80px);
 }
 
-#products > .panel{
+#products > .panel {
     display: flex;
     flex-direction: row;
     height: fit-content;
-    gap: 30px;
+    gap: 25px;
     align-items: center;
+    flex-wrap: wrap;
+    max-height: 580px;
+    overflow-y: scroll;
 }
 
-#products{
+#products {
     height: fit-content;
+    max-height: 580px;
 }
+
 
 .product-card{
-    max-width: 200px;
+    max-width: 190px;
     display: flex;
     flex-direction: column;
     border: 1px solid #868686;
@@ -149,8 +154,4 @@ a {
 .product-image-container > img{
     height: 150px;
     width: auto;
-}
-
-.product-name{
-    flex-grow: 0;
 }

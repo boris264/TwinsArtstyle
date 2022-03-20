@@ -145,7 +145,7 @@ li.about-text{
     display: flex;
     flex-direction: column;
     background-color: var(--light-blue);
-    width: 200px;
+    max-width: 200px;
     padding: 10px 30px;
     margin: 0 auto;
     border-radius: 15px;
@@ -169,7 +169,7 @@ li.about-text{
 
 .add-product{
     display: flex;
-    align-items: center;
+    width: 100%;
     border: 2px solid white;
     justify-content: space-between;
 }
@@ -213,4 +213,29 @@ li.about-text{
 #access-denied > img{
     width: 256px;
     height: 256px;
+}
+
+.panel{
+    padding: 10px;
+    background-color: var(--dark-blue-green);
+    border-radius: 15px;
+    border: 1px solid var(--dark-blue-green);
+    box-shadow: 3px 3px 6px #333;
+    margin: 0 auto;
+    display: flex;
+    gap: 35px;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+#products{
+    height: 80%;
+}
+
+#products > h3{
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    background-color: var(--light-blue);
+    font-size: 50px;
 }

@@ -1,0 +1,10 @@
+﻿@model ProductViewModel
+
+<div class="product-card">
+    <img class="product-image" src="@Model.ImageUrl" />
+    <span class="product-name">@Model.Name</span>
+    <div class="add-product">
+        <span class="price">@Model.Price лв.</span>
+        <button class="add-to-cart-button">Add To Cart</button>
+    </div>
+</div>

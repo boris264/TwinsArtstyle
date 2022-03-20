@@ -27,7 +27,6 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
             if(ModelState.IsValid)
             {
                 await _roleManager.CreateAsync(new IdentityRole(roleViewModel.Name));
-                return RedirectToAction(nameof(Manage));
             }
 
             return RedirectToAction(nameof(Manage));
