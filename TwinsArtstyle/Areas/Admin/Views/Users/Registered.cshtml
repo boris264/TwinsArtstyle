@@ -13,6 +13,7 @@
                     <th>Last Name</th>
                     <th>Email</th>
                     <th>Phone Number</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,6 +24,14 @@
                         <td>@user.LastName</td>
                         <td>@user.Email</td>
                         <td>@user.PhoneNumber</td>
+                        <td id="actions">
+                            <a asp-area="Admin" asp-controller="Users" asp-action="Edit" asp-route-email="@user.Email">
+                                <i class="bi bi-pencil-fill action-icon"></i>
+                            </a>
+                            <a asp-area="Admin" asp-controller="Users" asp-action="Delete" asp-route-email="@user.Email"> 
+                                <i class="bi bi-x-lg action-icon delete"></i>
+                            </a>
+                        </td>
                     </tr>
                 }
             </tbody>

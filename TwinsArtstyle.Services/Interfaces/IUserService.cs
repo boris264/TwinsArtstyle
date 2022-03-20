@@ -7,6 +7,9 @@ namespace TwinsArtstyle.Services.Interfaces
     public interface IUserService
     {
         public Task<IdentityResult> UpdateUserProfileInfo(UserViewModel userViewModel, ClaimsPrincipal claimsPrincipal);
+
+        public Task<IdentityResult> UpdateUserProfileInfo(UserViewModel userViewModel, string email);
         public Task<IEnumerable<UserViewModel>> GetAllUsers();
+        public Task<bool> DeleteUser(string email);
     }
 }

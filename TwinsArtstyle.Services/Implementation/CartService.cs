@@ -23,5 +23,17 @@ namespace TwinsArtstyle.Services.Implementation
         {
             return new Cart();
         }
+
+        public async Task DeleteCart(Guid cartId)
+        {
+            var cart = repository.All<Cart>()
+                .Where(c => c.Id == cartId)
+                .FirstOrDefault();
+
+            if(cart != null)
+            {
+                await repository.Remove(cart);
+            }
+        }
     }
 }

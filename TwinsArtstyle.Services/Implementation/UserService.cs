@@ -16,13 +16,31 @@ namespace TwinsArtstyle.Services.Implementation
     public class UserService : IUserService
     {
         private readonly UserManager<User> _userManager;
+        private readonly ICartService _cartService;
         private readonly IRepository _repository;
 
         public UserService(UserManager<User> userManager,
-            IRepository repository)
+            IRepository repository,
+            ICartService cartService)
         {
             _userManager = userManager;
             _repository = repository;
+            _cartService = cartService;
+        }
+
+        public async Task<bool> DeleteUser(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            bool result = false;
+
+            if(user != null)
+            {
+                await _repository.Remove(user);
+                await _cartService.DeleteCart(user.CartId);
+                result = true;
+            }
+
+            return result;
         }
 
         public async Task<IEnumerable<UserViewModel>> GetAllUsers()
@@ -54,6 +72,28 @@ namespace TwinsArtstyle.Services.Implementation
             }
 
             return IdentityResult.Failed();
+        }
+
+        public async Task<IdentityResult> UpdateUserProfileInfo(UserViewModel userViewModel, string email)
+        {
+            IdentityResult result = IdentityResult.Failed();
+
+            if(email != null)
+            {
+                var user = await _userManager.FindByEmailAsync(email);
+
+                if(user != null)
+                {
+                    user.FirstName = userViewModel.FirstName;
+                    user.LastName = userViewModel.LastName;
+                    user.Email = userViewModel.Email;
+                    user.PhoneNumber = userViewModel.PhoneNumber;
+
+                    return await _userManager.UpdateAsync(user);
+                }
+            }
+
+            return result;
         }
     }
 }

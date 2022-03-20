@@ -1,3 +1,7 @@
+a {
+    text-decoration: none;
+}
+
 .text-danger{
     color: red;
     font-size: 20px;
@@ -5,14 +9,16 @@
 }
 
 .content-wrapper{
-    display: inline-block;
-    position:relative;
-    margin-left: 20%;
+    position:absolute;
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    height: calc(100% - 80px)
 }
 
 #registered-users{
     position: relative;
-    top: 50px;
+    top: 30px;
+    left: 20px;
     width: 800px;
 }
 
@@ -42,4 +48,62 @@
 th, td{
     border: 1px solid #868686;
     padding: 5px;
+}
+
+.action-icon:hover{
+    cursor: pointer;
+}
+
+.delete{
+    color: red;
+}
+
+#edit-user{
+    width: 300px;
+    position: relative;
+    top: 50px;
+    padding: 15px;
+    border: 1px solid #868686;
+    background-color: #eee;
+    border-radius: 20px;
+    margin: 0 auto;
+}
+
+.form-floating{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.form-label{
+    font-size: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.form-control{
+    font-size: 20px;
+    padding: 7px 5px 7px 6px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #eee;
+}
+
+.submit-button-container{
+    margin-top: 15px;
+}
+
+.submit{
+    padding: 5px 10px;
+    font-size: 24px;
+    width: 100%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #333;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.submit:hover{
+    cursor: pointer;
 }
