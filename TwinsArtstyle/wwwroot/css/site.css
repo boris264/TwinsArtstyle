@@ -145,18 +145,19 @@ li.about-text{
     display: flex;
     flex-direction: column;
     background-color: var(--light-blue);
-    max-width: 200px;
+    max-width: 250px;
     padding: 10px 30px;
-    margin: 0 auto;
     border-radius: 15px;
     box-shadow: 8px 10px 30px #333;
     font-family: "Comic Sans MS";
     gap: 3px;
+    justify-content: center;
+    align-items: center;
 }
 
 .product-card > img{
-    width: 189px;
-    height: 250px;
+    width: 200px;
+    height: auto;
     border: 1px solid #333;
     border-radius: 2px;
 }
@@ -167,11 +168,24 @@ li.about-text{
     color: white;
 }
 
+#product-count{
+    width: 30px;
+    height: auto;
+    background-color: var(--light-blue);
+    border: 1px solid var(--blue);
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+}
+
 .add-product{
     display: flex;
     width: 100%;
     border: 2px solid white;
     justify-content: space-between;
+    align-items: center;
+    color: white;
 }
 
 .price{

@@ -5,6 +5,8 @@ namespace TwinsArtstyle.Services.ViewModels
 {
     public class ProductViewModel
     {
+        public string? Id { get; set; }
+
         [Required]
         [StringLength(60)]
         public string Name { get; set; }

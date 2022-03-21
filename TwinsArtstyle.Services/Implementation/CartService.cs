@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,6 +35,43 @@ namespace TwinsArtstyle.Services.Implementation
             {
                 await repository.Remove(cart);
             }
+        }
+
+        public async Task<bool> AddToCart(string cartId, string productId, int count)
+        {
+            bool result = false;
+            var cart = repository.All<Cart>()
+                .Where(c => c.Id.ToString() == cartId)
+                .FirstOrDefault();
+            var product = repository.All<Product>()
+                .Where(p => p.Id.ToString() == productId)
+                .FirstOrDefault();
+
+            if(cart != null && product != null && count > 0)
+            {
+                try
+                {
+                    await repository.Add(new CartProductCount()
+                    {
+                        Cart = cart,
+                        Product = product,
+                        Count = count
+                    });
+
+                    await repository.SaveChanges();
+                    result = true;
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    result = false;
+                }
+                catch(DbUpdateException)
+                {
+                    result = false;
+                }
+            }
+
+            return result;
         }
     }
 }

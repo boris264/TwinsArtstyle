@@ -46,6 +46,7 @@ namespace TwinsArtstyle.Services.Implementation
             return await _repository.All<Product>()
                 .Select(p => new ProductViewModel()
                 {
+                    Id = p.Id.ToString(),
                     Name = p.Name,
                     Description = p.Description,
                     ImageUrl = p.ImageUrl,
@@ -60,6 +61,7 @@ namespace TwinsArtstyle.Services.Implementation
                 .Where(p => p.Category.Name == categoryName)
                 .Select(p => new ProductViewModel()
                 {
+                    Id = p.Id.ToString(),
                     ImageUrl = p.ImageUrl,
                     Name = p.Name,
                     Category = p.Category.Name,

@@ -4,5 +4,6 @@
     {
         public const string Role = "Role";
         public const string FullName = "Full Name";
+        public const string CartId = "CartId";
     }
 }

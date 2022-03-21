@@ -7,5 +7,7 @@ namespace TwinsArtstyle.Services.Interfaces
         public Cart CreateCart();
 
         public Task DeleteCart(Guid cartId);
+
+        public Task<bool> AddToCart(string cartId, string productId, int count);
     }
 }

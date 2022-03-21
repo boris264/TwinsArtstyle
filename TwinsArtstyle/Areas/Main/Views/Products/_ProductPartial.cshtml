@@ -1,10 +1,12 @@
 ﻿@model ProductViewModel
 
-<div class="product-card">
+<div class="product-card" id="@Model.Id">
     <img class="product-image" src="@Model.ImageUrl" />
     <span class="product-name">@Model.Name</span>
     <div class="add-product">
         <span class="price">@Model.Price лв.</span>
+        <span>Count: </span>
+        <input value="1" type="number" id="product-count"/>
         <button class="add-to-cart-button">Add To Cart</button>
     </div>
 </div>

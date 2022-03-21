@@ -21,6 +21,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
 
             var productsByCategory = await _productService.GetByCategory(category);
 
+            ViewData["Category"] = category;
             return View(productsByCategory);
         }
     }

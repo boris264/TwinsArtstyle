@@ -5,7 +5,7 @@
 }
 
 <div id="products">
-    <h3>@Model.FirstOrDefault().Category</h3>
+    <h3>@ViewData["Category"]</h3>
     <div class="panel">
 
         @foreach (var item in Model)
