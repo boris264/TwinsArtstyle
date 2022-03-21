@@ -25,11 +25,15 @@
                 <li>
                     <h1 id="top-heading">Twins <br> Artstyle</h1>
                 </li>
-                <li>
-                    <button class="top-cart-button animate-background-color">
-                        <img id="top-cart-icon" src="~/images/shopping-cart.png" alt="shopping-cart">
-                        <p id="top-cart">Cart</p>
-                    </button>
+                <li class="cart-li">
+                    <div class="cart-dropdown" dropdown-menu>
+                        <div class="button-container">
+                            <button class="top-cart-button top-cart animate-background-color" dropdown-button>Cart</button>
+                        </div>
+                        <div class="cart">
+                            <partial name="_CartPartial" />
+                        </div>
+                    </div>
                 </li>
             </ul>
         </nav>
@@ -80,7 +84,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/site.js"></script>
+    <script src="~/js/site.js" defer></script>
     @await RenderSectionAsync("Scripts", false)
 </body>
 </html>

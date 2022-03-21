@@ -51,13 +51,24 @@ namespace TwinsArtstyle.Services.Implementation
             {
                 try
                 {
-                    await repository.Add(new CartProductCount()
-                    {
-                        Cart = cart,
-                        Product = product,
-                        Count = count
-                    });
+                    var cartProduct = repository.All<CartProductCount>()
+                        .Where(c => c.Cart == cart && c.Product == product)
+                        .FirstOrDefault();
 
+                    if(cartProduct != null)
+                    {
+                        cartProduct.Count += count;
+                    }
+                    else
+                    {
+                        await repository.Add(new CartProductCount()
+                        {
+                            Cart = cart,
+                            Product = product,
+                            Count = count
+                        });
+                    }
+                   
                     await repository.SaveChanges();
                     result = true;
                 }

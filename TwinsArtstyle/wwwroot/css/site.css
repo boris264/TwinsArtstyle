@@ -168,8 +168,8 @@ li.about-text{
     color: white;
 }
 
-#product-count{
-    width: 30px;
+.product-count{
+    width: 60px;
     height: auto;
     background-color: var(--light-blue);
     border: 1px solid var(--blue);

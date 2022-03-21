@@ -27,5 +27,16 @@ namespace TwinsArtstyle.Infrastructure.Data
             : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<CartProductCount>()
+                .HasKey(k => new { k.CartId, k.ProductId });
+
+            builder.Entity<OrderProductCount>()
+                .HasKey(k => new { k.OrderId, k.ProductId });
+
+            base.OnModelCreating(builder);
+        }
     }
 }

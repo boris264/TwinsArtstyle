@@ -22,7 +22,13 @@ namespace TwinsArtstyle.Areas.Main.Controllers
         {
             var userCartIdClaim = HttpContext.User.FindFirst(ClaimType.CartId);
             var result = await _cartService.AddToCart(userCartIdClaim.Value, product.productId, product.count);
-            return Ok();
+            
+            if(result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
         }
     }
 }

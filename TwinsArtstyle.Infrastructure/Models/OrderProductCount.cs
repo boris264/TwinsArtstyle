@@ -5,7 +5,6 @@ namespace TwinsArtstyle.Infrastructure.Models
 {
     public class OrderProductCount
     {
-        [Key]
         public Guid OrderId { get; set; }
 
         [ForeignKey(nameof(OrderId))]
