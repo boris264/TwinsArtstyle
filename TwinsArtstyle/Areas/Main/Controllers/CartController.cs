@@ -30,5 +30,6 @@ namespace TwinsArtstyle.Areas.Main.Controllers
 
             return BadRequest();
         }
+
     }
 }

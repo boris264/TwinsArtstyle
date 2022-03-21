@@ -1,6 +1,21 @@
-﻿<div class="cart-items">
+﻿@using TwinsArtstyle.Services.Interfaces
+@inject ICartService _cartService
+@{
+    var userCartItems = await _cartService.GetProductsForUser(User);
+}
+
+<div class="cart-items">
     <ul class="items">
-        
+
+        @foreach(var item in userCartItems)
+        {
+            <li class="cart-item">
+                <img src="@item.Product.ImageUrl" class="item-image">
+                <span class="item-name">@item.Product.Name</span>
+                <input type="number" class="quantity" value="@item.Count" max="99">
+            </li>
+        }
+
     </ul>
     <br />
     <hr />
