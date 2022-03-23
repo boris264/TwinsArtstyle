@@ -1,3 +1,10 @@
+@using TwinsArtstyle.Services.Interfaces
+@inject ICartService _cartService
+
+@{
+    var userCartItems = await _cartService.GetProductsForUser(User);
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +38,7 @@
                             <button class="top-cart-button top-cart animate-background-color" dropdown-button>Cart</button>
                         </div>
                         <div class="cart">
-                            <partial name="_CartPartial" />
+                            <partial name="_CartPartial" model="userCartItems"/>
                         </div>
                     </div>
                 </li>

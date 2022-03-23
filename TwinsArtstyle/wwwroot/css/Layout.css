@@ -266,7 +266,19 @@ ul.items{
     font-family: 'Courier New', Courier, monospace;
 }
 
+.order-button:hover{
+    cursor: pointer;
+}
+
 .remove-item:hover{
     cursor: pointer;
     color: red;
+}
+
+#empty{
+    text-align: center;
+    font-size: 40px;
+    font-family: 'Courier New', Courier, monospace;
+    opacity: 50%;
+    
 }

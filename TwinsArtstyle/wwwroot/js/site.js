@@ -4,15 +4,20 @@
     if (!isDropDownButton && e.target.closest("[dropdown-menu]") != null) return;
 
     let dropdown;
+
     if (isDropDownButton) {
         dropdown = e.target.closest("[dropdown-menu]");
+
         dropdown.classList.toggle("active");
     }
 
-    document.querySelectorAll("[dropdown-menu].active").forEach(item => {
-        if (item === dropdown) return;
-        item.classList.remove("active");
-    })
+    if(!e.target.classList.contains("add-to-cart-button"))
+    {
+        document.querySelectorAll("[dropdown-menu].active").forEach(item => {
+            if (item === dropdown) return;
+            item.classList.remove("active");
+        })
+    }
 })
 
 const addToCartButtons = document.getElementsByClassName("add-to-cart-button");
@@ -24,6 +29,7 @@ for(let i = 0; i < addToCartButtons.length; i++)
 
 async function addToCart(event)
 {
+    const cartDropdown = document.getElementsByClassName("cart-dropdown")[0];
     const productCard = event.target.closest(".product-card");
     const productCount = parseInt(productCard.querySelector(".product-count").value);
     const productCardAttributes = productCard.attributes;
@@ -49,13 +55,19 @@ async function addToCart(event)
         headers: {"Content-Type": "application/json"}
     });
 
-    if(response.ok)
+    if(!response.redirected)
     {
         const productImage = productCard.getElementsByClassName("product-image")[0].getAttribute("src");
         const productName = productCard.querySelector(".product-name").innerText;
         const productPrice = parseFloat(productCard.querySelector(".price").innerText.replace(" лв.", ""));
         const cartUl = document.querySelector(".cart-items").children[0];
         const cartItems = cartUl.children;
+
+        if(!cartDropdown.classList.contains("active"))
+        {
+            cartDropdown.classList.toggle("active");
+        }
+        
 
         for(let i = 0; i < cartItems.length; i++)
         {
@@ -79,6 +91,10 @@ async function addToCart(event)
 
         const newProduct = createCartItem(productImage, productName, productPrice, productCount);
         cartUl.appendChild(newProduct);
+    }
+    else
+    {
+        window.location.replace(response.url);
     }
 }
 

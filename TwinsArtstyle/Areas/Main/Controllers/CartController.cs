@@ -17,7 +17,6 @@ namespace TwinsArtstyle.Areas.Main.Controllers
 
         [Authorize]
         [HttpPost]
-
         public async Task<IActionResult> Add([FromBody] ProductDTO product)
         {
             var userCartIdClaim = HttpContext.User.FindFirst(ClaimType.CartId);
