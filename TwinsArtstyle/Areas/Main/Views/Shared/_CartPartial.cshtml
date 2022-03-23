@@ -5,10 +5,11 @@
 
         @foreach (var item in Model)
         {
-            <li class="cart-item">
+            <li class="cart-item" id="@item.Product.Id">
                 <img src="@item.Product.ImageUrl" class="item-image">
                 <span class="item-name">@item.Product.Name</span>
                 <input type="number" class="quantity" value="@item.Count" max="99">
+                <i class="remove-item bi bi-trash-fill"></i>
             </li>
         }
 

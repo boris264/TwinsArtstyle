@@ -13,5 +13,7 @@ namespace TwinsArtstyle.Services.Interfaces
         public Task<bool> AddToCart(string cartId, string productId, int count);
 
         public Task<IEnumerable<CartProductViewModel>> GetProductsForUser(ClaimsPrincipal userClaims);
+
+        public Task<bool> RemoveFromCart(string productId, string cartId);
     }
 }

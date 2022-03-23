@@ -11,7 +11,7 @@
         dropdown.classList.toggle("active");
     }
 
-    if(!e.target.classList.contains("add-to-cart-button"))
+    if(!e.target.classList.contains("add-to-cart-button") && !e.target.classList.contains("remove-item"))
     {
         document.querySelectorAll("[dropdown-menu].active").forEach(item => {
             if (item === dropdown) return;
@@ -20,11 +20,19 @@
     }
 })
 
+const placeOrderButtonContainer = document.getElementsByClassName("order-button-container")[0];
 const addToCartButtons = document.getElementsByClassName("add-to-cart-button");
 
 for(let i = 0; i < addToCartButtons.length; i++)
 {
     addToCartButtons[i].addEventListener("click", addToCart);
+}
+
+const deleteItemButtons = document.getElementsByClassName("remove-item");
+
+for(let i = 0; i < deleteItemButtons.length; i++)
+{
+    deleteItemButtons[i].addEventListener("click", deleteListItem);
 }
 
 async function addToCart(event)
@@ -89,8 +97,13 @@ async function addToCart(event)
             }
         }
 
-        const newProduct = createCartItem(productImage, productName, productPrice, productCount);
+        const newProduct = createCartItem(productImage, productName, productPrice, productCount, productId);
         cartUl.appendChild(newProduct);
+
+        if(cartItems.length > 0)
+        {
+            placeOrderButtonContainer.style.display = "block";
+        }
     }
     else
     {
@@ -98,10 +111,11 @@ async function addToCart(event)
     }
 }
 
-function createCartItem(image, name, price, quantity)
+function createCartItem(image, name, price, quantity, productId)
 {
     let li = document.createElement('li');
-    li.className = "cart-item";
+    li.classList.add("cart-item");
+    li.id = productId;
     let productImage = document.createElement("img");
     productImage.src = image;
     productImage.className = "item-image";
@@ -116,5 +130,36 @@ function createCartItem(image, name, price, quantity)
     productQuantity.setAttribute("value", quantity);
     productQuantity.max = 99;
     li.appendChild(productQuantity);
+    const deleteIcon = document.createElement("i");
+    deleteIcon.classList.add("bi");
+    deleteIcon.classList.add("remove-item");
+    deleteIcon.classList.add("bi-trash-fill");
+    li.appendChild(deleteIcon);
     return li;
+}
+
+async function deleteListItem(e)
+{
+    const productId = e.target.closest(".cart-item").id;
+    const product = {
+        productId: productId
+    }
+
+    const response = await fetch("/Main/Cart/Remove", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(product)
+    });
+
+    if(response.ok)
+    {
+        const listItem = e.target.closest(".cart-item");
+        const ul = e.target.closest(".items");
+        ul.removeChild(listItem);
+
+        if(ul.children.length === 0)
+        {
+            placeOrderButtonContainer.style.display = "none";
+        }
+    }
 }

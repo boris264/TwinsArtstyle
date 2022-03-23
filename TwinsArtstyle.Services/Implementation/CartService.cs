@@ -106,6 +106,7 @@ namespace TwinsArtstyle.Services.Implementation
                     {
                         Product = new ProductViewModel()
                         {
+                            Id = p.ProductId.ToString(),
                             Name = p.Product.Name,
                             ImageUrl = p.Product.ImageUrl,
                             Price = p.Product.Price,
@@ -118,6 +119,33 @@ namespace TwinsArtstyle.Services.Implementation
             }
 
             return Enumerable.Empty<CartProductViewModel>();
+        }
+
+        public async Task<bool> RemoveFromCart(string productId, string cartId)
+        {
+            var entity = await repository.All<CartProductCount>()
+                .Where(c => c.CartId.ToString() == cartId && c.ProductId.ToString() == productId)
+                .FirstOrDefaultAsync();
+            var result = false;
+
+            if(entity != null)
+            {
+                try
+                {
+                    await repository.Remove(entity);
+                    result = true;
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+
+                }
+                catch(DbUpdateException)
+                {
+
+                }
+            }
+
+            return result;
         }
     }
 }

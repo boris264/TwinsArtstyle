@@ -30,5 +30,19 @@ namespace TwinsArtstyle.Areas.Main.Controllers
             return BadRequest();
         }
 
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Remove([FromBody] ProductDTO product)
+        {
+            var result = await _cartService
+                .RemoveFromCart(product.productId, HttpContext.User.FindFirst(ClaimType.CartId).Value);
+
+            if(result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
     }
 }

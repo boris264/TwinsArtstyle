@@ -158,8 +158,8 @@ footer {
 .cart-dropdown.active .cart{
     position: absolute;
     display: block;
-    width: 400px;
-    max-width: 400px;
+    width: 440px;
+    max-width: 440px;
     top: 40px;
     background-color: white;
     right: 0;
