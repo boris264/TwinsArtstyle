@@ -24,5 +24,16 @@ namespace TwinsArtstyle.Areas.Main.Controllers
             ViewData["Category"] = category;
             return View(productsByCategory);
         }
+
+        public async Task<IActionResult> Details(string productId)
+        {
+            if(!await _productService.Exists(productId))
+            {
+                return Redirect("/");
+            }
+
+            var product = await _productService.GetById(productId);
+            return View(product);
+        }
     }
 }

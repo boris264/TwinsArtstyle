@@ -134,6 +134,7 @@ function createCartItem(image, name, price, quantity, productId)
     deleteIcon.classList.add("bi");
     deleteIcon.classList.add("remove-item");
     deleteIcon.classList.add("bi-trash-fill");
+    deleteIcon.addEventListener("click", deleteListItem);
     li.appendChild(deleteIcon);
     return li;
 }

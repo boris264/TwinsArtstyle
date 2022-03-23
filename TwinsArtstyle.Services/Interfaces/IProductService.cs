@@ -9,5 +9,9 @@ namespace TwinsArtstyle.Services.Interfaces
         public Task AddProduct(ProductViewModel productViewModel);
 
         public Task<IEnumerable<ProductViewModel>> GetByCategory(string categoryName);
+
+        public Task<bool> Exists(string productId);
+
+        public Task<ProductViewModel> GetById(string productId);
     }
 }

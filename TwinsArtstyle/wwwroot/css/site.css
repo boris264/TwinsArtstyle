@@ -158,7 +158,7 @@ li.about-text{
     align-items: center;
 }
 
-.product-card > img{
+.product-card > a > img{
     width: 200px;
     height: auto;
     border: 1px solid #333;
@@ -297,4 +297,41 @@ li.about-text{
     background-color: var(--blue);
     padding: 5px;
     border-radius: 15px;
+}
+
+.product-detail-card{
+    width: 850px;
+    margin: 30px auto;
+    display: flex;
+    background-color: #eee;
+    border-radius: 15px;
+    box-shadow: 3px 5px 6px #333;
+    padding: 20px;
+    gap: 20px;
+}
+
+.product-image > img{
+    height: 400px;
+    width: auto;
+    padding: 5px;
+    border: 2px solid #333;
+    border-radius: 15px;
+    transition: transform .5s;
+}
+
+.product-image > img:hover{
+    transform: scale(1.2);
+}
+
+.product-details{
+    font-size: 30px;
+    font-family: 'Sansita Swashed', cursive;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.product-details > hr{
+    width: 100%;
 }

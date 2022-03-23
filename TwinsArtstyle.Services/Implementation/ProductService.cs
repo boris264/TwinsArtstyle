@@ -32,7 +32,7 @@ namespace TwinsArtstyle.Services.Implementation
                 .Where(c => c.Name == productViewModel.Category).FirstOrDefaultAsync()
             };
 
-            if(product.Category == null)
+            if (product.Category == null)
             {
                 throw new ArgumentNullException("Invalid category!");
             }
@@ -69,6 +69,34 @@ namespace TwinsArtstyle.Services.Implementation
                     Price = p.Price
 
                 }).ToListAsync();
+        }
+
+        public async Task<bool> Exists(string productId)
+        {
+            return await _repository.All<Product>()
+                .Where(p => p.Id.ToString() == productId)
+                .AnyAsync();
+        }
+
+        public async Task<ProductViewModel> GetById(string productId)
+        {
+            if (!await Exists(productId))
+            {
+                return null;
+            }
+
+            return await _repository.All<Product>()
+                .Where(p => p.Id.ToString() == productId)
+                .Select(p => new ProductViewModel()
+                {
+                    Id = p.Id.ToString(),
+                    Name = p.Name,
+                    ImageUrl = p.ImageUrl,
+                    Price = p.Price,
+                    Category = p.Category.Name,
+                    Description = p.Description,
+                })
+                .FirstOrDefaultAsync();
         }
     }
 }

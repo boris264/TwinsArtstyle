@@ -1,0 +1,21 @@
+﻿@model ProductViewModel
+
+<div class="product-detail-container">
+    <div class="product-detail-card">
+        <div class="product-image">
+            <img src="@Model.ImageUrl" />
+        </div>
+        <div class="product-details">
+            <span>@Model.Name</span>
+            <hr />
+            <span class="product-category">Category: @Model.Category</span>
+            <hr />
+            <span class="product-price">Price: @Model.Price лв.</span>
+            
+            @if(Model.Description != string.Empty)
+            {
+                <span class="product-description">@Model.Description</span>
+            }
+        </div>
+    </div>
+</div>
