@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TwinsArtstyle.Infrastructure.Interfaces;
 using TwinsArtstyle.Infrastructure.Models;
 using TwinsArtstyle.Services.Interfaces;
-using TwinsArtstyle.Services.ViewModels;
+using TwinsArtstyle.Services.ViewModels.ProductModels;
 
 namespace TwinsArtstyle.Services.Implementation
 {

@@ -36,6 +36,11 @@ namespace TwinsArtstyle.Infrastructure.Data
             builder.Entity<OrderProductCount>()
                 .HasKey(k => new { k.OrderId, k.ProductId });
 
+            builder.Entity<Address>()
+                .HasOne(u => u.User)
+                .WithMany(a => a.Addresses)
+                .OnDelete(DeleteBehavior.NoAction);
+
             base.OnModelCreating(builder);
         }
     }

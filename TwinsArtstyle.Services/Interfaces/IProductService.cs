@@ -1,4 +1,4 @@
-﻿using TwinsArtstyle.Services.ViewModels;
+﻿using TwinsArtstyle.Services.ViewModels.ProductModels;
 
 namespace TwinsArtstyle.Services.Interfaces
 {

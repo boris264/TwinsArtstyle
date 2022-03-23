@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using TwinsArtstyle.Infrastructure.Models;
-using TwinsArtstyle.Services.ViewModels;
+using TwinsArtstyle.Services.ViewModels.ProductModels;
 
 namespace TwinsArtstyle.Services.Interfaces
 {

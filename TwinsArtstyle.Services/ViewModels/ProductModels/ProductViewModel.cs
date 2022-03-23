@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace TwinsArtstyle.Services.ViewModels
+namespace TwinsArtstyle.Services.ViewModels.ProductModels
 {
     public class ProductViewModel
     {

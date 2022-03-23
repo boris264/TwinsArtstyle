@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Main\Views\Cart\" />
+    <Folder Include="Areas\Main\Views\Addresses\" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using TwinsArtstyle.Services.Interfaces;
-using TwinsArtstyle.Services.ViewModels;
+using TwinsArtstyle.Services.ViewModels.ProductModels;
 
 namespace TwinsArtstyle.Areas.Admin.Controllers
 {

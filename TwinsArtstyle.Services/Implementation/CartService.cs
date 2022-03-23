@@ -11,7 +11,7 @@ using TwinsArtstyle.Infrastructure.Interfaces;
 using TwinsArtstyle.Infrastructure.Models;
 using TwinsArtstyle.Services.Constants;
 using TwinsArtstyle.Services.Interfaces;
-using TwinsArtstyle.Services.ViewModels;
+using TwinsArtstyle.Services.ViewModels.ProductModels;
 
 namespace TwinsArtstyle.Services.Implementation
 {

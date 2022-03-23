@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TwinsArtstyle.Services.Constants;
 using TwinsArtstyle.Services.Interfaces;
-using TwinsArtstyle.Services.ViewModels;
+using TwinsArtstyle.Services.ViewModels.ProductModels;
 
 namespace TwinsArtstyle.Areas.Main.Controllers
 {

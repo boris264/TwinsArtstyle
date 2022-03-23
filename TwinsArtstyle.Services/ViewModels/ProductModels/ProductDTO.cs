@@ -1,4 +1,4 @@
-﻿namespace TwinsArtstyle.Services.ViewModels
+﻿namespace TwinsArtstyle.Services.ViewModels.ProductModels
 {
     public class ProductDTO
     {
