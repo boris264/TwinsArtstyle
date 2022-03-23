@@ -1,0 +1,26 @@
+﻿@model AddressViewModel
+
+@{
+    ViewData["Title"] = "Add a new address";
+}
+
+<form asp-area="Main" asp-controller="Addresses" asp-action="Add" method="post">
+    <div class="address-card">
+        <h2>Add a new address</h2>
+        <hr />
+        <div class="form-floating">
+            <label class="form-label" asp-for="Name"></label>
+            <input class="form-control" type="text" asp-for="Name" />
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div class="form-floating">
+            <label class="form-label" asp-for="AddressText"></label>
+            <input class="form-control" type="text" asp-for="AddressText" />
+            <span asp-validation-for="AddressText"></span>
+        </div>
+        <div class="submit-button-container">
+            <button class="submit">Add</button>
+        </div>
+            
+    </div>
+</form>

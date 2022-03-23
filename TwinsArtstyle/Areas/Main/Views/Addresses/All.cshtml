@@ -1,0 +1,29 @@
+﻿@model IEnumerable<AddressViewModel>
+
+@{
+    ViewData["Title"] = "Addresses";
+}
+
+<div class="address-card">
+    <h2 class="form-heading">Addresses</h2>
+    <hr />
+
+    @foreach (var address in Model)
+    {
+        <div class="form-floating">
+            <label class="form-label" asp-for="FirstOrDefault().Name"></label>
+            <span disabled class="form-control">@address.Name</span>
+        </div>
+        <div class="form-floating">
+            <label class="form-label" asp-for="FirstOrDefault().AddressText"></label>
+            <span disabled class="form-control">@address.AddressText</span>
+        </div>
+        <br />
+        <hr />
+    }
+
+    <div class="submit-button-container">
+        <a asp-area="Main" asp-controller="Addresses" asp-action="Add">Add a new address</a>
+    </div>
+
+</div>
