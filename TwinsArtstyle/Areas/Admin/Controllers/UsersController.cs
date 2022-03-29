@@ -24,7 +24,7 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
         public async Task<IActionResult> Registered()
         {
             IEnumerable<UserViewModel> users = await _userService.GetAllUsers();
-            return View(users.Take(20));
+            return View(users);
         }
 
         public async Task<IActionResult> Edit([FromQuery] string email)

@@ -155,3 +155,44 @@ a {
     height: 150px;
     width: auto;
 }
+
+.add-administrator-container{
+    margin:0 auto;
+}
+
+.add-administrator{
+    background-color: #333;
+    height: 200px;
+    width: 500px;
+    max-width: 500px;
+    max-height: 200px;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #eee;
+    font-size: 30px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.add-administrator > input{
+    font-size: 30px;
+    padding: 10px;
+    border-radius: 15px;
+    border: none;
+}
+
+.submit-button-container{
+    width: 50%;
+    font-size: 30px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.submit{
+    padding: 15px;
+    background-color: white;
+    color: #333;
+    border: 20px;
+}
