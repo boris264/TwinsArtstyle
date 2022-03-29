@@ -58,5 +58,17 @@ namespace TwinsArtstyle.Services.Implementation
 
             return result;
         }
+
+        public async Task<AddressViewModel> AddressExistsForUser(string addressName, string userId)
+        {
+            return await _repository.All<Address>()
+                .Where(a => a.UserId.ToString() == userId && a.Name == addressName)
+                .Select(a => new AddressViewModel()
+                {
+                    Name = a.Name,
+                    AddressText = a.AddressText
+                })
+                .FirstOrDefaultAsync();
+        }
     }
 }

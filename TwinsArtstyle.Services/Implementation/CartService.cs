@@ -38,7 +38,7 @@ namespace TwinsArtstyle.Services.Implementation
                 .Where(c => c.Id == cartId)
                 .FirstOrDefault();
 
-            if(cart != null)
+            if (cart != null)
             {
                 await repository.Remove(cart);
             }
@@ -54,7 +54,7 @@ namespace TwinsArtstyle.Services.Implementation
                 .Where(p => p.Id.ToString() == productId)
                 .FirstOrDefault();
 
-            if(cart != null && product != null && count > 0)
+            if (cart != null && product != null && count > 0)
             {
                 try
                 {
@@ -62,7 +62,7 @@ namespace TwinsArtstyle.Services.Implementation
                         .Where(c => c.Cart == cart && c.Product == product)
                         .FirstOrDefault();
 
-                    if(cartProduct != null)
+                    if (cartProduct != null)
                     {
                         cartProduct.Count += count;
                     }
@@ -75,7 +75,7 @@ namespace TwinsArtstyle.Services.Implementation
                             Count = count
                         });
                     }
-                   
+
                     await repository.SaveChanges();
                     result = true;
                 }
@@ -83,7 +83,7 @@ namespace TwinsArtstyle.Services.Implementation
                 {
                     result = false;
                 }
-                catch(DbUpdateException)
+                catch (DbUpdateException)
                 {
                     result = false;
                 }
@@ -92,13 +92,41 @@ namespace TwinsArtstyle.Services.Implementation
             return result;
         }
 
-        public async Task<IEnumerable<CartProductViewModel>> GetProductsForUser(ClaimsPrincipal userClaims)
+        public async Task<IEnumerable<CartProductViewModel>> GetProductsForUser(string userId)
         {
-            var userCartIdClaim = userClaims.FindFirst(ClaimType.CartId);
+            var user = await _userManager.FindByIdAsync(userId);
 
-            if(userCartIdClaim != null)
+            if (user != null)
             {
-                var userCartId = userCartIdClaim.Value;
+                var userCartId = user.CartId;
+
+                var items = await repository.All<CartProductCount>()
+                    .Where(c => c.CartId == userCartId)
+                    .Select(p => new CartProductViewModel()
+                    {
+                        Product = new ProductViewModel()
+                        {
+                            Id = p.ProductId.ToString(),
+                            Name = p.Product.Name,
+                            ImageUrl = p.Product.ImageUrl,
+                            Price = p.Product.Price,
+                            Category = p.Product.Category.Name
+                        },
+                        Count = p.Count
+                    }).ToListAsync();
+
+                return items;
+            }
+
+            return Enumerable.Empty<CartProductViewModel>();
+        }
+
+        public async Task<IEnumerable<CartProductViewModel>> GetProductsForUser(ClaimsPrincipal user)
+        {
+
+            if (user != null)
+            {
+                var userCartId = user.FindFirst("CartId").Value;
 
                 var items = await repository.All<CartProductCount>()
                     .Where(c => c.CartId.ToString() == userCartId)
@@ -121,6 +149,20 @@ namespace TwinsArtstyle.Services.Implementation
             return Enumerable.Empty<CartProductViewModel>();
         }
 
+        public async Task<decimal> CalculateTotalPrice(string cartId)
+        {
+            decimal totalPrice = 0;
+
+            if (cartId != string.Empty)
+            {
+                totalPrice = await repository.All<CartProductCount>()
+                     .Where(c => c.CartId.ToString() == cartId)
+                     .SumAsync(p => p.Product.Price * p.Count);
+            }
+
+            return totalPrice;
+        }
+
         public async Task<bool> RemoveFromCart(string productId, string cartId)
         {
             var entity = await repository.All<CartProductCount>()
@@ -128,7 +170,7 @@ namespace TwinsArtstyle.Services.Implementation
                 .FirstOrDefaultAsync();
             var result = false;
 
-            if(entity != null)
+            if (entity != null)
             {
                 try
                 {
@@ -139,10 +181,31 @@ namespace TwinsArtstyle.Services.Implementation
                 {
 
                 }
-                catch(DbUpdateException)
+                catch (DbUpdateException)
                 {
 
                 }
+            }
+
+            return result;
+        }
+
+        public async Task<bool> CleanCart(string cartId)
+        {
+            var result = false;
+            var cartItems = await repository.All<CartProductCount>()
+                .Where(c => c.CartId.ToString() == cartId)
+                .ToListAsync();
+
+            try
+            {
+                await repository.RemoveRange(cartItems);
+                await repository.SaveChanges();
+                result = true;
+            }
+            catch (Exception)
+            {
+
             }
 
             return result;

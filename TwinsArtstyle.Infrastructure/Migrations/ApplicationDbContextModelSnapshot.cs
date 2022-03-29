@@ -185,7 +185,7 @@ namespace TwinsArtstyle.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("TwinsArtstyle.Infrastructure.Models.Cart", b =>
@@ -196,7 +196,7 @@ namespace TwinsArtstyle.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("TwinsArtstyle.Infrastructure.Models.CartProductCount", b =>
@@ -214,7 +214,7 @@ namespace TwinsArtstyle.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartsProductsCount");
+                    b.ToTable("CartsProductsCount", (string)null);
                 });
 
             modelBuilder.Entity("TwinsArtstyle.Infrastructure.Models.Category", b =>
@@ -230,7 +230,7 @@ namespace TwinsArtstyle.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("TwinsArtstyle.Infrastructure.Models.Message", b =>
@@ -257,7 +257,7 @@ namespace TwinsArtstyle.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("TwinsArtstyle.Infrastructure.Models.Order", b =>
@@ -282,7 +282,7 @@ namespace TwinsArtstyle.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("TwinsArtstyle.Infrastructure.Models.OrderProductCount", b =>
@@ -300,7 +300,7 @@ namespace TwinsArtstyle.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrdersProductsCount");
+                    b.ToTable("OrdersProductsCount", (string)null);
                 });
 
             modelBuilder.Entity("TwinsArtstyle.Infrastructure.Models.Product", b =>
@@ -332,7 +332,7 @@ namespace TwinsArtstyle.Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("TwinsArtstyle.Infrastructure.Models.User", b =>

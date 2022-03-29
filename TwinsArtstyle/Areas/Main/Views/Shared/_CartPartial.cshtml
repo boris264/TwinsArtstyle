@@ -19,15 +19,16 @@
     @if (Model.Count() == 0)
     {
         <hr />
-        <div style="display: none" class="order-button-container">
-            <button type="submit" class="order-button">Place order</button>
+        <div style="display: none" class="order-container">
+            <a class="place-order" asp-area="Main" asp-controller="Cart" asp-action="PlaceOrder">Place order</a>
         </div>
     }
     else
     {
         <hr />
-        <div  class="order-button-container">
-            <button type="submit" class="order-button">Place order</button>
+        <span class="total-price">Total price: @Model.Sum(p => p.Product.Price * p.Count) лв.</span>
+        <div  class="order-container">
+            <a class="place-order" asp-area="Main" asp-controller="Cart" asp-action="PlaceOrder">Place order</a>
         </div>
     }
 

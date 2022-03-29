@@ -1,0 +1,24 @@
+﻿@model OrderViewModel
+
+@{
+    ViewData["Title"] = $"Order #{@Model.Id.ToString()}";
+}
+
+    <div class="order-details">
+        <div class="products">
+            <ul class="order-items-list">
+
+                @foreach (var item in Model.Products)
+                {
+                    <li class="cart-item">
+                        <img src="@item.Product.ImageUrl" class="item-image">
+                        <span class="item-name">@item.Product.Name</span>
+                        <span class="quantity">@item.Count</span>
+                    </li>
+                }
+            </ul>
+        </div>
+        <span class="address-name">Address Name: @Model.AddressName</span>
+        <span class="products-price">Total Price: @Model.TotalPrice лв.</span>
+        <span class="order-status">Status: @Model.OrderStatus.ToString()</span>
+    </div>

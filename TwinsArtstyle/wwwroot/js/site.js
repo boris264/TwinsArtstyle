@@ -21,6 +21,7 @@
 })
 
 const placeOrderButtonContainer = document.getElementsByClassName("order-button-container")[0];
+const totalPrice = document.getElementsByClassName("total-price")[0];
 const addToCartButtons = document.getElementsByClassName("add-to-cart-button");
 
 for(let i = 0; i < addToCartButtons.length; i++)
@@ -96,13 +97,14 @@ async function addToCart(event)
                 return;
             }
         }
-
+        
         const newProduct = createCartItem(productImage, productName, productPrice, productCount, productId);
         cartUl.appendChild(newProduct);
 
         if(cartItems.length > 0)
         {
             placeOrderButtonContainer.style.display = "block";
+            totalPrice.style.display = "inline";
         }
     }
     else
@@ -161,6 +163,7 @@ async function deleteListItem(e)
         if(ul.children.length === 0)
         {
             placeOrderButtonContainer.style.display = "none";
+            totalPrice.style.display = "none";
         }
     }
 }

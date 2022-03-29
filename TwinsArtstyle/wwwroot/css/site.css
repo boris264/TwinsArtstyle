@@ -335,3 +335,77 @@ li.about-text{
 .product-details > hr{
     width: 100%;
 }
+
+.orders-card{
+    background-color: #eee;
+    width: 800px;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    margin: 50px auto;
+    height: 700px;
+    max-height: 700px;
+    gap: 10px;
+    overflow-y: scroll;
+    box-shadow: 5px 6px 10px #333;
+}
+
+.order{
+    border: 1px solid #333;
+    width: 700px;
+    min-width: 700px;
+    padding: 10px;
+    border-radius: 15px;
+    margin-top: 10px;
+    font-size: 25px;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-weight: bold;
+}
+
+.order-details-button{
+    margin-top: 15px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 20px;
+    text-decoration: none;
+}
+
+.order-details-button:hover{
+    cursor: pointer;
+}
+
+.products{
+    height: 40%;
+    max-height: 40%;
+    overflow-y: scroll;
+    border: 1px solid #333;
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.order-details{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-size: 30px;
+    font-family: 'Courier New', Courier, monospace;
+    width: 600px;
+    max-width: 600px;
+    height: 500px;
+    max-height: 500px;
+    margin: 50px auto;
+    background-color: #eee;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 7px 7px 10px #333;
+    justify-content: space-between;
+}

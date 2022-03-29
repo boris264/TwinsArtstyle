@@ -252,6 +252,11 @@ ul.items{
     font-size: 25px;
 }
 
+.total-price{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+}
+
 .order-button-container{
     padding: 20px;
 }
@@ -280,5 +285,70 @@ ul.items{
     font-size: 40px;
     font-family: 'Courier New', Courier, monospace;
     opacity: 50%;
+}
+
+.place-order{
+    width: 100%;
+    font-size: 30px;
+    border-radius: 20px;
+    padding: 3px 8px;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    text-decoration: none;
+    background-color: var(--blue);
+}
+
+.order-container{
+    width: fit-content;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.place-order-card{
+    width: 700px;
+    background-color: #eee;
+    padding: 20px;
+    margin: 10px auto;
+    height: 700px;
+    max-height: 700px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    box-shadow: 3px 6px 6px #333;
+    gap: 20px;
     
 }
+
+.order-items-card{
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    max-height: 200px;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    padding: 6px;
+    border: 1px solid #333;
+    border-radius: 15px;
+    background-color: white;
+    box-shadow: 3px 6px 10px #333;
+}
+
+.items-text-container{
+    text-align: center;
+    font-size: 30px;
+    font-family: 'Courier New', Courier, monospace;
+    margin-bottom: 5px;
+}
+
+.addresses-card{
+    font-size: 30px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.addresses-card > select{
+    font-size: 30px;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 3px;
+    border-radius: 10px;
+}
+

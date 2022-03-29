@@ -1,0 +1,49 @@
+﻿@model PlaceOrderViewModel
+@{
+    ViewData["Title"] = "Place an order";
+}
+
+<form method="post" asp-area="Main" asp-controller="Cart" asp-action="PlaceOrder">
+    <div class="place-order-card">
+        <div class="items-text-container">
+            <span>Items</span>
+        </div>
+
+        <div class="order-items-card">
+
+            <ul class="order-items-list">
+
+                @foreach (var item in Model.Products)
+                {
+                    <li class="cart-item">
+                        <img src="@item.Product.ImageUrl" class="item-image">
+                        <span class="item-name">@item.Product.Name</span>
+                        <input type="number" class="quantity" value="@item.Count" max="99">
+                    </li>
+
+                }
+
+            </ul>
+        </div>
+
+        <div class="addresses-card">
+            <span>Select an address: </span>
+            <select name="AddressName" class="addresses">
+
+                @foreach (var item in Model.Addresses)
+                {
+                    <option class="address-option">@item.Name</option>
+                }
+
+            </select>
+        </div>
+
+        <div class="total-price">
+            <span>Total price: @Model.TotalPrice.ToString("f2") лв.</span>
+        </div>
+
+        <div class="submit-button-container">
+            <button class="submit" type="submit">Place order</button>
+        </div>
+    </div>
+</form>
