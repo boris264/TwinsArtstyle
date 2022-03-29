@@ -1,9 +1,41 @@
-﻿<div class="add-administrator-container">
-    <form class="add-administrator" asp-area="Admin" asp-controller="Administrators" asp-action="Add" method="post">
-        <span>Email: </span>
-        <input type="email" class="email" name="email" />
-        <div class="submit-button-container">
-            <button class="submit">Add administrator</button>
+﻿@model IEnumerable<UserViewModel>
+
+<div class="administrators">
+    <div class="add-administrator-container">
+        <form class="add-administrator" asp-area="Admin" asp-controller="Administrators" asp-action="Add" method="post">
+            <span>Email: </span>
+            <input type="email" class="email" name="email" />
+            <div class="submit-button-container">
+                <button class="submit" id="add-admin-button">Add administrator</button>
+            </div>
+            <span class="text-danger">@TempData["Error"]</span>
+        </form>
+    </div>
+
+    <div class="registered-users">
+        <div class="panel">
+            <h3>Administrators</h3>
+            <table class="display-table users">
+                <thead>
+                    <tr class="row">
+                        <th class="display-head">First Name</th>
+                        <th class="display-head">Last Name</th>
+                        <th class="display-head">Email</th>
+                        <th class="display-head">Phone Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr class="row">
+                            <td class="display-data">@user.FirstName</td>
+                            <td class="display-data">@user.LastName</td>
+                            <td class="display-data">@user.Email</td>
+                            <td class="display-data">@user.PhoneNumber</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
-    </form>
+    </div>
 </div>

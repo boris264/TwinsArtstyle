@@ -1,5 +1,8 @@
 @import "colors.css";
 
+
+
+
 * {
     margin: 0;
     padding: 0;
@@ -168,20 +171,6 @@ footer {
     overflow-y: scroll;
     z-index: 1;
     border-radius: 10px;
-}
-
-.cart-dropdown.active .cart::-webkit-scrollbar{
-    width: 10px;
-}
-
-.cart-dropdown.active .cart::-webkit-scrollbar-track{
-    background: var(--blue);
-}
-
-.cart-dropdown.active .cart::-webkit-scrollbar-thumb{
-    border-radius: 20px;
-
-    background-color: var(--dark-blue-green);
 }
 
 

@@ -33,7 +33,7 @@ namespace TwinsArtstyle.Services.Implementation
             var user = await _userManager.FindByEmailAsync(email);
             bool result = false;
 
-            if(user != null)
+            if (user != null)
             {
                 await _repository.Remove(user);
                 await _cartService.DeleteCart(user.CartId);
@@ -57,11 +57,23 @@ namespace TwinsArtstyle.Services.Implementation
             return users;
         }
 
+        public async Task<IEnumerable<UserViewModel>> GetUsersByRole(string roleName)
+        {
+            var usersInRole = await _userManager.GetUsersInRoleAsync(roleName);
+            return usersInRole.Select(u => new UserViewModel()
+            {
+                Email = u.Email,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                PhoneNumber = u.PhoneNumber
+            });
+        }
+
         public async Task<IdentityResult> UpdateUserProfileInfo(UserViewModel userViewModel, ClaimsPrincipal claimsPrincipal)
         {
             var user = await _userManager.GetUserAsync(claimsPrincipal);
 
-            if(user != null)
+            if (user != null)
             {
                 user.FirstName = userViewModel.FirstName;
                 user.LastName = userViewModel.LastName;
@@ -78,11 +90,11 @@ namespace TwinsArtstyle.Services.Implementation
         {
             IdentityResult result = IdentityResult.Failed();
 
-            if(email != null)
+            if (email != null)
             {
                 var user = await _userManager.FindByEmailAsync(email);
 
-                if(user != null)
+                if (user != null)
                 {
                     user.FirstName = userViewModel.FirstName;
                     user.LastName = userViewModel.LastName;

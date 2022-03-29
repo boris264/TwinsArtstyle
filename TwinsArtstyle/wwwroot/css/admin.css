@@ -1,3 +1,4 @@
+
 a {
     text-decoration: none;
 }
@@ -18,7 +19,7 @@ a {
     gap: 20px;
 }
 
-#registered-users{
+.registered-users{
     position: relative;
     top: 30px;
     left: 20px;
@@ -184,15 +185,7 @@ a {
     border: none;
 }
 
-.submit-button-container{
-    width: 50%;
-    font-size: 30px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-
-.submit{
-    padding: 15px;
-    background-color: white;
-    color: #333;
-    border: 20px;
+.administrators{
+    display: flex;
+    flex-direction: column;
 }

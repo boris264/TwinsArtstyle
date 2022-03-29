@@ -11,5 +11,6 @@ namespace TwinsArtstyle.Services.Interfaces
         public Task<IdentityResult> UpdateUserProfileInfo(UserViewModel userViewModel, string email);
         public Task<IEnumerable<UserViewModel>> GetAllUsers();
         public Task<bool> DeleteUser(string email);
+        public Task<IEnumerable<UserViewModel>> GetUsersByRole(string roleName);
     }
 }
