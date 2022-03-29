@@ -189,3 +189,55 @@ a {
     display: flex;
     flex-direction: column;
 }
+
+#orders{
+    width: 1600px;
+    max-width: 1600px;
+    height: 700px;
+    max-height: 700px;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 25px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    gap: 30px;
+    overflow-y: scroll;
+}
+
+.order{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 20px;
+    border: 1px solid #333;
+    border-radius: 20px;
+    box-shadow: 2px 2px 5px #333;
+    max-height: 150px;
+    height: 150px;
+    overflow-y: scroll;
+    align-items: flex-start;
+    gap: 1px;
+}
+
+.user-information{
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    padding: 3px;
+    max-height: 60px;
+}
+
+.products-list{
+    overflow-y: scroll;
+
+}
+
+.address{
+    border: 1px solid #333;
+    border-radius: 20px;
+    height: 50px;
+    max-height: 50px;
+    padding: 10px;
+    overflow-y: scroll
+}

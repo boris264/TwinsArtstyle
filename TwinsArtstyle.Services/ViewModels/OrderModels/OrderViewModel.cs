@@ -13,6 +13,6 @@ namespace TwinsArtstyle.Services.ViewModels.OrderModels
 
         public decimal TotalPrice { get; set; }
 
-        public OrderStatus OrderStatus { get; set; } = OrderStatus.Confirmed;
+        public OrderStatus OrderStatus { get; set; }
     }
 }

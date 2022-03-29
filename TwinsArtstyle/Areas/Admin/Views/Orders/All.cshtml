@@ -1,0 +1,36 @@
+﻿@model IEnumerable<AdminAreaOrderViewModel>
+
+<div class="panel" id="orders">
+
+    @foreach (var order in Model)
+    {
+        <div class="order">
+            <span class="order-id">Order Id: @order.OrderId.ToString()</span>
+            <div class="user-information">
+                <span class="first-name">First name: @order.User.FirstName</span>
+                <span class="last-name">Last name: @order.User.LastName</span>
+                <span class="email">Email: @order.User.Email</span>
+                <span class="phone-number">Phone number: @order.User.PhoneNumber</span>
+            </div>
+            <div class="purchased-products-names">
+                <ul class="products-list">
+
+                    @foreach (var product in order.Products)
+                    {
+                        <li class="product">
+                            @product.Product.Name, Count: @product.Count
+                        </li>
+                    }
+
+                </ul>
+            </div>
+            <div class="address">
+                <span class="address-text">Address: @order.AddressText</span>
+            </div>
+            <span class="order-total-price">Price: @order.TotalPrice лв.</span>
+            <span class="status">Order status: @order.Status.ToString()</span>
+            <span class="creation-date">Creation date: @order.CreationDate.ToString("dd/MM/yyyy HH:mm")</span>
+        </div>
+    }
+
+</div>

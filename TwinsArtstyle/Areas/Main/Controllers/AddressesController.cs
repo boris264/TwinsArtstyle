@@ -36,13 +36,15 @@ namespace TwinsArtstyle.Areas.Main.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddressViewModel addressViewModel)
         {
-            var result = await _addressService.AddNewAddress(addressViewModel, _userManager.GetUserId(User));
+            (bool result, string errorMessage) = 
+                await _addressService.AddNewAddress(addressViewModel, _userManager.GetUserId(User));
 
             if (result)
             {
                 return RedirectToAction(nameof(All));
             }
 
+            ModelState.AddModelError(string.Empty, errorMessage);
             return View(addressViewModel);
         }
     }

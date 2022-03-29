@@ -63,7 +63,7 @@ namespace TwinsArtstyle.Services.Implementation
             {
 
             }
-            catch(DbUpdateException)
+            catch (DbUpdateException)
             {
 
             }
@@ -134,6 +134,40 @@ namespace TwinsArtstyle.Services.Implementation
                         Count = p.Count
                     }).ToList()
                 }).FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<AdminAreaOrderViewModel>> GetOrdersForAdminArea()
+        {
+            return await _repository.All<Order>()
+                .Select(o => new AdminAreaOrderViewModel()
+                {
+                    OrderId = o.Id,
+                    User = new UserViewModel()
+                    {
+                        Email = o.User.Email,
+                        FirstName = o.User.FirstName,
+                        LastName = o.User.LastName,
+                        PhoneNumber = o.User.PhoneNumber,
+                    },
+                    AddressText = o.Address.AddressText,
+                    Status = o.Status,
+                    CreationDate = o.CreationDate,
+                    TotalPrice = o.Price,
+                    Products = o.OrderProducts.Select(p => new CartProductViewModel()
+                    {
+                        Product = new ProductViewModel()
+                        {
+                            Category = p.Product.Category.Name,
+                            Name = p.Product.Name,
+                            Description = p.Product.Description,
+                            Price = p.Product.Price,
+                            ImageUrl = p.Product.ImageUrl
+                        },
+                        Count = p.Count
+
+                    }).ToList()
+
+                }).ToListAsync();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TwinsArtstyle.Services.Enums;
 
 namespace TwinsArtstyle.Infrastructure.Models
 {
@@ -20,5 +21,9 @@ namespace TwinsArtstyle.Infrastructure.Models
         public Address Address { get; set; }
 
         public decimal Price { get; set; }
+
+        public DateTime CreationDate { get; set; } = DateTime.Now;
+
+        public OrderStatus Status { get; set; } = OrderStatus.Confirmed;
     }
 }

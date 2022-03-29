@@ -35,28 +35,38 @@ namespace TwinsArtstyle.Services.Implementation
                 }).ToListAsync();
         }
 
-        public async Task<bool> AddNewAddress(AddressViewModel addressViewModel, string userId)
+        public async Task<(bool, string)> AddNewAddress(AddressViewModel addressViewModel, string userId)
         {
             var result = false;
-            var user = await _userManager.FindByIdAsync(userId);
+            var errorMessage = string.Empty;
+            var user = await _repository.All<User>()
+                .Include(u => u.Addresses)
+                .Where(u => u.Id == userId)
+                .FirstOrDefaultAsync();
 
             try
             {
-                user.Addresses.Add(new Address()
+                if (!user.Addresses.Any(a => a.Name == addressViewModel.Name
+                     && a.AddressText == addressViewModel.AddressText))
                 {
-                    Name = addressViewModel.Name,
-                    AddressText = addressViewModel.AddressText
-                });
+                    user.Addresses.Add(new Address()
+                    {
+                        Name = addressViewModel.Name,
+                        AddressText = addressViewModel.AddressText
+                    });
 
-                await _repository.SaveChanges();
-                result = true;
+                    await _repository.SaveChanges();
+                    result = true;
+                }
+
+                errorMessage = "Address already exists!";
             }
             catch (Exception)
             {
 
             }
 
-            return result;
+            return (result, errorMessage);
         }
 
         public async Task<AddressViewModel> AddressExistsForUser(string addressName, string userId)

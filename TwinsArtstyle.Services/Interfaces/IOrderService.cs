@@ -17,5 +17,7 @@ namespace TwinsArtstyle.Services.Interfaces
         public Task<decimal> CalculateTotalPrice(string orderId);
 
         public Task<OrderViewModel> GetOrderById(string orderId);
+
+        public Task<IEnumerable<AdminAreaOrderViewModel>> GetOrdersForAdminArea();
     }
 }
