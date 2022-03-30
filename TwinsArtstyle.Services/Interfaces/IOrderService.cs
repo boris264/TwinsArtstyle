@@ -19,5 +19,7 @@ namespace TwinsArtstyle.Services.Interfaces
         public Task<OrderViewModel> GetOrderById(string orderId);
 
         public Task<IEnumerable<AdminAreaOrderViewModel>> GetOrdersForAdminArea();
+
+        public Task<AdminAreaOrderViewModel> GetAdminOrderById(string orderId);
     }
 }

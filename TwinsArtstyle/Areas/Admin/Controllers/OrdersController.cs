@@ -14,8 +14,20 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
 
         public async Task<IActionResult> All()
         {
-            var orders = await _orderService.GetOrdersForAdminArea();
-            return View(orders.OrderByDescending(o => o.CreationDate));
+            var orders = (await _orderService.GetOrdersForAdminArea()).OrderByDescending(o => o.CreationDate);
+            return View(orders);
+        }
+
+        public async Task<IActionResult> Details([FromQuery] string orderId)
+        {
+            var order = await _orderService.GetAdminOrderById(orderId);
+
+            if(order != null)
+            {
+                return View(order);
+            }
+
+            return RedirectToAction(nameof(All));
         }
     }
 }

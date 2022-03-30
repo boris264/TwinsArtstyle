@@ -1,0 +1,41 @@
+﻿@model AdminAreaOrderViewModel
+
+<div class="order-details">
+    <div class="products">
+        <table class="products-table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Count</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var product in Model.Products)
+                {
+                    <tr>
+                        <td><img class="product-image" src="@product.Product.ImageUrl" /></td>
+                        <td>@product.Product.Name</td>
+                        <td>@product.Product.Category</td>
+                        <td>@product.Count</td>
+                        <td>@product.Product.Price лв.</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <h2>User details:</h2>
+    <div class="shipping-information">
+        <span>First Name: @Model.User.FirstName</span>
+        <span>Last Name: @Model.User.LastName</span>
+        <span>Email: @Model.User.Email</span>
+        <span>Phone Number: @Model.User.PhoneNumber</span>
+        <span>Address: @Model.AddressText</span>
+    </div>
+    <span class="total-price">Total price: @Model.TotalPrice лв.</span>
+</div>

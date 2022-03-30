@@ -132,8 +132,44 @@ namespace TwinsArtstyle.Services.Implementation
                             ImageUrl = p.Product.ImageUrl
                         },
                         Count = p.Count
-                    }).ToList()
+                    }).ToList(),
+                    OrderStatus = o.Status
                 }).FirstOrDefaultAsync();
+        }
+
+        public async Task<AdminAreaOrderViewModel> GetAdminOrderById(string orderId)
+        {
+            return await _repository.All<Order>()
+                .Where(o => o.Id.ToString() == orderId)
+                .Select(o => new AdminAreaOrderViewModel()
+                {
+                    OrderId = o.Id,
+                    User = new UserViewModel()
+                    {
+                        Email = o.User.Email,
+                        FirstName = o.User.FirstName,
+                        LastName = o.User.LastName,
+                        PhoneNumber = o.User.PhoneNumber,
+                    },
+                    AddressText = o.Address.AddressText,
+                    TotalPrice = o.Price,
+                    Status = o.Status,
+                    CreationDate = o.CreationDate,
+                    Products = o.OrderProducts.Select(p => new CartProductViewModel()
+                    {
+                        Product = new ProductViewModel()
+                        {
+                            Name = p.Product.Name,
+                            Category = p.Product.Category.Name,
+                            Price = p.Product.Price,
+                            Description = p.Product.Description,
+                            ImageUrl = p.Product.ImageUrl
+                        },
+                        Count = p.Count
+                    }).ToList()
+
+                }).FirstOrDefaultAsync();
+            
         }
 
         public async Task<IEnumerable<AdminAreaOrderViewModel>> GetOrdersForAdminArea()
