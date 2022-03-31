@@ -20,9 +20,8 @@
             <div class="creation-date">
                 <span class="date">Creation date: @order.CreationDate.ToString("dd/MM/yyyy HH:mm")</span>
             </div>
-            <div class="details-button-container">
-                <a asp-area="Admin" asp-controller="Orders" asp-action="Details" asp-route-orderId="@order.OrderId">Details</a>
-            </div>
+
+            <a class="details" asp-area="Admin" asp-controller="Orders" asp-action="Details" asp-route-orderId="@order.OrderId">Details</a>
         </div>
     }
 

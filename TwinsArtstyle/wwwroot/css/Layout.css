@@ -232,8 +232,8 @@ ul.items{
 }
 
 .cart-item > img{
-    height: 150px;
-    width: auto;
+    height: auto;
+    width: 110px;
     margin-left: 15px;
     margin-top: 15px;
 }

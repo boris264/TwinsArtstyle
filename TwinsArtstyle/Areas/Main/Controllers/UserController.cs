@@ -83,10 +83,11 @@ namespace TwinsArtstyle.Areas.Main.Controllers
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                user.Cart = _cartService.CreateCart();
+                user.Cart = await _cartService.CreateCart();
 
                 await _userStore.SetUserNameAsync(user, registerModel.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, registerModel.Email, CancellationToken.None);
+                await _userManager.SetPhoneNumberAsync(user, registerModel.PhoneNumber);
                 user.FirstName = registerModel.FirstName;
                 user.LastName = registerModel.LastName;
 

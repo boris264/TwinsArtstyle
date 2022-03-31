@@ -27,9 +27,12 @@ namespace TwinsArtstyle.Services.Implementation
             _userManager = userManager;
         }
 
-        public Cart CreateCart()
+        public async Task<Cart> CreateCart()
         {
-            return new Cart();
+            Cart cart = new Cart();
+            await repository.Add(cart);
+            await repository.SaveChanges();
+            return cart;
         }
 
         public async Task DeleteCart(Guid cartId)

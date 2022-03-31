@@ -238,15 +238,9 @@ a {
     border: 2px solid #333;
 }
 
-.details-button-container{
-    background-color: #333;
-    padding: 5px 30px;
-    border-radius: 15px;
-}
-
-.details-button-container > a{
+.details{
     text-decoration: none;
-    color: white;
+    color: #333;
 }
 
 .creation-date{
