@@ -20,8 +20,9 @@
     }
 })
 
-const placeOrderButtonContainer = document.getElementsByClassName("order-button-container")[0];
+const placeOrderButtonContainer = document.getElementsByClassName("order-container")[0];
 const totalPrice = document.getElementsByClassName("total-price")[0];
+const totalPriceContainer = document.getElementsByClassName("total-price-container")[0];
 const addToCartButtons = document.getElementsByClassName("add-to-cart-button");
 
 for(let i = 0; i < addToCartButtons.length; i++)
@@ -77,6 +78,7 @@ async function addToCart(event)
             cartDropdown.classList.toggle("active");
         }
         
+        let totalPriceValue = parseFloat(totalPrice.textContent)
 
         for(let i = 0; i < cartItems.length; i++)
         {
@@ -94,17 +96,19 @@ async function addToCart(event)
                 }
 
                 oldQuantity.setAttribute("value", newQuantity);
+                totalPrice.textContent = totalPriceValue + productPrice;
                 return;
             }
         }
         
         const newProduct = createCartItem(productImage, productName, productPrice, productCount, productId);
         cartUl.appendChild(newProduct);
+        totalPrice.textContent = totalPriceValue + productPrice;
 
         if(cartItems.length > 0)
         {
             placeOrderButtonContainer.style.display = "block";
-            totalPrice.style.display = "inline";
+            totalPriceContainer.style.display = "block";
         }
     }
     else
@@ -117,6 +121,7 @@ function createCartItem(image, name, price, quantity, productId)
 {
     let li = document.createElement('li');
     li.classList.add("cart-item");
+    li.setAttribute("full-price", price * quantity);
     li.id = productId;
     let productImage = document.createElement("img");
     productImage.src = image;
@@ -128,6 +133,7 @@ function createCartItem(image, name, price, quantity, productId)
     li.appendChild(productName);
     let productQuantity = document.createElement("input")
     productQuantity.type = "number";
+    productQuantity.setAttribute("disabled", "true");
     productQuantity.className = "quantity";
     productQuantity.setAttribute("value", quantity);
     productQuantity.max = 99;
@@ -144,6 +150,7 @@ function createCartItem(image, name, price, quantity, productId)
 async function deleteListItem(e)
 {
     const productId = e.target.closest(".cart-item").id;
+    const itemFullPrice = parseFloat(e.target.closest(".cart-item").getAttribute("full-price"));
     const product = {
         productId: productId
     }
@@ -159,11 +166,13 @@ async function deleteListItem(e)
         const listItem = e.target.closest(".cart-item");
         const ul = e.target.closest(".items");
         ul.removeChild(listItem);
-
+        let totalPriceValue = parseFloat(totalPrice.textContent)
+        totalPrice.textContent = totalPriceValue - itemFullPrice;
+        
         if(ul.children.length === 0)
         {
             placeOrderButtonContainer.style.display = "none";
-            totalPrice.style.display = "none";
+            totalPriceContainer.style.display = "none";
         }
     }
 }

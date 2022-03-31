@@ -5,10 +5,10 @@
 
         @foreach (var item in Model)
         {
-            <li class="cart-item" id="@item.Product.Id">
+            <li full-price="@item.Product.Price * @item.Count" class="cart-item" id="@item.Product.Id">
                 <img src="@item.Product.ImageUrl" class="item-image">
                 <span class="item-name">@item.Product.Name</span>
-                <input type="number" class="quantity" value="@item.Count" max="99">
+                <input disabled="disabled" type="number" class="quantity" value="@item.Count" max="99">
                 <i class="remove-item bi bi-trash-fill"></i>
             </li>
         }
@@ -19,6 +19,9 @@
     @if (Model.Count() == 0)
     {
         <hr />
+        <div style="display: none" class="total-price-container">
+            Total price: <span class="total-price">0</span> лв.
+        </div>
         <div style="display: none" class="order-container">
             <a class="place-order" asp-area="Main" asp-controller="Cart" asp-action="PlaceOrder">Place order</a>
         </div>
@@ -26,8 +29,10 @@
     else
     {
         <hr />
-        <span class="total-price">Total price: @Model.Sum(p => p.Product.Price * p.Count) лв.</span>
-        <div  class="order-container">
+        <div class="total-price-container">
+            Total price: <span class="total-price">@Model.Sum(p => p.Product.Price * p.Count)</span> лв.
+        </div>
+        <div class="order-container">
             <a class="place-order" asp-area="Main" asp-controller="Cart" asp-action="PlaceOrder">Place order</a>
         </div>
     }

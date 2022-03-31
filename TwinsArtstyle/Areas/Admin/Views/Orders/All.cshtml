@@ -2,27 +2,34 @@
 
 <div class="panel" id="orders">
 
-    @foreach (var order in Model)
+    @if (Model.Count() == 0)
     {
-        <div class="order">
-            <span class="order-id">Order Id: @order.OrderId.ToString()</span>
-            <div class="user-information">
-                <span class="full-name">@order.User.FirstName @order.User.LastName</span>
-                <span class="email">@order.User.Email</span>
-                <span class="phone-number">@order.User.PhoneNumber</span>
-            </div>
-            <div class="address-container">
-                <span class="address">Адрес: @order.AddressText</span>
-            </div>
-            <div class="price-container">
-                <span class="price">Цена: @order.TotalPrice лв.</span>
-            </div>
-            <div class="creation-date">
-                <span class="date">Creation date: @order.CreationDate.ToString("dd/MM/yyyy HH:mm")</span>
-            </div>
+        <h2 class="header-empty">Empty</h2>
+    }
+    else
+    {
+        @foreach (var order in Model)
+        {
+            <div class="order">
+                <span class="order-id">Order Id: @order.OrderId.ToString()</span>
+                <div class="user-information">
+                    <span class="full-name">@order.User.FirstName @order.User.LastName</span>
+                    <span class="email">@order.User.Email</span>
+                    <span class="phone-number">@order.User.PhoneNumber</span>
+                </div>
+                <div class="address-container">
+                    <span class="address">Адрес: @order.AddressText</span>
+                </div>
+                <div class="price-container">
+                    <span class="price">Цена: @order.TotalPrice лв.</span>
+                </div>
+                <div class="creation-date">
+                    <span class="date">Creation date: @order.CreationDate.ToString("dd/MM/yyyy HH:mm")</span>
+                </div>
 
-            <a class="details" asp-area="Admin" asp-controller="Orders" asp-action="Details" asp-route-orderId="@order.OrderId">Details</a>
-        </div>
+                <a class="details" asp-area="Admin" asp-controller="Orders" asp-action="Details" asp-route-orderId="@order.OrderId">Details</a>
+            </div>
+        }
     }
 
 </div>

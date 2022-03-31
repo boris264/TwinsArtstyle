@@ -273,8 +273,8 @@ a {
     display: table;
     width: 100%;
     text-align: center;
-   
     border-collapse: collapse;
+
 }
 
 .product-image{
@@ -303,4 +303,38 @@ td{
 .total-price{
     margin-top: 50px;
     font-size: 2em;
+}
+
+.header-empty{
+    margin: 0 auto;
+    font-size: 80px;
+    letter-spacing: 6px;
+    opacity: 40%;
+    color: #333;
+    font-weight: lighter;
+}
+
+.messages-container{
+    background-color: #eee;
+    width: 700px;
+    max-width: 700px;
+    height: 700px;
+    max-height: 700px;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 3px 3px 7px #333;
+    overflow-y: scroll;
+}
+
+.messages-table{
+    display: table;
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    font-size: 25px;
+    font-family: 'Courier New', Courier, monospace;
+    max-width: 100%;
+    table-layout: fixed;
+    word-wrap: break-word;
 }

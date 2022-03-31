@@ -1,0 +1,23 @@
+﻿@model IEnumerable<MessageViewModel>
+
+<div class="messages-container">
+    <table class="messages-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>From</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach(var message in Model)
+            {
+                <tr>
+                    <td>@message.Title</td>
+                    <td>@message.User.FirstName @message.User.LastName</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

@@ -351,3 +351,7 @@ ul.items{
     border-radius: 10px;
 }
 
+.total-price-container{
+    font-size: 23px;
+    font-family: 'Courier New', Courier, monospace;
+}

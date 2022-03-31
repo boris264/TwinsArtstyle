@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,23 @@ namespace TwinsArtstyle.Services.Implementation
                 await _repository.Add(message);
                 await _repository.SaveChanges();
             }
+        }
+
+        public async Task<IEnumerable<MessageViewModel>> GetAllMessages()
+        {
+            return await _repository.All<Message>()
+                .Select(m => new MessageViewModel()
+                {
+                    User = new UserViewModel()
+                    {
+                        FirstName = m.User.FirstName,
+                        LastName = m.User.LastName,
+                        Email = m.User.Email,
+                        PhoneNumber = m.User.PhoneNumber,
+                    },
+                    Title = m.Title,
+                    Content = m.Body
+                }).ToListAsync();
         }
     }
 }
