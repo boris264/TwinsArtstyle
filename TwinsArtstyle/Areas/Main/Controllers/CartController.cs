@@ -33,12 +33,15 @@ namespace TwinsArtstyle.Areas.Main.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] ProductDTO product)
         {
-            var userCartIdClaim = HttpContext.User.FindFirst(ClaimType.CartId);
-            var result = await _cartService.AddToCart(userCartIdClaim.Value, product.productId, product.count);
-            
-            if(result)
+            if (ModelState.IsValid)
             {
-                return Ok();
+                var userCartIdClaim = HttpContext.User.FindFirst(ClaimType.CartId);
+                var result = await _cartService.AddToCart(userCartIdClaim.Value, product.productId, product.count);
+
+                if (result)
+                {
+                    return Ok();
+                }
             }
 
             return BadRequest();
@@ -47,12 +50,15 @@ namespace TwinsArtstyle.Areas.Main.Controllers
         [HttpPost]
         public async Task<IActionResult> Remove([FromBody] ProductDTO product)
         {
-            var result = await _cartService
+            if (ModelState.IsValid)
+            {
+                var result = await _cartService
                 .RemoveFromCart(product.productId, HttpContext.User.FindFirst(ClaimType.CartId).Value);
 
-            if(result)
-            {
-                return Ok();
+                if (result)
+                {
+                    return Ok();
+                }
             }
 
             return BadRequest();
@@ -64,7 +70,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
             var userAddresses = await _addressService.GetAddressesForUser(user.Id);
             var products = await _cartService.GetProductsForUser(user.Id);
 
-            if(user != null)
+            if (user != null)
             {
                 var orderViewModel = new PlaceOrderViewModel()
                 {
@@ -84,8 +90,8 @@ namespace TwinsArtstyle.Areas.Main.Controllers
         {
             bool result = await _orderService.
                 Add(orderViewModel, HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            
-            if(result)
+
+            if (result)
             {
                 await _cartService.CleanCart(HttpContext.User.FindFirst(ClaimType.CartId).Value);
                 return RedirectToAction("Index", "Home");

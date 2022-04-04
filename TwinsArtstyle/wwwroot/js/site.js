@@ -42,6 +42,12 @@ async function addToCart(event)
     const cartDropdown = document.getElementsByClassName("cart-dropdown")[0];
     const productCard = event.target.closest(".product-card");
     const productCount = parseInt(productCard.querySelector(".product-count").value);
+
+    if(Number.isNaN(productCount) || productCount === 0 || productCount < 0)
+    {
+        return;
+    }
+
     const productCardAttributes = productCard.attributes;
     let productId = "";
 
@@ -57,6 +63,7 @@ async function addToCart(event)
         productId: productId,
         count: productCount
     };
+
     
     let response = await fetch("/Main/Cart/Add", 
     {
@@ -89,21 +96,15 @@ async function addToCart(event)
                 const oldQuantity = cartItems[i].getElementsByClassName("quantity")[0];
                 const maxValue = parseInt(oldQuantity.getAttribute("max"));
                 let newQuantity = parseInt(oldQuantity.value) + productCount;
-
-                if(newQuantity > maxValue)
-                {
-                    newQuantity -= newQuantity - maxValue;
-                }
-
                 oldQuantity.setAttribute("value", newQuantity);
-                totalPrice.textContent = totalPriceValue + productPrice;
+                totalPrice.textContent = totalPriceValue + (productPrice * productCount);
                 return;
             }
         }
         
         const newProduct = createCartItem(productImage, productName, productPrice, productCount, productId);
         cartUl.appendChild(newProduct);
-        totalPrice.textContent = totalPriceValue + productPrice;
+        totalPrice.textContent = totalPriceValue + (productPrice * productCount);
 
         if(cartItems.length > 0)
         {

@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TwinsArtstyle.Infrastructure.Interfaces;
 using TwinsArtstyle.Infrastructure.Models;
+using TwinsArtstyle.Services.Constants;
+using TwinsArtstyle.Services.Helpers;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels.ProductModels;
 
@@ -20,8 +22,9 @@ namespace TwinsArtstyle.Services.Implementation
             _repository = repository;
         }
 
-        public async Task AddProduct(ProductViewModel productViewModel)
+        public async Task<OperationResult> AddProduct(ProductViewModel productViewModel)
         {
+            var result = new OperationResult();
             Product product = new Product()
             {
                 Name = productViewModel.Name,
@@ -34,11 +37,21 @@ namespace TwinsArtstyle.Services.Implementation
 
             if (product.Category == null)
             {
-                throw new ArgumentNullException("Invalid category!");
+                result.ErrorMessage = "Invalid category!";
             }
 
-            await _repository.Add(product);
-            await _repository.SaveChanges();
+            try
+            {
+                await _repository.Add(product);
+                await _repository.SaveChanges();
+                result.Success = true;
+            }
+            catch (DbUpdateException)
+            {
+                result.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
+            }
+
+            return result;
         }
 
         public async Task<IEnumerable<ProductViewModel>> GetProducts()
@@ -73,18 +86,11 @@ namespace TwinsArtstyle.Services.Implementation
 
         public async Task<bool> Exists(string productId)
         {
-            return await _repository.All<Product>()
-                .Where(p => p.Id.ToString() == productId)
-                .AnyAsync();
+            return (await _repository.FindById<Product>(productId)) == null ? false: true;
         }
 
         public async Task<ProductViewModel> GetById(string productId)
         {
-            if (!await Exists(productId))
-            {
-                return null;
-            }
-
             return await _repository.All<Product>()
                 .Where(p => p.Id.ToString() == productId)
                 .Select(p => new ProductViewModel()

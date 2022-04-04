@@ -10,6 +10,7 @@ using TwinsArtstyle.Infrastructure.Data;
 using TwinsArtstyle.Infrastructure.Interfaces;
 using TwinsArtstyle.Infrastructure.Models;
 using TwinsArtstyle.Services.Constants;
+using TwinsArtstyle.Services.Helpers;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels.ProductModels;
 
@@ -35,27 +36,34 @@ namespace TwinsArtstyle.Services.Implementation
             return cart;
         }
 
-        public async Task DeleteCart(Guid cartId)
+        public async Task<OperationResult> DeleteCart(Guid cartId)
         {
-            var cart = repository.All<Cart>()
-                .Where(c => c.Id == cartId)
-                .FirstOrDefault();
+            var result = new OperationResult();
+
+            var cart = await repository.FindById<Cart>(cartId);
 
             if (cart != null)
             {
-                await repository.Remove(cart);
+                try
+                {
+                    repository.Remove(cart);
+                    await repository.SaveChanges();
+                    result.Success = true;
+                }
+                catch (DbUpdateException)
+                {
+                    result.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
+                }
             }
+
+            return result;
         }
 
-        public async Task<bool> AddToCart(string cartId, string productId, int count)
+        public async Task<OperationResult> AddToCart(string cartId, string productId, int count)
         {
-            bool result = false;
-            var cart = repository.All<Cart>()
-                .Where(c => c.Id.ToString() == cartId)
-                .FirstOrDefault();
-            var product = repository.All<Product>()
-                .Where(p => p.Id.ToString() == productId)
-                .FirstOrDefault();
+            var operationResult = new OperationResult();
+            var cart = await repository.FindById<Cart>(cartId);
+            var product = await repository.FindById<Product>(productId);
 
             if (cart != null && product != null && count > 0)
             {
@@ -80,19 +88,15 @@ namespace TwinsArtstyle.Services.Implementation
                     }
 
                     await repository.SaveChanges();
-                    result = true;
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    result = false;
+                    operationResult.Success = true;
                 }
                 catch (DbUpdateException)
                 {
-                    result = false;
+                    operationResult.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
                 }
             }
 
-            return result;
+            return operationResult;
         }
 
         public async Task<IEnumerable<CartProductViewModel>> GetProductsForUser(string userId)
@@ -166,49 +170,46 @@ namespace TwinsArtstyle.Services.Implementation
             return totalPrice;
         }
 
-        public async Task<bool> RemoveFromCart(string productId, string cartId)
+        public async Task<OperationResult> RemoveFromCart(string productId, string cartId)
         {
             var entity = await repository.All<CartProductCount>()
                 .Where(c => c.CartId.ToString() == cartId && c.ProductId.ToString() == productId)
                 .FirstOrDefaultAsync();
-            var result = false;
+            var result = new OperationResult();
 
             if (entity != null)
             {
                 try
                 {
-                    await repository.Remove(entity);
-                    result = true;
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-
+                    repository.Remove(entity);
+                    await repository.SaveChanges();
+                    result.Success = true;
                 }
                 catch (DbUpdateException)
                 {
-
+                    result.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
                 }
             }
 
             return result;
         }
 
-        public async Task<bool> CleanCart(string cartId)
+        public async Task<OperationResult> CleanCart(string cartId)
         {
-            var result = false;
+            var result = new OperationResult();
             var cartItems = await repository.All<CartProductCount>()
                 .Where(c => c.CartId.ToString() == cartId)
                 .ToListAsync();
 
             try
             {
-                await repository.RemoveRange(cartItems);
+                repository.RemoveRange(cartItems);
                 await repository.SaveChanges();
-                result = true;
+                result.Success = true;
             }
-            catch (Exception)
+            catch (DbUpdateException)
             {
-
+                result.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
             }
 
             return result;

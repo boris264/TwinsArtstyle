@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TwinsArtstyle.Infrastructure.Interfaces;
 using TwinsArtstyle.Infrastructure.Models;
+using TwinsArtstyle.Services.Constants;
+using TwinsArtstyle.Services.Helpers;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels;
 
@@ -32,13 +34,13 @@ namespace TwinsArtstyle.Services.Implementation
                 {
                     Name = a.Name,
                     AddressText = a.AddressText
+
                 }).ToListAsync();
         }
 
-        public async Task<(bool, string)> AddNewAddress(AddressViewModel addressViewModel, string userId)
+        public async Task<OperationResult> AddNewAddress(AddressViewModel addressViewModel, string userId)
         {
-            var result = false;
-            var errorMessage = string.Empty;
+            OperationResult result = new OperationResult();
             var user = await _repository.All<User>()
                 .Include(u => u.Addresses)
                 .Where(u => u.Id == userId)
@@ -56,23 +58,26 @@ namespace TwinsArtstyle.Services.Implementation
                     });
 
                     await _repository.SaveChanges();
-                    result = true;
+                    result.Success = true;
                 }
 
-                errorMessage = "Address already exists!";
             }
-            catch (Exception)
+            catch (ArgumentNullException)
             {
-
+                result.ErrorMessage = "Address name and/or text shouldn't be empty!";
+            }
+            catch(DbUpdateException)
+            {
+                result.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
             }
 
-            return (result, errorMessage);
+            return result;
         }
 
         public async Task<AddressViewModel> AddressExistsForUser(string addressName, string userId)
         {
             return await _repository.All<Address>()
-                .Where(a => a.UserId.ToString() == userId && a.Name == addressName)
+                .Where(a => a.UserId == userId && a.Name == addressName)
                 .Select(a => new AddressViewModel()
                 {
                     Name = a.Name,

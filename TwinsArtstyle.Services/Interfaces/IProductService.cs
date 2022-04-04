@@ -1,4 +1,5 @@
-﻿using TwinsArtstyle.Services.ViewModels.ProductModels;
+﻿using TwinsArtstyle.Services.Helpers;
+using TwinsArtstyle.Services.ViewModels.ProductModels;
 
 namespace TwinsArtstyle.Services.Interfaces
 {
@@ -6,7 +7,7 @@ namespace TwinsArtstyle.Services.Interfaces
     {
         public Task<IEnumerable<ProductViewModel>> GetProducts();
 
-        public Task AddProduct(ProductViewModel productViewModel);
+        public Task<OperationResult> AddProduct(ProductViewModel productViewModel);
 
         public Task<IEnumerable<ProductViewModel>> GetByCategory(string categoryName);
 

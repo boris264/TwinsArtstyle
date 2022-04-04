@@ -12,8 +12,10 @@ namespace TwinsArtstyle.Infrastructure.Interfaces
 
         public Task<int> SaveChanges();
 
-        public Task Remove<T>(T entity) where T : class;
+        public void Remove<T>(T entity) where T : class;
 
-        public Task RemoveRange<T>(IEnumerable<T> entities) where T : class;
+        public void RemoveRange<T>(IEnumerable<T> entities) where T : class;
+
+        public Task<T> FindById<T>(object id) where T : class;
     }
 }

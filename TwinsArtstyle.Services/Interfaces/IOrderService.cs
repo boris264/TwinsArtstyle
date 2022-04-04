@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TwinsArtstyle.Infrastructure.Models;
+using TwinsArtstyle.Services.Helpers;
 using TwinsArtstyle.Services.ViewModels.OrderModels;
 
 namespace TwinsArtstyle.Services.Interfaces
 {
     public interface IOrderService
     {
-        public Task<bool> Add(OrderDTO orderViewModel, string userId);
+        public Task<OperationResult> Add(OrderDTO orderViewModel, string userId);
 
         public Task<IEnumerable<OrderViewModel>> GetOrdersForUser(string userId);
 

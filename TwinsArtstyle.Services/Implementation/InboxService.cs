@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TwinsArtstyle.Infrastructure.Interfaces;
 using TwinsArtstyle.Infrastructure.Models;
+using TwinsArtstyle.Services.Constants;
+using TwinsArtstyle.Services.Helpers;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels;
 
@@ -24,22 +26,34 @@ namespace TwinsArtstyle.Services.Implementation
             _repository = repository;
         }
 
-        public async Task AddContactLetter(ContactUsViewModel contactUsViewModel, string userId)
+        public async Task<OperationResult> AddContactLetter(ContactUsViewModel contactUsViewModel, string userId)
         {
+            var result = new OperationResult();
             var user = await _userManager.FindByIdAsync(userId);
-            
-            if(user != null)
-            {
-                Message message = new Message()
-                {
-                    User = user,
-                    Title = contactUsViewModel.Title,
-                    Body = contactUsViewModel.Content
-                };
 
-                await _repository.Add(message);
-                await _repository.SaveChanges();
+            if (user != null)
+            {
+                try
+                {
+                    Message message = new Message()
+                    {
+                        User = user,
+                        Title = contactUsViewModel.Title,
+                        Body = contactUsViewModel.Content
+                    };
+
+                    await _repository.Add(message);
+                    await _repository.SaveChanges();
+                    result.Success = true;
+                }
+                catch (DbUpdateException)
+                {
+                    result.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
+                }
             }
+
+            result.ErrorMessage = "User should not be null!";
+            return result;
         }
 
         public async Task<IEnumerable<MessageViewModel>> GetAllMessages()

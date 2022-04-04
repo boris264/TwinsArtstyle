@@ -37,16 +37,21 @@ namespace TwinsArtstyle.Infrastructure.Data
             return await dbContext.SaveChangesAsync();
         }
 
-        public async Task Remove<T>(T entity) where T : class
+        public void Remove<T>(T entity) where T : class
         {
             dbContext.Remove(entity);
-            await SaveChanges();
         }
 
-        public async Task RemoveRange<T>(IEnumerable<T> entities) where T : class
+        public void RemoveRange<T>(IEnumerable<T> entities) where T : class
         {
             dbContext.RemoveRange(entities);
-            await SaveChanges();
+        }
+
+        public async Task<T> FindById<T>(object id) where T : class
+        {
+            var model = await DbSet<T>().FindAsync(id);
+            
+            return model;
         }
     }
 }

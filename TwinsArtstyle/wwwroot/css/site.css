@@ -1,5 +1,8 @@
 @import "colors.css";
 
+*{
+    text-decoration: none;
+}
 
 .text-danger{
     padding: 5px 0px;
@@ -426,4 +429,11 @@ li.about-text{
     height: 300px;
     max-height: 300px;
     text-align: start;
+}
+
+.add-address{
+    color: white;
+    padding: 6px;
+    background-color: var(--blue);
+    border-radius: 10px;
 }

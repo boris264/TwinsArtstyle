@@ -28,14 +28,23 @@
 
         <div class="addresses-card">
             <span>Select an address: </span>
-            <select name="AddressName" class="addresses">
 
-                @foreach (var item in Model.Addresses)
-                {
-                    <option class="address-option">@item.Name</option>
-                }
+            @if (Model.Addresses.Count() == 0)
+            {
+                <a class="add-address" asp-area="Main" asp-controller="Addresses" asp-action="Add">Add an address</a>
+            }
+            else
+            {
+                <select name="AddressName" class="addresses">
 
-            </select>
+                    @foreach (var item in Model.Addresses)
+                    {
+                        <option class="address-option">@item.Name</option>
+                    }
+
+                </select>
+            }
+
         </div>
 
         <div class="total-price">

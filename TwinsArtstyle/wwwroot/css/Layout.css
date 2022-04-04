@@ -243,10 +243,11 @@ ul.items{
 }
 
 .cart-item .quantity{
+    box-sizing: border-box;
     border: 1px solid #333;
     padding: 0px 5px;
     border-radius: 5px;
-    width: 50px;
+    width: 80px;
     font-family: 'Courier New', Courier, monospace;
     font-size: 25px;
 }

@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TwinsArtstyle.Infrastructure.Interfaces;
 using TwinsArtstyle.Infrastructure.Models;
+using TwinsArtstyle.Services.Constants;
+using TwinsArtstyle.Services.Helpers;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels;
 
@@ -28,18 +30,27 @@ namespace TwinsArtstyle.Services.Implementation
             _cartService = cartService;
         }
 
-        public async Task<bool> DeleteUser(string email)
+        public async Task<OperationResult> DeleteUser(string email)
         {
+
+            var result = new OperationResult();
             var user = await _userManager.FindByEmailAsync(email);
-            bool result = false;
 
             if (user != null)
             {
-                await _repository.Remove(user);
-                await _cartService.DeleteCart(user.CartId);
-                result = true;
+                try
+                {
+                    _repository.Remove(user);
+                    await _cartService.DeleteCart(user.CartId);
+                    result.Success = true;
+                }
+                catch (DbUpdateException)
+                {
+                    result.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
+                }
             }
 
+            result.ErrorMessage = "Invalid email address!";
             return result;
         }
 
@@ -69,9 +80,9 @@ namespace TwinsArtstyle.Services.Implementation
             });
         }
 
-        public async Task<IdentityResult> UpdateUserProfileInfo(UserViewModel userViewModel, ClaimsPrincipal claimsPrincipal)
+        public async Task<IdentityResult> UpdateUserProfileInfo(UserViewModel userViewModel, string userId)
         {
-            var user = await _userManager.GetUserAsync(claimsPrincipal);
+            var user = await _userManager.FindByIdAsync(userId);
 
             if (user != null)
             {
@@ -86,11 +97,11 @@ namespace TwinsArtstyle.Services.Implementation
             return IdentityResult.Failed();
         }
 
-        public async Task<IdentityResult> UpdateUserProfileInfo(UserViewModel userViewModel, string email)
+        public async Task<IdentityResult> UpdateUserProfileByEmail(UserViewModel userViewModel, string email)
         {
             IdentityResult result = IdentityResult.Failed();
 
-            if (email != null)
+            if (!string.IsNullOrEmpty(email))
             {
                 var user = await _userManager.FindByEmailAsync(email);
 

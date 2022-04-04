@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TwinsArtstyle.Infrastructure.Interfaces;
 using TwinsArtstyle.Infrastructure.Models;
+using TwinsArtstyle.Services.Constants;
+using TwinsArtstyle.Services.Helpers;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels;
 using TwinsArtstyle.Services.ViewModels.OrderModels;
@@ -28,9 +30,9 @@ namespace TwinsArtstyle.Services.Implementation
             _userManager = userManager;
         }
 
-        public async Task<bool> Add(OrderDTO orderViewModel, string userId)
+        public async Task<OperationResult> Add(OrderDTO orderViewModel, string userId)
         {
-            bool result = false;
+            var result = new OperationResult();
             var user = await _userManager.FindByIdAsync(userId);
             var products = await _cartService.GetProductsForUser(userId);
             var totalPriceForCart = await _cartService.CalculateTotalPrice(user.CartId.ToString());
@@ -57,16 +59,12 @@ namespace TwinsArtstyle.Services.Implementation
             {
                 await _repository.Add(order);
                 await _repository.SaveChanges();
-                result = true;
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-
+                result.Success = true;
             }
             catch (DbUpdateException)
             {
-
-            }
+                result.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
+            }   
 
             return result;
         }
