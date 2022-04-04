@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<AdminAreaOrderViewModel>
 
+@{
+    ViewData["Title"] = "All Orders";
+}
+
 <div class="panel" id="orders">
 
     @if (Model.Count() == 0)

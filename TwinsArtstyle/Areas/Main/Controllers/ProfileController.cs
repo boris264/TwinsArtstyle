@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TwinsArtstyle.Infrastructure.Models;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels;
@@ -40,15 +41,17 @@ namespace TwinsArtstyle.Areas.Main.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _userService.UpdateUserProfileInfo(model, HttpContext.User);
+                var result = await _userService.
+                    UpdateUserProfileInfo(model, HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
                 if (result.Succeeded)
                 {
                     ViewData["UpdateSuccessfull"] = "Profile updated successfully!";
-                    return View(model);
+                    return RedirectToAction(nameof(UserProfile));
                 }
             }
 
+            ModelState.AddModelError(string.Empty, "Profile update failed!");
             return View(model);
         }
     }

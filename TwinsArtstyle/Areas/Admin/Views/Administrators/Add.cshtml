@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<UserViewModel>
 
+@{
+    ViewData["Title"] = "Administrators";
+}
+
 <div class="administrators">
     <div class="add-administrator-container">
         <form class="add-administrator" asp-area="Admin" asp-controller="Administrators" asp-action="Add" method="post">

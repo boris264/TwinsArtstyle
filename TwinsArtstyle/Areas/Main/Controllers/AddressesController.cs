@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TwinsArtstyle.Infrastructure.Models;
 using TwinsArtstyle.Services.Constants;
+using TwinsArtstyle.Services.Helpers;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels;
 
@@ -14,12 +15,15 @@ namespace TwinsArtstyle.Areas.Main.Controllers
     {
         private readonly IAddressService _addressService;
         private readonly UserManager<User> _userManager;
+        private readonly ILogger<AddressesController> _logger;
 
         public AddressesController(IAddressService addressService,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            ILogger<AddressesController> logger)
         {
             _addressService = addressService;
             _userManager = userManager;
+            _logger = logger;
         }
 
         public async Task<IActionResult> All()
@@ -36,15 +40,20 @@ namespace TwinsArtstyle.Areas.Main.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddressViewModel addressViewModel)
         {
-            (bool result, string errorMessage) = 
+            if (ModelState.IsValid)
+            {
+                OperationResult result =
                 await _addressService.AddNewAddress(addressViewModel, _userManager.GetUserId(User));
 
-            if (result)
-            {
-                return RedirectToAction(nameof(All));
+                if (result.Success)
+                {
+                    return RedirectToAction(nameof(All));
+                }
+
+                _logger.LogError(result.ErrorMessage);
+                ModelState.AddModelError(string.Empty, "An unexpected error occured!");
             }
 
-            ModelState.AddModelError(string.Empty, errorMessage);
             return View(addressViewModel);
         }
     }

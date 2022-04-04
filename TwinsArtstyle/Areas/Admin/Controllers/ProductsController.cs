@@ -9,12 +9,15 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
     {
         private readonly IProductService _productService;
         private readonly IWebHostEnvironment _webHostEnv;
+        private readonly ILogger<ProductsController> _logger;
 
         public ProductsController(IProductService productService,
-            IWebHostEnvironment webHostEnv)
+            IWebHostEnvironment webHostEnv,
+            ILogger<ProductsController> logger)
         {
             _productService = productService;
             _webHostEnv = webHostEnv;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Manage()
@@ -26,7 +29,7 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Manage(ProductViewModel productViewModel)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
 
                 if (productViewModel.Image?.Length > 0)
@@ -41,15 +44,15 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
 
                     productViewModel.ImageUrl = $"/images/{imageName}";
 
-                    try
+                    var result = await _productService.AddProduct(productViewModel);
+
+                    if(result.Success)
                     {
-                        await _productService.AddProduct(productViewModel);
                         return RedirectToAction(nameof(Manage));
                     }
-                    catch (ArgumentNullException)
-                    {
-                        ModelState.AddModelError(String.Empty, "Something went wrong...");
-                    }
+
+                    _logger.LogError(result.ErrorMessage);
+                    ModelState.AddModelError(String.Empty, "Something went wrong...");
                 }
             }
 

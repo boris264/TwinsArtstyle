@@ -86,7 +86,7 @@ namespace TwinsArtstyle.Services.Implementation
 
         public async Task<bool> Exists(string productId)
         {
-            return (await _repository.FindById<Product>(productId)) == null ? false: true;
+            return (await _repository.FindById<Product>(new Guid(productId))) == null ? false: true;
         }
 
         public async Task<ProductViewModel> GetById(string productId)

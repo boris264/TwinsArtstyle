@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<OrderViewModel>
 
+@{
+    ViewData["Title"] = "All orders";
+}
+
 <div class="orders-card">
 
     @foreach (var order in Model)
@@ -10,7 +14,7 @@
             <span class="address-name">Address used: @order.AddressName</span>
             <span class="order-status">Status: @order.OrderStatus.ToString()</span>
             <a asp-area="Main" asp-controller="Orders" asp-action="Details" asp-route-orderId="@order.Id" class="order-details-button">Order details</a>
-        </div> 
+        </div>
     }
 
 </div>

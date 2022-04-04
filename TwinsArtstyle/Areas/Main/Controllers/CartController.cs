@@ -18,16 +18,19 @@ namespace TwinsArtstyle.Areas.Main.Controllers
         private readonly IAddressService _addressService;
         private readonly UserManager<User> _userManager;
         private readonly IOrderService _orderService;
+        private readonly ILogger<CartController> _logger;
 
         public CartController(ICartService cartService,
             UserManager<User> userManager,
             IAddressService addressService,
-            IOrderService orderService)
+            IOrderService orderService,
+            ILogger<CartController> logger)
         {
             _cartService = cartService;
             _userManager = userManager;
             _addressService = addressService;
             _orderService = orderService;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -38,7 +41,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
                 var userCartIdClaim = HttpContext.User.FindFirst(ClaimType.CartId);
                 var result = await _cartService.AddToCart(userCartIdClaim.Value, product.productId, product.count);
 
-                if (result)
+                if (result.Success)
                 {
                     return Ok();
                 }
@@ -55,7 +58,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
                 var result = await _cartService
                 .RemoveFromCart(product.productId, HttpContext.User.FindFirst(ClaimType.CartId).Value);
 
-                if (result)
+                if (result.Success)
                 {
                     return Ok();
                 }
@@ -88,15 +91,16 @@ namespace TwinsArtstyle.Areas.Main.Controllers
         [HttpPost]
         public async Task<IActionResult> PlaceOrder(OrderDTO orderViewModel)
         {
-            bool result = await _orderService.
+            var result = await _orderService.
                 Add(orderViewModel, HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            if (result)
+            if (result.Success)
             {
                 await _cartService.CleanCart(HttpContext.User.FindFirst(ClaimType.CartId).Value);
                 return RedirectToAction("Index", "Home");
             }
 
+            _logger.LogError(result.ErrorMessage);
             return RedirectToAction(nameof(PlaceOrder));
         }
     }

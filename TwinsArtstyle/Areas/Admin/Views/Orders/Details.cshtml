@@ -1,5 +1,9 @@
 ﻿@model AdminAreaOrderViewModel
 
+@{
+    ViewData["Title"] = $"Order #{Model.OrderId}";
+}
+
 <div class="order-details">
     <div class="products">
         <table class="products-table">

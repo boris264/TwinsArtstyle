@@ -29,7 +29,7 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit([FromQuery] string email)
         {
-            if (email != null)
+            if (string.IsNullOrEmpty(email))
             {
                 var user = await _userManager.FindByEmailAsync(email);
 
@@ -47,7 +47,7 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
                 }
             }
 
-            return RedirectToAction("Registered");
+            return RedirectToAction(nameof(Registered));
         }
 
         [HttpPost]
@@ -70,7 +70,7 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
         public async Task<IActionResult> Delete([FromQuery] string email)
         {
             await _userService.DeleteUser(email);
-            return RedirectToAction("Registered");
+            return RedirectToAction(nameof(Registered));
         }
     }
 }
