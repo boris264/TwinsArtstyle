@@ -1,0 +1,23 @@
+[
+  {
+    "Id": "1fc61825-03e6-4446-9375-5b8bf75e2d83",
+    "ImageUrl": "https://google.com",
+    "Name": "Risunka 1",
+    "Price": 15,
+    "CategoryId": "1d5a97b2-2d21-4fad-83c9-787e7cefe2b6"
+  },
+  {
+    "Id": "3203980b-1021-46f9-966b-70f13c4dc5d6",
+    "ImageUrl": "https://google.com",
+    "Name": "Risunka 2",
+    "Price": 34,
+    "CategoryId": "1d5a97b2-2d21-4fad-83c9-787e7cefe2b6"
+  },
+  {
+    "Id": "70f179b7-85fc-4a08-be87-e6c098500ccf",
+    "ImageUrl": "https://google.com",
+    "Name": "Risunka 3",
+    "Price": 20,
+    "CategoryId": "6f03ec3a-c01b-40b0-9069-7543081cf110"
+  }
+]

@@ -1,12 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using TwinsArtstyle.Infrastructure.Data;
 using TwinsArtstyle.Infrastructure.Interfaces;
 using TwinsArtstyle.Infrastructure.Models;
 using TwinsArtstyle.Services.Constants;
@@ -54,8 +48,11 @@ namespace TwinsArtstyle.Services.Implementation
                 {
                     result.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
                 }
+
+                return result;
             }
 
+            result.ErrorMessage = "Invalid Cart Id!";
             return result;
         }
 
@@ -96,8 +93,11 @@ namespace TwinsArtstyle.Services.Implementation
                 {
                     operationResult.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
                 }
+
+                return operationResult;
             }
 
+            operationResult.ErrorMessage = "Invalid Cart and/or Product Id!";
             return operationResult;
         }
 
@@ -132,7 +132,6 @@ namespace TwinsArtstyle.Services.Implementation
 
         public async Task<IEnumerable<CartProductViewModel>> GetProductsForUser(ClaimsPrincipal user)
         {
-
             if (user != null)
             {
                 var userCartId = user.FindFirst("CartId").Value;
@@ -191,29 +190,41 @@ namespace TwinsArtstyle.Services.Implementation
                 {
                     result.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
                 }
+
+                return result;
             }
 
+            result.ErrorMessage = "Invalid Cart and/or Product Id!";
             return result;
         }
 
         public async Task<OperationResult> CleanCart(string cartId)
         {
             var result = new OperationResult();
-            var cartItems = await repository.All<CartProductCount>()
+            var cartExists = (await repository.
+                FindById<Cart>(new Guid(cartId))) == null ? false : true;
+
+            if(!string.IsNullOrEmpty(cartId) && cartExists)
+            {
+                var cartItems = await repository.All<CartProductCount>()
                 .Where(c => c.CartId.ToString() == cartId)
                 .ToListAsync();
 
-            try
-            {
-                repository.RemoveRange(cartItems);
-                await repository.SaveChanges();
-                result.Success = true;
-            }
-            catch (DbUpdateException)
-            {
-                result.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
+                try
+                {
+                    repository.RemoveRange(cartItems);
+                    await repository.SaveChanges();
+                    result.Success = true;
+                }
+                catch (DbUpdateException)
+                {
+                    result.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
+                }
+
+                return result;
             }
 
+            result.ErrorMessage = "Invalid Cart Id!";
             return result;
         }
     }

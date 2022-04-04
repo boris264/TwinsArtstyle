@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using TwinsArtstyle.Extensions;
 using TwinsArtstyle.Infrastructure.Data;
 using TwinsArtstyle.Infrastructure.Interfaces;
 using TwinsArtstyle.Infrastructure.Models;
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
 
 builder.Services.AddDefaultIdentity<User>(options =>
 {
@@ -34,13 +36,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/Main/User/Login";
 });
 
-builder.Services.AddScoped<IRepository, Repository>();
-builder.Services.AddScoped<ICartService, CartService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddScoped<IAddressService, AddressService>();
-builder.Services.AddScoped<IInboxService, InboxService>();
+builder.Services.AddApplicationServices();
 builder.Services.AddControllersWithViews();
 
 

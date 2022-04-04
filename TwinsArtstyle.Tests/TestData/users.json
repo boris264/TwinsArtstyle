@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "03fcf816-15f5-4df5-adc8-16f6ff504f3d",
+    "FirstName": "Boris",
+    "LastName": "Todorov",
+    "Email": "boristodorov12@gmail.com",
+    "PhoneNumber": "0892222222",
+    "CartId": "42f486e2-8e8d-4cdb-afd7-b15ecfd7b5c5"
+  },
+  {
+    "Id": "0de7ec96-154c-41da-9325-f305ed814417",
+    "FirstName": "Georgi",
+    "LastName": "Stoilov",
+    "Email": "georgistoilov@abv.bg",
+    "PhoneNumber": "0892222222",
+    "CartId": "1f93f0f9-5eeb-490a-a65c-1eafd8e36fa5"
+  },
+  {
+    "Id": "984e940f-59a0-441b-a8d1-104735dc1bd5",
+    "FirstName": "Ivan",
+    "LastName": "Ivan",
+    "Email": "ivanov@abv.bg",
+    "PhoneNumber": "0892222222",
+    "CartId": "edd0019f-288a-4365-80e4-fbfd5aac7e72"
+  }
+]           

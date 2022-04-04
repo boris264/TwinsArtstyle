@@ -17,13 +17,10 @@ namespace TwinsArtstyle.Services.Implementation
     public class AddressService : IAddressService
     {
         private readonly IRepository _repository;
-        private readonly UserManager<User> _userManager;
 
-        public AddressService(IRepository repository,
-            UserManager<User> userManager)
+        public AddressService(IRepository repository)
         {
             _repository = repository;
-            _userManager = userManager;
         }
 
         public async Task<IEnumerable<AddressViewModel>> GetAddressesForUser(string userId)
@@ -61,10 +58,12 @@ namespace TwinsArtstyle.Services.Implementation
                     result.Success = true;
                 }
 
+                result.ErrorMessage = "Address already exists for that user!";
+
             }
-            catch (ArgumentNullException)
+            catch (NullReferenceException)
             {
-                result.ErrorMessage = "Address name and/or text shouldn't be empty!";
+                result.ErrorMessage = "Invalid user Id was provided!";
             }
             catch(DbUpdateException)
             {

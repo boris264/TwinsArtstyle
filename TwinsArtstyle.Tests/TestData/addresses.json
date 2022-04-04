@@ -1,0 +1,20 @@
+[
+  {
+    "Id": 1,
+    "Name": "Test 1",
+    "AddressText": "Test 1 text",
+    "UserId": "03fcf816-15f5-4df5-adc8-16f6ff504f3d"
+  },
+  {
+    "Id": 2,
+    "Name": "Test 2",
+    "AddressText": "Test 2 text",
+    "UserId": "1f93f0f9-5eeb-490a-a65c-1eafd8e36fa5"
+  },
+  {
+    "Id": 3,
+    "Name": "Test 3",
+    "AddressText": "Test 3 text",
+    "UserId": "edd0019f-288a-4365-80e4-fbfd5aac7e72"
+  }
+]

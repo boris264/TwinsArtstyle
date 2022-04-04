@@ -1,0 +1,10 @@
+E:\TwinsArtstyle\.vs\TwinsArtstyle\v17\lut\0\b\TwinsArtstyle.Infrastructure\Debug\net6.0\TwinsArtstyle.Infrastructure.deps.json
+E:\TwinsArtstyle\.vs\TwinsArtstyle\v17\lut\0\b\TwinsArtstyle.Infrastructure\Debug\net6.0\TwinsArtstyle.Infrastructure.dll
+E:\TwinsArtstyle\.vs\TwinsArtstyle\v17\lut\0\i\TwinsArtstyle.Infrastructure\Debug\net6.0\TwinsArtstyle.Infrastructure.csproj.AssemblyReference.cache
+E:\TwinsArtstyle\.vs\TwinsArtstyle\v17\lut\0\i\TwinsArtstyle.Infrastructure\Debug\net6.0\TwinsArtstyle.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+E:\TwinsArtstyle\.vs\TwinsArtstyle\v17\lut\0\i\TwinsArtstyle.Infrastructure\Debug\net6.0\TwinsArtstyle.Infrastructure.AssemblyInfoInputs.cache
+E:\TwinsArtstyle\.vs\TwinsArtstyle\v17\lut\0\i\TwinsArtstyle.Infrastructure\Debug\net6.0\TwinsArtstyle.Infrastructure.AssemblyInfo.cs
+E:\TwinsArtstyle\.vs\TwinsArtstyle\v17\lut\0\i\TwinsArtstyle.Infrastructure\Debug\net6.0\TwinsArtstyle.Infrastructure.csproj.CopyComplete
+E:\TwinsArtstyle\.vs\TwinsArtstyle\v17\lut\0\i\TwinsArtstyle.Infrastructure\Debug\net6.0\TwinsArtstyle.Infrastructure.dll
+E:\TwinsArtstyle\.vs\TwinsArtstyle\v17\lut\0\i\TwinsArtstyle.Infrastructure\Debug\net6.0\refint\TwinsArtstyle.Infrastructure.dll
+E:\TwinsArtstyle\.vs\TwinsArtstyle\v17\lut\0\i\TwinsArtstyle.Infrastructure\Debug\net6.0\ref\TwinsArtstyle.Infrastructure.dll
