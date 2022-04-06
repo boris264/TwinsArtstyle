@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using TwinsArtstyle.Infrastructure.Models;
 using TwinsArtstyle.Services.Constants;
 using TwinsArtstyle.Services.Implementation;
 using TwinsArtstyle.Services.Interfaces;
@@ -63,7 +62,7 @@ namespace TwinsArtstyle.Tests.ServicesTests
 
             var result = await productService.AddProduct(product);
             Assert.That(result.Success, Is.False);
-            Assert.That(result.ErrorMessage, Is.EqualTo(ErrorMessages.DbUpdateFailedMessage));
+            Assert.That(result.ErrorMessage, Is.EqualTo(Messages.DbUpdateFailed));
         }
 
         [Test]

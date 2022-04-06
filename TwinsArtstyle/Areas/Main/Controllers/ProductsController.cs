@@ -29,7 +29,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
         {
             if(!await _productService.Exists(productId))
             {
-                return Redirect("/");
+                return RedirectToAction("Index", "Home");
             }
 
             var product = await _productService.GetById(productId);

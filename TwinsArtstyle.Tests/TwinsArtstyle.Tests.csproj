@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ControllersTests\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\TwinsArtstyle.Infrastructure\TwinsArtstyle.Infrastructure.csproj" />
     <ProjectReference Include="..\TwinsArtstyle.Services\TwinsArtstyle.Services.csproj" />
   </ItemGroup>

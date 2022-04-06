@@ -46,7 +46,7 @@ namespace TwinsArtstyle.Services.Implementation
                 }
                 catch (DbUpdateException)
                 {
-                    result.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
+                    result.ErrorMessage = Messages.DbUpdateFailed;
                 }
 
                 return result;
@@ -91,7 +91,7 @@ namespace TwinsArtstyle.Services.Implementation
                 }
                 catch (DbUpdateException)
                 {
-                    operationResult.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
+                    operationResult.ErrorMessage = Messages.DbUpdateFailed;
                 }
 
                 return operationResult;
@@ -188,7 +188,7 @@ namespace TwinsArtstyle.Services.Implementation
                 }
                 catch (DbUpdateException)
                 {
-                    result.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
+                    result.ErrorMessage = Messages.DbUpdateFailed;
                 }
 
                 return result;
@@ -218,7 +218,7 @@ namespace TwinsArtstyle.Services.Implementation
                 }
                 catch (DbUpdateException)
                 {
-                    result.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
+                    result.ErrorMessage = Messages.DbUpdateFailed;
                 }
 
                 return result;

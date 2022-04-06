@@ -69,7 +69,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
                     return LocalRedirect(ReturnUrl);
                 }
 
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                ModelState.AddModelError(string.Empty, Messages.InvalidLoginAttempt);
             }
 
             return View(loginModel);
@@ -123,7 +123,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
                     }
                 }
 
-                ModelState.AddModelError(string.Empty, "Registration failed.");
+                ModelState.AddModelError(string.Empty, Messages.RegistrationFailed);
             }
 
             return View(registerModel);

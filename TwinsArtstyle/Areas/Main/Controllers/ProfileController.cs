@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TwinsArtstyle.Infrastructure.Models;
+using TwinsArtstyle.Services.Constants;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels;
 
@@ -46,12 +47,12 @@ namespace TwinsArtstyle.Areas.Main.Controllers
 
                 if (result.Succeeded)
                 {
-                    ViewData["UpdateSuccessfull"] = "Profile updated successfully!";
+                    ViewData["UpdateSuccessfull"] = Messages.ProfileUpdatedSuccessfully;
                     return RedirectToAction(nameof(UserProfile));
                 }
             }
 
-            ModelState.AddModelError(string.Empty, "Profile update failed!");
+            ModelState.AddModelError(string.Empty, Messages.ProfileUpdateFailed);
             return View(model);
         }
     }

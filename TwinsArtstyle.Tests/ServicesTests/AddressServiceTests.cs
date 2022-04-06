@@ -1,14 +1,7 @@
-﻿using Moq;
-using NUnit.Framework;
-using TwinsArtstyle.Infrastructure.Interfaces;
-using TwinsArtstyle.Infrastructure.Models;
-using TwinsArtstyle.Services.Implementation;
-using TwinsArtstyle.Services.Interfaces;
-using Microsoft.EntityFrameworkCore.InMemory;
-using TwinsArtstyle.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using TwinsArtstyle.Services.ViewModels;
+﻿using NUnit.Framework;
 using TwinsArtstyle.Services.Constants;
+using TwinsArtstyle.Services.Implementation;
+using TwinsArtstyle.Services.ViewModels;
 
 namespace TwinsArtstyle.Tests.ServicesTests
 {
@@ -91,7 +84,7 @@ namespace TwinsArtstyle.Tests.ServicesTests
             string userId = "03fcf816-15f5-4df5-adc8-16f6ff504f3d";
             var addressService = new AddressService(repository);
             var result = await addressService.AddNewAddress(addressViewModel, userId);
-            Assert.That(result.ErrorMessage, Is.EqualTo(ErrorMessages.DbUpdateFailedMessage));
+            Assert.That(result.ErrorMessage, Is.EqualTo(Messages.DbUpdateFailed));
         }
 
         [Test]

@@ -45,7 +45,7 @@ namespace TwinsArtstyle.Services.Implementation
                 }
                 catch (DbUpdateException)
                 {
-                    result.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
+                    result.ErrorMessage = Messages.DbUpdateFailed;
                 }
 
                 return result;

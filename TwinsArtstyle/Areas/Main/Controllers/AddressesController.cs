@@ -43,7 +43,8 @@ namespace TwinsArtstyle.Areas.Main.Controllers
             if (ModelState.IsValid)
             {
                 OperationResult result =
-                await _addressService.AddNewAddress(addressViewModel, _userManager.GetUserId(User));
+                await _addressService.AddNewAddress(addressViewModel, 
+                HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
                 if (result.Success)
                 {
@@ -51,9 +52,9 @@ namespace TwinsArtstyle.Areas.Main.Controllers
                 }
 
                 _logger.LogError(result.ErrorMessage);
-                ModelState.AddModelError(string.Empty, "An unexpected error occured!");
             }
 
+            ModelState.AddModelError(string.Empty, Messages.UnexpectedErrorOccured);
             return View(addressViewModel);
         }
     }
