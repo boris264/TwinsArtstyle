@@ -27,9 +27,14 @@ namespace TwinsArtstyle.Tests.Helpers
             dbContext.Users
                 .Select(u => u.Addresses
                 .Concat(dbContext.Addresses.Where(a => a.UserId == u.Id)));
-
+            dbContext.Orders.AddRange(GenerateOrdersData());
             dbContext.SaveChanges();
             return dbContext;
+        }
+
+        private static IEnumerable<Order> GenerateOrdersData()
+        {
+            return ParseJsonTestData<IEnumerable<Order>>("TestData/orders.json");
         }
 
         private static IEnumerable<Cart> GenerateCartsData()

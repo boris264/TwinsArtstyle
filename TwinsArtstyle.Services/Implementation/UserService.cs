@@ -32,7 +32,6 @@ namespace TwinsArtstyle.Services.Implementation
 
         public async Task<OperationResult> DeleteUser(string email)
         {
-
             var result = new OperationResult();
             var user = await _userManager.FindByEmailAsync(email);
 
@@ -48,6 +47,8 @@ namespace TwinsArtstyle.Services.Implementation
                 {
                     result.ErrorMessage = ErrorMessages.DbUpdateFailedMessage;
                 }
+
+                return result;
             }
 
             result.ErrorMessage = "Invalid email address!";

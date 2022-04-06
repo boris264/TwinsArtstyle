@@ -1,39 +1,20 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using TwinsArtstyle.Infrastructure.Data;
-using TwinsArtstyle.Infrastructure.Interfaces;
-using TwinsArtstyle.Infrastructure.Models;
-using TwinsArtstyle.Services.Constants;
 using TwinsArtstyle.Services.Implementation;
 using TwinsArtstyle.Services.Interfaces;
-using TwinsArtstyle.Tests.Helpers;
 
 namespace TwinsArtstyle.Tests.ServicesTests
 {
     [TestFixture]
-    public class CartServiceTests
+    public class CartServiceTests : ServiceTests
     {
-        private ApplicationDbContext dbContext;
-        private IRepository repository;
         private ICartService cartService;
-        private UserManager<User> userManager;
 
         [SetUp]
-        public void Setup()
+        public override void Setup()
         {
-            dbContext = InMemoryDbConfig.CreateDbContext("Carts_Test_Database");
-            repository = new Repository(dbContext);
-            userManager = new UserManager<User>(new UserStore<User>(dbContext), null, null, null, null, null, null, null, null);
+            base.Setup();
             cartService = new CartService(repository, userManager);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            dbContext.Database.EnsureDeleted();
-            dbContext.Dispose();
         }
 
         [Test]

@@ -34,6 +34,9 @@
     <None Update="TestData\categories.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestData\orders.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\products.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

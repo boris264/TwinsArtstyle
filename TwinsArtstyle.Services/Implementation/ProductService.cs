@@ -38,6 +38,7 @@ namespace TwinsArtstyle.Services.Implementation
             if (product.Category == null)
             {
                 result.ErrorMessage = "Invalid category!";
+                return result;
             }
 
             try

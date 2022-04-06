@@ -13,34 +13,13 @@ using TwinsArtstyle.Services.Constants;
 namespace TwinsArtstyle.Tests.ServicesTests
 {
     [TestFixture]
-    public class AddressServiceTests
+    public class AddressServiceTests : ServiceTests
     {
-        private DbContextOptions<ApplicationDbContext> dbContextOptions;
-        private ApplicationDbContext dbContext;
-        private IRepository repository;
-
-        [OneTimeSetUp]
-        public void SetupInMemoryDatabase()
-        {
-            dbContextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "Users_And_Addresses")
-                .Options;
-
-            dbContext = new ApplicationDbContext(dbContextOptions);
-            var addresses = GetAddressesData();
-            dbContext.Addresses.AddRange(addresses);
-            dbContext.Users.AddRange(GetUsersData());
-            dbContext.Users
-                .Select(u => u.Addresses.Concat(addresses.Where(a => a.UserId == u.Id)));
-            dbContext.SaveChanges();
-            repository = new Repository(dbContext);
-        }
-
         [Test]
         public async Task CheckAddressesForUser()
         {
             var addressService = new AddressService(repository);
-            var addressesForUser = await addressService.GetAddressesForUser("c194bf04-b556-4fd3-9bca-674b9683514d");
+            var addressesForUser = await addressService.GetAddressesForUser("03fcf816-15f5-4df5-adc8-16f6ff504f3d");
 
             Assert.That(addressesForUser.Any(n => n.Name == "Test 1"));
         }
@@ -69,7 +48,7 @@ namespace TwinsArtstyle.Tests.ServicesTests
                 Name = "test address",
                 AddressText = "New York"
             };
-            string userId = "c194bf04-b556-4fd3-9bca-674b9683514d";
+            string userId = "03fcf816-15f5-4df5-adc8-16f6ff504f3d";
             var addressService = new AddressService(repository);
             var result = await addressService.AddNewAddress(addressViewModel, userId);
             Assert.That(result.Success, Is.Not.False);
@@ -83,7 +62,7 @@ namespace TwinsArtstyle.Tests.ServicesTests
                 Name = "Test 1",
                 AddressText = "Test 1 text"
             };
-            string userId = "c194bf04-b556-4fd3-9bca-674b9683514d";
+            string userId = "03fcf816-15f5-4df5-adc8-16f6ff504f3d";
             var addressService = new AddressService(repository);
             var result = await addressService.AddNewAddress(addressViewModel, userId);
             Assert.That(result.ErrorMessage, Is.EqualTo("Address already exists for that user!"));
@@ -109,7 +88,7 @@ namespace TwinsArtstyle.Tests.ServicesTests
         {
             AddressViewModel addressViewModel = new AddressViewModel();
 
-            string userId = "c194bf04-b556-4fd3-9bca-674b9683514d";
+            string userId = "03fcf816-15f5-4df5-adc8-16f6ff504f3d";
             var addressService = new AddressService(repository);
             var result = await addressService.AddNewAddress(addressViewModel, userId);
             Assert.That(result.ErrorMessage, Is.EqualTo(ErrorMessages.DbUpdateFailedMessage));
@@ -119,62 +98,10 @@ namespace TwinsArtstyle.Tests.ServicesTests
         public async Task CheckIfAddressExistsForUser()
         {
             var addressService = new AddressService(repository);
-            var resultUser1 = await addressService.AddressExistsForUser("Test 1", "c194bf04-b556-4fd3-9bca-674b9683514d");
-            var resultUser2 = await addressService.AddressExistsForUser("Test 3", "ecfe30b2-dfd4-4723-a8f8-77a7330ac8db");
+            var resultUser1 = await addressService.AddressExistsForUser("Test 1", "03fcf816-15f5-4df5-adc8-16f6ff504f3d");
+            var resultUser2 = await addressService.AddressExistsForUser("Test 3", "edd0019f-288a-4365-80e4-fbfd5aac7e72");
             Assert.That(resultUser1, Is.Not.Null);
             Assert.That(resultUser2, Is.Not.Null);
-        }
-
-        public IEnumerable<Address> GetAddressesData()
-        {
-            return new List<Address>()
-            {
-                new Address()
-                {
-                    Name = "Test 1",
-                    AddressText = "Test 1 text",
-                    UserId = "c194bf04-b556-4fd3-9bca-674b9683514d"
-                },
-                new Address()
-                {
-                    Name = "Test 2",
-                    AddressText = "Test 2 text",
-                    UserId = "c194bf04-b556-4fd3-9bca-674b9683514d"
-                },
-                new Address()
-                {
-                    Name = "Test 3",
-                    AddressText = "Test 3 text",
-                    UserId = "ecfe30b2-dfd4-4723-a8f8-77a7330ac8db"
-                },
-                new Address()
-                {
-                    Name = "Test 4",
-                    AddressText = "Test 4 text",
-                    UserId = "ecfe30b2-dfd4-4723-a8f8-77a7330ac8db"
-                },
-            };
-        }
-
-        public IEnumerable<User> GetUsersData()
-        {
-            return new List<User>()
-            {
-                new User()
-                {
-                    Id = "c194bf04-b556-4fd3-9bca-674b9683514d",
-                    FirstName = "Boris",
-                    LastName = "Todorov",
-                    Email = "boristodorov1343@abv.bg",
-                },
-                new User()
-                {
-                    Id = "ecfe30b2-dfd4-4723-a8f8-77a7330ac8db",
-                    FirstName = "Ivan",
-                    LastName = "Georgiev",
-                    Email = "ivangeorgiev64@gmail.com",
-                }
-            };
         }
     }
 }

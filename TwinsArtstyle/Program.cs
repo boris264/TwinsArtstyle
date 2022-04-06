@@ -2,10 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TwinsArtstyle.Extensions;
 using TwinsArtstyle.Infrastructure.Data;
-using TwinsArtstyle.Infrastructure.Interfaces;
 using TwinsArtstyle.Infrastructure.Models;
-using TwinsArtstyle.Services.Implementation;
-using TwinsArtstyle.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,7 +35,6 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddApplicationServices();
 builder.Services.AddControllersWithViews();
-
 
 var app = builder.Build();
 
