@@ -17,13 +17,10 @@ namespace TwinsArtstyle.Services.Implementation
     public class ProductService : IProductService
     {
         private readonly IRepository _repository;
-        private readonly IDistributedCache _cache;
 
-        public ProductService(IRepository repository,
-            IDistributedCache cache)
+        public ProductService(IRepository repository)
         {
             _repository = repository;
-            _cache = cache;
         }
 
         public async Task<OperationResult> AddProduct(ProductViewModel productViewModel)

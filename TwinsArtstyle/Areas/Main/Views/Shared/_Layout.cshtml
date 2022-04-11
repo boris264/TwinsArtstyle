@@ -1,13 +1,17 @@
 @using System.Security.Claims
+@using System.Text
+@using TwinsArtstyle.Helpers
+@using TwinsArtstyle.Services.DTOs
 @using TwinsArtstyle.Services.Interfaces
-@inject ICartService _cartService
 
 @{
-    var userCartItems = Enumerable.Empty<CartProductViewModel>();
+    var userCartDTO = new CartDTO();
 
     if(User.Identity.IsAuthenticated)
     {
-        userCartItems = await _cartService.GetProductsForUser(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+        userCartDTO = JsonHelper
+        .Deserialize<CartDTO>(Encoding.Unicode.GetString(Context.Session
+            .Get(User.FindFirst(ClaimTypes.NameIdentifier).Value))) ?? new CartDTO();
     }
 }
 
@@ -44,7 +48,7 @@
                             <button class="top-cart-button top-cart animate-background-color" dropdown-button>Cart</button>
                         </div>
                         <div class="cart">
-                            <partial name="_CartPartial" model="userCartItems"/>
+                            <partial name="_CartPartial" model="userCartDTO"/>
                         </div>
                     </div>
                 </li>

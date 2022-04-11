@@ -2,12 +2,10 @@
 
 namespace TwinsArtstyle.Services.DTOs
 {
-    public class UserCartDTO
+    public class CartDTO
     {
-        public string UserId { get; set; }
-
         public Guid CartId { get; set; }
 
-        public IList<CartProductViewModel> Products { get; set; }
+        public IList<CartProductViewModel> Products { get; set; } = new List<CartProductViewModel>();
     }
 }

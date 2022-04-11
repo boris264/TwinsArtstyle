@@ -13,6 +13,7 @@ var logger = LoggerFactory.Create(options =>
 {
     options.AddConfiguration(builder.Configuration);
     options.AddConsole();
+
 }).CreateLogger("Console");
 
 // Add services to the container.
@@ -98,6 +99,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseSession();
+app.UseSessionLoader();
 
 //app.MapControllerRoute(
 //    name: "default",

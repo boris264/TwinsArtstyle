@@ -1,17 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Security.Claims;
 using System.Text;
-using System.Text.Encodings.Web;
 using TwinsArtstyle.Helpers;
 using TwinsArtstyle.Infrastructure.Models;
 using TwinsArtstyle.Services.Constants;
+using TwinsArtstyle.Services.DTOs;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels;
+using TwinsArtstyle.Services.ViewModels.ProductModels;
 
 namespace TwinsArtstyle.Areas.Main.Controllers
 {
@@ -71,9 +70,17 @@ namespace TwinsArtstyle.Areas.Main.Controllers
                 {
                     var user = await _userManager.FindByEmailAsync(loginModel.Email);
                     var userCartProducts = await _cartService.GetProductsForUser(user.Id);
+
+                    var userCartDTO = new CartDTO()
+                    {
+                        CartId = user.CartId,
+                        Products = new List<CartProductViewModel>(userCartProducts)
+                    };
+
                     _logger.LogInformation("User logged in.");
-                    HttpContext.Session.Set(user.Id, Encoding.Unicode.GetBytes(JsonHelper.Serialize(userCartProducts)));
-                    //await HttpContext.Session.LoadAsync();
+
+                    HttpContext.Session.Set(user.Id, Encoding.Unicode.GetBytes(JsonHelper.Serialize(userCartDTO)));
+
                     return LocalRedirect(ReturnUrl);
                 }
 
@@ -108,18 +115,6 @@ namespace TwinsArtstyle.Areas.Main.Controllers
                     await _userManager.AddClaimAsync(user, new Claim(ClaimType.CartId, user.CartId.ToString()));
                     await _userManager.AddToRoleAsync(user, RoleType.User);
 
-                    //var userId = await _userManager.GetUserIdAsync(user);
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    //var callbackUrl = Url.Page(
-                    //    "/Account/ConfirmEmail",
-                    //    pageHandler: null,
-                    //    values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                    //    protocol: Request.Scheme);
-
-                    //await _emailSender.SendEmailAsync(registerModel.Email, "Confirm your email",
-                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = registerModel.Email, returnUrl = "/Home/Index"});
@@ -140,7 +135,6 @@ namespace TwinsArtstyle.Areas.Main.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 

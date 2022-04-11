@@ -29,6 +29,8 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
 
         public async Task<IActionResult> Manage()
         {
+            // This is not good, but it does the job for now. Will fix it when i implement my own IDistributedCache.
+
             var products = await _productService.GetProducts();
             await _cache.SetAsync("products", Encoding.Unicode.GetBytes(JsonHelper.Serialize(products)));
             
@@ -69,7 +71,6 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 if (productViewModel.Image?.Length > 0)
                 {
                     var imageName = Path.GetFileName(productViewModel.Image.FileName);
