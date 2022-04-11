@@ -18,7 +18,7 @@ namespace TwinsArtstyle.Services.ViewModels
         [EmailAddress]
         public string Email { get; set; }
 
-        [Phone]
+        [RegularExpression(@"^(\+359|0) *(87|88|89|98) *[0-9] *[0-9]{6}$", ErrorMessage = "Invalid phone number!")]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
     }

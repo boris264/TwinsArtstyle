@@ -1,17 +1,41 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TwinsArtstyle.Extensions;
+using TwinsArtstyle.Helpers;
 using TwinsArtstyle.Infrastructure.Data;
 using TwinsArtstyle.Infrastructure.Models;
+using TwinsArtstyle.Services.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var logger = LoggerFactory.Create(options =>
+{
+    options.AddConfiguration(builder.Configuration);
+    options.AddConsole();
+}).CreateLogger("Console");
+
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var redisConnectionString = builder.Configuration.GetConnectionString("Redis");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = redisConnectionString;
+});
+
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = "TwinsArtstyle.Session";
+    options.Cookie.HttpOnly = true;
+    options.IdleTimeout = TimeSpan.FromMinutes(CookieConstants.SessionCookieExpirationMinutes);
+});
 
 
 builder.Services.AddDefaultIdentity<User>(options =>
@@ -31,12 +55,27 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.AccessDeniedPath = "/Main/Home/AccessDenied";
     options.LoginPath = "/Main/User/Login";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(CookieConstants.IdentityCookieExpirationMinutes);
 });
 
 builder.Services.AddApplicationServices();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+app.Lifetime.ApplicationStarted.Register(async () =>
+{
+    try
+    {
+        await CacheConfigurator.ConfigureRedisCache(app.Services);
+        logger.LogInformation("Successfully loaded cached data into redis.");
+    }
+    catch (Exception e)
+    {
+        logger.LogCritical($"Failed to load data into the Redis cache store! Exception message: {e.Message}\n");
+        await app.StopAsync();
+    }
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -50,12 +89,15 @@ else
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
 
 //app.MapControllerRoute(
 //    name: "default",

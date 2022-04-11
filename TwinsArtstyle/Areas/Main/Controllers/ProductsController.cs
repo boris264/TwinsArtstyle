@@ -1,39 +1,54 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text;
+using TwinsArtstyle.Helpers;
 using TwinsArtstyle.Services.Interfaces;
+using TwinsArtstyle.Services.ViewModels.ProductModels;
 
 namespace TwinsArtstyle.Areas.Main.Controllers
 {
     public class ProductsController : MainController
     {
         private readonly IProductService _productService;
+        private readonly IDistributedCache _cache;
 
-        public ProductsController(IProductService productService)
+        public ProductsController(IProductService productService,
+            IDistributedCache cache)
         {
             _productService = productService;
+            _cache = cache;
         }
 
         public async Task<IActionResult> ByCategory([FromQuery] string category)
         {
-            if(category == null)
+            if (string.IsNullOrEmpty(category))
             {
                 return NotFound();
             }
 
-            var productsByCategory = await _productService.GetByCategory(category);
+            var products = JsonHelper
+                .Deserialize<IEnumerable<ProductViewModel>>(Encoding.Unicode.GetString(await _cache.GetAsync($"products")));
 
-            ViewData["Category"] = category;
-            return View(productsByCategory);
+            if(products.Any(c => c.Category == category))
+            {
+                ViewData["Category"] = category;
+                return View(products.Where(p => p.Category == category));
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> Details(string productId)
         {
-            if(!await _productService.Exists(productId))
+            var products = JsonHelper.
+                Deserialize<IEnumerable<ProductViewModel>>(Encoding.Unicode.GetString(await _cache.GetAsync("products")));
+
+            if (!products.Any(p => p.Id == productId))
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var product = await _productService.GetById(productId);
-            return View(product);
+            return View(products.Where(p => p.Id == productId).FirstOrDefault());
         }
     }
 }

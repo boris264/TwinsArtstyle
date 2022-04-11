@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,13 @@ namespace TwinsArtstyle.Services.Implementation
     public class ProductService : IProductService
     {
         private readonly IRepository _repository;
+        private readonly IDistributedCache _cache;
 
-        public ProductService(IRepository repository)
+        public ProductService(IRepository repository,
+            IDistributedCache cache)
         {
             _repository = repository;
+            _cache = cache;
         }
 
         public async Task<OperationResult> AddProduct(ProductViewModel productViewModel)
@@ -104,6 +108,36 @@ namespace TwinsArtstyle.Services.Implementation
                     Description = p.Description,
                 })
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<OperationResult> DeleteById(string productId)
+        {
+            var operationResult = new OperationResult();
+            var product = await _repository.FindById<Product>(new Guid(productId));
+
+            if(product != null)
+            {
+                try
+                {
+                    _repository.Remove(product);
+                    await _repository.SaveChanges();
+                    File.Delete($"{Directory.GetCurrentDirectory()}\\wwwroot\\{product.ImageUrl}");
+                    operationResult.Success = true;
+                }
+                catch (DbUpdateException)
+                {
+                    operationResult.ErrorMessage = Messages.DbUpdateFailed;
+                }
+                catch (DirectoryNotFoundException e)
+                {
+                    operationResult.ErrorMessage = $"Couldn't locate image path! Exception message: {e.Message}";
+                }
+
+                return operationResult;
+            }
+
+            operationResult.ErrorMessage = "Invalid product!";
+            return operationResult;
         }
     }
 }

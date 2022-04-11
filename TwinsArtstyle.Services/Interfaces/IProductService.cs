@@ -14,5 +14,7 @@ namespace TwinsArtstyle.Services.Interfaces
         public Task<bool> Exists(string productId);
 
         public Task<ProductViewModel> GetById(string productId);
+
+        public Task<OperationResult> DeleteById(string productId);
     }
 }

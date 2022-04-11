@@ -1,6 +1,6 @@
 ﻿@model ProductViewModel
 
-<div class="product-card">
+<div class="product-card" productId="@Model.Id">
     <div class="product-image-container">
         <img src="@Model.ImageUrl" />
     </div>
@@ -13,4 +13,7 @@
     <div class="order-container">
         <span class="price form-label">@Model.Price лв.</span>
     </div>
+    <a asp-area="Admin" asp-controller="Products" asp-action="Delete" asp-route-productId="@Model.Id">
+        <i class="bi bi-x-lg action-icon delete"></i>
+    </a>
 </div>

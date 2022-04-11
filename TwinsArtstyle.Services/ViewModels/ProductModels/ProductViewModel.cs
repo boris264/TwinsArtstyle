@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace TwinsArtstyle.Services.ViewModels.ProductModels
 {
@@ -11,6 +13,7 @@ namespace TwinsArtstyle.Services.ViewModels.ProductModels
         [StringLength(60)]
         public string Name { get; set; }
 
+        [JsonIgnore]
         public IFormFile? Image { get; set; }
 
         [Url]

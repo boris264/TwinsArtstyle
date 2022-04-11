@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Caching.Distributed;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
+using TwinsArtstyle.Helpers;
 using TwinsArtstyle.Infrastructure.Models;
 using TwinsArtstyle.Services.Constants;
 using TwinsArtstyle.Services.Interfaces;
@@ -23,13 +25,15 @@ namespace TwinsArtstyle.Areas.Main.Controllers
         private readonly IUserEmailStore<User> _emailStore;
         private readonly ICartService _cartService;
         private readonly IEmailSender _emailSender;
+        private readonly IDistributedCache _cache;
 
         public UserController(SignInManager<User> signInManager,
             ILogger<LoginViewModel> logger,
             UserManager<User> userManager,
             IUserStore<User> userStore,
             ICartService cartService,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IDistributedCache cache)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -38,6 +42,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
             _cartService = cartService;
             _emailSender = emailSender;
             _logger = logger;
+            _cache = cache;
         }
 
         public string ReturnUrl { get; set; }
@@ -64,8 +69,11 @@ namespace TwinsArtstyle.Areas.Main.Controllers
                 
                 if (result.Succeeded)
                 {
+                    var user = await _userManager.FindByEmailAsync(loginModel.Email);
+                    var userCartProducts = await _cartService.GetProductsForUser(user.Id);
                     _logger.LogInformation("User logged in.");
-
+                    HttpContext.Session.Set(user.Id, Encoding.Unicode.GetBytes(JsonHelper.Serialize(userCartProducts)));
+                    //await HttpContext.Session.LoadAsync();
                     return LocalRedirect(ReturnUrl);
                 }
 
@@ -132,7 +140,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-
+            HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 

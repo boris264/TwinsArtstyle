@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TwinsArtstyle.Infrastructure.Models;
+using TwinsArtstyle.Services.Constants;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels;
 
@@ -29,7 +30,7 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit([FromQuery] string email)
         {
-            if (string.IsNullOrEmpty(email))
+            if (!string.IsNullOrEmpty(email))
             {
                 var user = await _userManager.FindByEmailAsync(email);
 
@@ -63,7 +64,7 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
                 }
             }
 
-            ModelState.AddModelError(string.Empty, "Something went wrong!");
+            ModelState.AddModelError(string.Empty, Messages.UnexpectedErrorOccured);
             return View(model);
         }
 
