@@ -19,6 +19,10 @@
         {
             userCart = _cacheSerializer.DeserializeFromByteArray<IEnumerable<CartProductViewModel>>(userCartBytes);
         }
+        else
+        {
+            userCart = await _cartService.GetProductsForUser(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        }
     }
 }
 
