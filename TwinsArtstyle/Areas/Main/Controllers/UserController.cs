@@ -3,13 +3,10 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Security.Claims;
-using System.Text;
 using TwinsArtstyle.Infrastructure.Models;
 using TwinsArtstyle.Services.Constants;
-using TwinsArtstyle.Services.DTOs;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels;
-using TwinsArtstyle.Services.ViewModels.ProductModels;
 
 namespace TwinsArtstyle.Areas.Main.Controllers
 {
@@ -162,13 +159,8 @@ namespace TwinsArtstyle.Areas.Main.Controllers
             var user = await _userManager.FindByEmailAsync(userEmail);
             var userCartProducts = await _cartService.GetProductsForUser(user.Id);
 
-            var userCartDTO = new CartDTO()
-            {
-                Products = new List<CartProductViewModel>(userCartProducts)
-            };
-
             await _cache
-                .SetAsync(user.CartId.ToString(), _cacheSerializer.SerializeToByteArray(userCartDTO));
+                .SetAsync(user.CartId.ToString(), _cacheSerializer.SerializeToByteArray(userCartProducts));
         }
     }
 }

@@ -3,12 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Security.Claims;
-using System.Text;
 using TwinsArtstyle.Infrastructure.Models;
 using TwinsArtstyle.Services.Constants;
-using TwinsArtstyle.Services.DTOs;
 using TwinsArtstyle.Services.Interfaces;
-using TwinsArtstyle.Services.ViewModels;
 using TwinsArtstyle.Services.ViewModels.OrderModels;
 using TwinsArtstyle.Services.ViewModels.ProductModels;
 
@@ -88,16 +85,22 @@ namespace TwinsArtstyle.Areas.Main.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var userAddresses = await _addressService.GetAddressesForUser(user.Id);
-            var userCartDTO = _cacheSerializer
-                .DeserializeFromByteArray<CartDTO>(await _cache.GetAsync(user.CartId.ToString()));
+            var userCartProducts = _cacheSerializer
+                .DeserializeFromByteArray<IEnumerable<CartProductViewModel>>(await _cache.GetAsync(user.CartId.ToString()));
+
+            if(userCartProducts == null)
+            {
+                _logger.LogWarning("Couldn't load user's cart items from cache! Loading them from database instead...");
+                
+            }
 
             if (user != null)
             {
                 var orderViewModel = new PlaceOrderViewModel()
                 {
                     Addresses = userAddresses,
-                    Products = userCartDTO.Products,
-                    TotalPrice = userCartDTO.Products.Sum(p => p.Count * p.Product.Price)
+                    Products = userCartProducts,
+                    TotalPrice = userCartProducts.Sum(p => p.Count * p.Product.Price)
                 };
 
                 return View(orderViewModel);
@@ -116,7 +119,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
             if (result.Success)
             {
                 await _cartService.CleanCart(userCartId);
-                await _cache.SetAsync(userCartId, _cacheSerializer.SerializeToByteArray(new CartDTO()));
+                await _cache.SetAsync(userCartId, _cacheSerializer.SerializeToByteArray(new List<CartProductViewModel>()));
 
                 return RedirectToAction("Index", "Home");
             }
@@ -134,12 +137,14 @@ namespace TwinsArtstyle.Areas.Main.Controllers
                 var productsFromCache = _cacheSerializer
                     .DeserializeFromByteArray<IEnumerable<ProductViewModel>>(productFromCacheBytes);
 
-                var cartFromCache = _cacheSerializer.DeserializeFromByteArray<CartDTO>(await _cache.GetAsync(cartId));
+                var cartFromCache = _cacheSerializer
+                    .DeserializeFromByteArray<IEnumerable<CartProductViewModel>>(await _cache.GetAsync(cartId))
+                    .ToList();
 
                 var productToAdd = productsFromCache.Where(p => p.Id == productDTO.productId)
                     .FirstOrDefault();
 
-                var cartProductExists = cartFromCache.Products.Where(p => p.Product.Id == productToAdd.Id)
+                var cartProductExists = cartFromCache.Where(p => p.Product.Id == productToAdd.Id)
                         .FirstOrDefault();
 
                 if (cartProductExists != null)
@@ -148,7 +153,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
                 }
                 else
                 {
-                    cartFromCache.Products.Add(new CartProductViewModel()
+                    cartFromCache.Add(new CartProductViewModel()
                     {
                         Product = productToAdd,
                         Count = productDTO.count
@@ -161,11 +166,13 @@ namespace TwinsArtstyle.Areas.Main.Controllers
 
         private async Task RemoveProductFromCache(ProductDTO productDTO, string cartId)
         {
-            var cartFromCache = _cacheSerializer.DeserializeFromByteArray<CartDTO>(await _cache.GetAsync(cartId));
-            var productToRemove = cartFromCache.Products.Where(p => p.Product.Id == productDTO.productId)
+            var cartFromCache = _cacheSerializer
+                .DeserializeFromByteArray<IEnumerable<CartProductViewModel>>(await _cache.GetAsync(cartId))
+                .ToList();
+            var productToRemove = cartFromCache.Where(p => p.Product.Id == productDTO.productId)
                 .FirstOrDefault();
             
-            if(cartFromCache.Products.Remove(productToRemove))
+            if(cartFromCache.Remove(productToRemove))
             {
                 await _cache.SetAsync(cartId, _cacheSerializer.SerializeToByteArray(cartFromCache));
             }
