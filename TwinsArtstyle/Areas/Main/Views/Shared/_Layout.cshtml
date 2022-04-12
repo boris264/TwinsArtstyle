@@ -1,17 +1,24 @@
 @using System.Security.Claims
 @using System.Text
-@using TwinsArtstyle.Helpers
+@using Microsoft.Extensions.Caching.Distributed
+@using TwinsArtstyle.Services.Constants
 @using TwinsArtstyle.Services.DTOs
 @using TwinsArtstyle.Services.Interfaces
+@inject IDistributedCache _cache
+@inject ICacheSerializer _cacheSerializer
 
 @{
     var userCartDTO = new CartDTO();
 
     if(User.Identity.IsAuthenticated)
     {
-        userCartDTO = JsonHelper
-        .Deserialize<CartDTO>(Encoding.Unicode.GetString(Context.Session
-            .Get(User.FindFirst(ClaimTypes.NameIdentifier).Value))) ?? new CartDTO();
+        var userCartId = User.FindFirst(ClaimType.CartId).Value;
+        var userCartBytes = await _cache.GetAsync(userCartId);
+
+        if(userCartBytes != null)
+        {
+            userCartDTO = _cacheSerializer.DeserializeFromByteArray<CartDTO>(userCartBytes);
+        }
     }
 }
 

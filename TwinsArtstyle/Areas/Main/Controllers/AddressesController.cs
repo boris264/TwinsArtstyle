@@ -54,7 +54,6 @@ namespace TwinsArtstyle.Areas.Main.Controllers
                 _logger.LogError(result.ErrorMessage);
             }
 
-            ModelState.AddModelError(string.Empty, Messages.UnexpectedErrorOccured);
             return View(addressViewModel);
         }
     }

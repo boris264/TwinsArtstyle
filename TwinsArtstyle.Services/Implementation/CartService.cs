@@ -59,17 +59,13 @@ namespace TwinsArtstyle.Services.Implementation
         public async Task<OperationResult> AddToCart(string cartId, string productId, int count)
         {
             var operationResult = new OperationResult();
-            var cartGuid = new Guid(cartId);
-            var productGuid = new Guid(productId);
-            var cart = await repository.FindById<Cart>(cartGuid);
-            var product = await repository.FindById<Product>(productGuid);
 
-            if (cart != null && product != null && count > 0)
+            if (!string.IsNullOrWhiteSpace(cartId) && !string.IsNullOrWhiteSpace(productId) != null && count > 0)
             {
                 try
                 {
                     var cartProduct = repository.All<CartProductCount>()
-                        .Where(c => c.Cart == cart && c.Product == product)
+                        .Where(c => c.CartId.ToString() == cartId && c.ProductId.ToString() == productId)
                         .FirstOrDefault();
 
                     if (cartProduct != null)
@@ -80,8 +76,8 @@ namespace TwinsArtstyle.Services.Implementation
                     {
                         await repository.Add(new CartProductCount()
                         {
-                            Cart = cart,
-                            Product = product,
+                            CartId = new Guid(cartId),
+                            ProductId = new Guid(productId),
                             Count = count
                         });
                     }

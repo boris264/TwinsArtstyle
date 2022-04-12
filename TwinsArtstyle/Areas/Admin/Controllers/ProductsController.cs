@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Caching.Distributed;
 using System.IO;
 using System.Text;
-using TwinsArtstyle.Helpers;
 using TwinsArtstyle.Services.Constants;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels.ProductModels;
@@ -15,16 +14,20 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
         private readonly IWebHostEnvironment _webHostEnv;
         private readonly ILogger<ProductsController> _logger;
         private readonly IDistributedCache _cache;
+        private readonly ICacheSerializer _cacheSerializer;
 
         public ProductsController(IProductService productService,
             IWebHostEnvironment webHostEnv,
             ILogger<ProductsController> logger,
-            IDistributedCache cache)
+            IDistributedCache cache,
+            ICacheSerializer cacheSerializer)
         {
             _productService = productService;
             _webHostEnv = webHostEnv;
             _logger = logger;
             _cache = cache;
+            _cacheSerializer = cacheSerializer;
+
         }
 
         public async Task<IActionResult> Manage()
@@ -32,7 +35,7 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
             // This is not good, but it does the job for now. Will fix it when i implement my own IDistributedCache.
 
             var products = await _productService.GetProducts();
-            await _cache.SetAsync("products", Encoding.Unicode.GetBytes(JsonHelper.Serialize(products)));
+            await _cache.SetAsync("products", _cacheSerializer.SerializeToByteArray(products));
             
             return View(products);
         }
@@ -41,9 +44,10 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
         {
             if(!string.IsNullOrEmpty(productId))
             {
-                var products = JsonHelper
-                    .Deserialize<IEnumerable<ProductViewModel>>
-                    (Encoding.Unicode.GetString(await _cache.GetAsync("products"))).ToList();
+                var products = _cacheSerializer
+                    .DeserializeFromByteArray<IEnumerable<ProductViewModel>>(await _cache.GetAsync("products"))
+                    .ToList();
+
                 var productById = products.Where(p => p.Id == productId).FirstOrDefault();
 
                 if(productById != null)
@@ -54,7 +58,7 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
                     {
                         products.Remove(productById);
 
-                        await _cache.SetAsync("products", Encoding.Unicode.GetBytes(JsonHelper.Serialize(products)));
+                        await _cache.SetAsync("products", _cacheSerializer.SerializeToByteArray(products));
 
                         return RedirectToAction(nameof(Manage));
                     }

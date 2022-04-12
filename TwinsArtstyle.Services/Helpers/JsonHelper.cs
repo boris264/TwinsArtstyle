@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace TwinsArtstyle.Helpers
+namespace TwinsArtstyle.Services.Helpers
 {
     public static class JsonHelper
     {

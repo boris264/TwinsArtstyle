@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Security.Claims;
 using System.Text;
-using TwinsArtstyle.Helpers;
 using TwinsArtstyle.Infrastructure.Models;
 using TwinsArtstyle.Services.Constants;
 using TwinsArtstyle.Services.DTOs;
@@ -25,6 +24,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
         private readonly ICartService _cartService;
         private readonly IEmailSender _emailSender;
         private readonly IDistributedCache _cache;
+        private readonly ICacheSerializer _cacheSerializer;
 
         public UserController(SignInManager<User> signInManager,
             ILogger<LoginViewModel> logger,
@@ -32,7 +32,8 @@ namespace TwinsArtstyle.Areas.Main.Controllers
             IUserStore<User> userStore,
             ICartService cartService,
             IEmailSender emailSender,
-            IDistributedCache cache)
+            IDistributedCache cache,
+            ICacheSerializer cacheSerializer)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -42,6 +43,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
             _emailSender = emailSender;
             _logger = logger;
             _cache = cache;
+            _cacheSerializer = cacheSerializer;
         }
 
         public string ReturnUrl { get; set; }
@@ -65,21 +67,12 @@ namespace TwinsArtstyle.Areas.Main.Controllers
             {
                 var result = await _signInManager.
                     PasswordSignInAsync(loginModel.Email, loginModel.Password, loginModel.RememberMe, lockoutOnFailure: false);
-                
+
                 if (result.Succeeded)
                 {
-                    var user = await _userManager.FindByEmailAsync(loginModel.Email);
-                    var userCartProducts = await _cartService.GetProductsForUser(user.Id);
-
-                    var userCartDTO = new CartDTO()
-                    {
-                        CartId = user.CartId,
-                        Products = new List<CartProductViewModel>(userCartProducts)
-                    };
+                    await LoadUserItemsIntoCache(loginModel.Email);
 
                     _logger.LogInformation("User logged in.");
-
-                    HttpContext.Session.Set(user.Id, Encoding.Unicode.GetBytes(JsonHelper.Serialize(userCartDTO)));
 
                     return LocalRedirect(ReturnUrl);
                 }
@@ -117,7 +110,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = registerModel.Email, returnUrl = "/Home/Index"});
+                        return RedirectToPage("RegisterConfirmation", new { email = registerModel.Email, returnUrl = "/Home/Index" });
                     }
                     else
                     {
@@ -134,7 +127,10 @@ namespace TwinsArtstyle.Areas.Main.Controllers
 
         public async Task<IActionResult> Logout()
         {
+            var userCartId = User.FindFirst(ClaimType.CartId).Value;
             await _signInManager.SignOutAsync();
+            await _cache.RemoveAsync(userCartId);
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -159,6 +155,20 @@ namespace TwinsArtstyle.Areas.Main.Controllers
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
             return (IUserEmailStore<User>)_userStore;
+        }
+
+        private async Task LoadUserItemsIntoCache(string userEmail)
+        {
+            var user = await _userManager.FindByEmailAsync(userEmail);
+            var userCartProducts = await _cartService.GetProductsForUser(user.Id);
+
+            var userCartDTO = new CartDTO()
+            {
+                Products = new List<CartProductViewModel>(userCartProducts)
+            };
+
+            await _cache
+                .SetAsync(user.CartId.ToString(), _cacheSerializer.SerializeToByteArray(userCartDTO));
         }
     }
 }

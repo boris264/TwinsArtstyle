@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 using TwinsArtstyle.Services.Interfaces;
 
-namespace TwinsArtstyle.Helpers
+namespace TwinsArtstyle.Services.Helpers
 {
     public static class CacheConfigurator
     {

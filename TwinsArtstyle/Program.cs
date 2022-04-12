@@ -1,11 +1,10 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TwinsArtstyle.Extensions;
-using TwinsArtstyle.Helpers;
 using TwinsArtstyle.Infrastructure.Data;
 using TwinsArtstyle.Infrastructure.Models;
 using TwinsArtstyle.Services.Constants;
+using TwinsArtstyle.Services.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,19 +22,11 @@ var redisConnectionString = builder.Configuration.GetConnectionString("Redis");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = redisConnectionString;
-});
-
-builder.Services.AddSession(options =>
-{
-    options.Cookie.Name = "TwinsArtstyle.Session";
-    options.Cookie.HttpOnly = true;
-    options.IdleTimeout = TimeSpan.FromMinutes(CookieConstants.SessionCookieExpirationMinutes);
 });
 
 
@@ -97,9 +88,6 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseSession();
-app.UseSessionLoader();
 
 //app.MapControllerRoute(
 //    name: "default",

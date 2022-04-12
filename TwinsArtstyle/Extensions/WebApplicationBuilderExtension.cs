@@ -1,7 +1,6 @@
-﻿using TwinsArtstyle.Helpers;
+﻿using System.Text;
 using TwinsArtstyle.Infrastructure.Data;
 using TwinsArtstyle.Infrastructure.Interfaces;
-using TwinsArtstyle.Middlewares;
 using TwinsArtstyle.Services.Implementation;
 using TwinsArtstyle.Services.Interfaces;
 
@@ -11,6 +10,7 @@ namespace TwinsArtstyle.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddSingleton<ICacheSerializer, CacheSerializer>(x => new CacheSerializer(Encoding.Unicode));
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IUserService, UserService>();
@@ -18,7 +18,6 @@ namespace TwinsArtstyle.Extensions
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IAddressService, AddressService>();
             services.AddScoped<IInboxService, InboxService>();
-            services.AddScoped<SessionLoaderMiddleware>();
             return services;
         }
     }
