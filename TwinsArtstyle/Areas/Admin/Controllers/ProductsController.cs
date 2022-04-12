@@ -48,6 +48,12 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
                     .DeserializeFromByteArray<IEnumerable<ProductViewModel>>(await _cache.GetAsync("products"))
                     .ToList();
 
+                if(products == null)
+                {
+                    _logger.LogError("Couldn't get products from cache! Fetching from database...");
+                    products = (await _productService.GetProducts()).ToList();
+                }
+
                 var productById = products.Where(p => p.Id == productId).FirstOrDefault();
 
                 if(productById != null)

@@ -52,7 +52,15 @@ namespace TwinsArtstyle.Areas.Main.Controllers
 
                 if (result.Success)
                 {
-                    await AddProductToCartCache(product, userCartId);
+                    try
+                    {
+                        await AddProductToCartCache(product, userCartId);
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogError($"Unexpected error occured while trying to save data into cache! Exception message: {e.Message}");
+                    }
+
                     return Ok();
                 }
 
@@ -73,7 +81,15 @@ namespace TwinsArtstyle.Areas.Main.Controllers
 
                 if (result.Success)
                 {
-                    await RemoveProductFromCache(product, userCartId);
+                    try
+                    {
+                        await RemoveProductFromCache(product, userCartId);
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogError($"Unexpected error occured while trying to remove data from cache! Exception message: {e.Message}");
+                    }
+
                     return Ok();
                 }
             }
@@ -88,10 +104,19 @@ namespace TwinsArtstyle.Areas.Main.Controllers
             var userCartProducts = _cacheSerializer
                 .DeserializeFromByteArray<IEnumerable<CartProductViewModel>>(await _cache.GetAsync(user.CartId.ToString()));
 
-            if(userCartProducts == null)
+            // If the user items are not found in the cache, we try to load them from the database instead.
+
+            if (userCartProducts == null)
             {
                 _logger.LogWarning("Couldn't load user's cart items from cache! Loading them from database instead...");
-                
+                userCartProducts = await _cartService.GetProductsForUser(user.Id);
+            }
+
+            // If loading from the database returns 0 items, then the user's cart is empty, and we just redirect him.
+
+            if (userCartProducts.Count() == 0)
+            {
+                return RedirectToAction("Index", "Home");
             }
 
             if (user != null)
@@ -130,38 +155,39 @@ namespace TwinsArtstyle.Areas.Main.Controllers
 
         private async Task AddProductToCartCache(ProductDTO productDTO, string cartId)
         {
-            var productFromCacheBytes = await _cache.GetAsync("products");
+            var products = _cacheSerializer
+                    .DeserializeFromByteArray<IEnumerable<ProductViewModel>>(await _cache.GetAsync("products"));
 
-            if(productFromCacheBytes != null)
+            if(products == null)
             {
-                var productsFromCache = _cacheSerializer
-                    .DeserializeFromByteArray<IEnumerable<ProductViewModel>>(productFromCacheBytes);
+                _logger.LogWarning("Couldn't load products from cache! Loading from database instead...");
+                products = await _productService.GetProducts();
+            }
 
-                var cartFromCache = _cacheSerializer
-                    .DeserializeFromByteArray<IEnumerable<CartProductViewModel>>(await _cache.GetAsync(cartId))
-                    .ToList();
+            var cartFromCache = _cacheSerializer
+                .DeserializeFromByteArray<IEnumerable<CartProductViewModel>>(await _cache.GetAsync(cartId))
+                .ToList();
 
-                var productToAdd = productsFromCache.Where(p => p.Id == productDTO.productId)
+            var productToAdd = products.Where(p => p.Id == productDTO.productId)
+                .FirstOrDefault();
+
+            var cartProductExists = cartFromCache.Where(p => p.Product.Id == productToAdd.Id)
                     .FirstOrDefault();
 
-                var cartProductExists = cartFromCache.Where(p => p.Product.Id == productToAdd.Id)
-                        .FirstOrDefault();
-
-                if (cartProductExists != null)
-                {
-                    cartProductExists.Count += productDTO.count;
-                }
-                else
-                {
-                    cartFromCache.Add(new CartProductViewModel()
-                    {
-                        Product = productToAdd,
-                        Count = productDTO.count
-                    });
-                }
-
-                await _cache.SetAsync(cartId, _cacheSerializer.SerializeToByteArray(cartFromCache));
+            if (cartProductExists != null)
+            {
+                cartProductExists.Count += productDTO.count;
             }
+            else
+            {
+                cartFromCache.Add(new CartProductViewModel()
+                {
+                    Product = productToAdd,
+                    Count = productDTO.count
+                });
+            }
+
+            await _cache.SetAsync(cartId, _cacheSerializer.SerializeToByteArray(cartFromCache));
         }
 
         private async Task RemoveProductFromCache(ProductDTO productDTO, string cartId)
@@ -171,8 +197,8 @@ namespace TwinsArtstyle.Areas.Main.Controllers
                 .ToList();
             var productToRemove = cartFromCache.Where(p => p.Product.Id == productDTO.productId)
                 .FirstOrDefault();
-            
-            if(cartFromCache.Remove(productToRemove))
+
+            if (cartFromCache.Remove(productToRemove))
             {
                 await _cache.SetAsync(cartId, _cacheSerializer.SerializeToByteArray(cartFromCache));
             }

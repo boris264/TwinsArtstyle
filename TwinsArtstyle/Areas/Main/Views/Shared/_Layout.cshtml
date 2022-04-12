@@ -5,6 +5,7 @@
 @using TwinsArtstyle.Services.Interfaces
 @inject IDistributedCache _cache
 @inject ICacheSerializer _cacheSerializer
+@inject ICartService _cartService
 
 @{
     var userCart = Enumerable.Empty<CartProductViewModel>();

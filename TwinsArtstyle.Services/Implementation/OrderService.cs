@@ -35,6 +35,13 @@ namespace TwinsArtstyle.Services.Implementation
             var result = new OperationResult();
             var user = await _userManager.FindByIdAsync(userId);
             var products = await _cartService.GetProductsForUser(userId);
+
+            if(products.Count() == 0)
+            {
+                result.ErrorMessage = "Can't complete the order. User didn't add any items to his cart!";
+                return result;
+            }
+
             var totalPriceForCart = await _cartService.CalculateTotalPrice(user.CartId.ToString());
 
             Order order = new Order()

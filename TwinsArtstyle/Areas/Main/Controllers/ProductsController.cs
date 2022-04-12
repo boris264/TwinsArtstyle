@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
-using System.Text;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels.ProductModels;
 
@@ -34,7 +33,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
             var products = _cacheSerializer
                 .DeserializeFromByteArray<IEnumerable<ProductViewModel>>(await _cache.GetAsync($"products"));
 
-            if (products.Count() > 0)
+            if (products != null)
             {
                 if (products.Any(c => c.Category == category))
                 {
@@ -57,7 +56,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
             var products = _cacheSerializer
                 .DeserializeFromByteArray<IEnumerable<ProductViewModel>>(await _cache.GetAsync("products"));
 
-            if (products.Count() > 0)
+            if (products != null)
             {
                 if (!products.Any(p => p.Id == productId))
                 {
