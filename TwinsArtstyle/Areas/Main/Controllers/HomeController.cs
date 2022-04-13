@@ -25,7 +25,6 @@ namespace TwinsArtstyle.Areas.Main.Controllers
 
         public IActionResult Index()
         {
-            Console.WriteLine("test");
             return View();
         }
 

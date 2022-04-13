@@ -42,4 +42,20 @@
         <span>Address: @Model.AddressText</span>
     </div>
     <span class="total-price">Total price: @Model.TotalPrice лв.</span>
+
+    <form asp-action="ChangeOrderStatus" asp-controller="Orders" asp-area="Admin" method="get">
+        <input name="orderId" type="hidden" value="@Model.OrderId"/>
+        <span>Current order status: @Model.Status</span>    
+        <br />
+
+        <span>Change order status to: </span>
+        <select name="newStatus" class="order-status">
+            <option>Confirmed</option>
+            <option>Sent</option>
+            <option>Finished</option>
+        </select>
+        <div class="submit-button-container">
+            <button class="submit" asp-action="ChangeOrderStatus" asp-controller="Orders" asp-area="Admin">Change order status</button>
+        </div>
+    </form>
 </div>

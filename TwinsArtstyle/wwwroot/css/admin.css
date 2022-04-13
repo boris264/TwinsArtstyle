@@ -338,3 +338,9 @@ td{
     table-layout: fixed;
     word-wrap: break-word;
 }
+
+.order-status{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 25px;
+    border-radius: 15px;
+}

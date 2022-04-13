@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TwinsArtstyle.Infrastructure.Interfaces;
 using TwinsArtstyle.Infrastructure.Models;
 using TwinsArtstyle.Services.Constants;
+using TwinsArtstyle.Services.Enums;
 using TwinsArtstyle.Services.Helpers;
 using TwinsArtstyle.Services.Interfaces;
 using TwinsArtstyle.Services.ViewModels;
@@ -96,7 +97,8 @@ namespace TwinsArtstyle.Services.Implementation
                             ImageUrl = p.Product.ImageUrl
                         },
                         Count = p.Count
-                    }).ToList()
+                    }).ToList(),
+                    OrderStatus = o.Status
 
                 }).ToListAsync();
 
@@ -209,6 +211,36 @@ namespace TwinsArtstyle.Services.Implementation
                     }).ToList()
 
                 }).ToListAsync();
+        }
+
+        public async Task<OperationResult> ChangeOrderStatus(string orderId, string newStatus)
+        {
+            var result = new OperationResult();
+            var order = await _repository.All<Order>()
+                .Where(o => o.Id.ToString() == orderId)
+                .FirstOrDefaultAsync();
+
+            if(order != null)
+            {
+                var orderStatuses = Enum.GetNames<OrderStatus>();
+
+                if (orderStatuses.Contains(newStatus))
+                {
+                    order.Status = Enum.Parse<OrderStatus>(newStatus);
+
+                    await _repository.SaveChanges();
+                    result.Success = true;
+                }
+                else
+                {
+                    result.ErrorMessage = "Invalid order status!";
+                }
+
+                return result;
+            }
+
+            result.ErrorMessage = "Invalid order!";
+            return result;
         }
     }
 }
