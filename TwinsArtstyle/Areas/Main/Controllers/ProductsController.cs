@@ -29,7 +29,7 @@ namespace TwinsArtstyle.Areas.Main.Controllers
             {
                 return NotFound();
             }
-            var items = await _cache.GetAsync(User.FindFirst("CartId").Value);
+
             var products = _cacheSerializer
                 .DeserializeFromByteArray<IEnumerable<ProductViewModel>>(await _cache.GetAsync($"products"));
 

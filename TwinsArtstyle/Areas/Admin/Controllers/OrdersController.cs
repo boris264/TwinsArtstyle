@@ -37,13 +37,10 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
         {
             var result = await _orderService.ChangeOrderStatus(orderId, newStatus);
 
-            if(result.Success)
-            {
-                return RedirectToAction(nameof(All));
-            }
+            if(!result.Success)
+                _logger.LogWarning(result.ErrorMessage);
 
-            _logger.LogWarning(result.ErrorMessage);
-            return RedirectToAction(nameof(All));
+            return RedirectToAction(nameof(Details), new { orderId = orderId });
         }
     }
 }
