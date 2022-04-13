@@ -54,6 +54,8 @@ builder.Services.AddApplicationServices();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+await new Seeder().SeedDatabase(app.Services);
+
 
 app.Lifetime.ApplicationStarted.Register(async () =>
 {
