@@ -36,8 +36,17 @@ namespace TwinsArtstyle.Services.Implementation
             var result = new OperationResult();
             var user = await _userManager.FindByIdAsync(userId);
             var products = await _cartService.GetProductsForUser(userId);
+            var userAddress = await _repository.All<Address>()
+                .Where(a => a.UserId == user.Id && a.Name == orderViewModel.AddressName)
+                .FirstOrDefaultAsync();
 
-            if(products.Count() == 0)
+            if(userAddress == null)
+            {
+                result.ErrorMessage = $"Address {orderViewModel.AddressName} doesn't exist for this user!";
+                return result;
+            }
+
+            if (products.Count() == 0)
             {
                 result.ErrorMessage = "Can't complete the order. User didn't add any items to his cart!";
                 return result;
@@ -47,8 +56,7 @@ namespace TwinsArtstyle.Services.Implementation
 
             Order order = new Order()
             {
-                Address = await _repository.All<Address>().Where(a => a.Name == orderViewModel.AddressName)
-                                    .FirstOrDefaultAsync(),
+                Address = userAddress,
                 User = user,
                 Price = totalPriceForCart,
             };
