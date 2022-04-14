@@ -8,5 +8,7 @@ namespace TwinsArtstyle.Services.Interfaces
         public Task<OperationResult> AddContactLetter(ContactUsViewModel contactUsViewModel, string userId);
 
         public Task<IEnumerable<MessageViewModel>> GetAllMessages();
+
+        public Task<MessageViewModel> GetMessage(string messageId);
     }
 }

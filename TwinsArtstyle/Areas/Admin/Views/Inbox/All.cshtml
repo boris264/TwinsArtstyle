@@ -10,6 +10,7 @@
             <tr>
                 <th>Title</th>
                 <th>From</th>
+                <th>Details</th>
             </tr>
         </thead>
         <tbody>
@@ -19,6 +20,9 @@
                 <tr>
                     <td>@message.Title</td>
                     <td>@message.User.FirstName @message.User.LastName</td>
+                    <td>
+                        <a asp-route-messageId="@message.Id" class="submit" asp-action="Details" asp-controller="Inbox" asp-area="Admin">Details</a>
+                    </td>
                 </tr>
             }
 

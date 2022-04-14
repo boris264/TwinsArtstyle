@@ -2,38 +2,43 @@
 
 @{
     ViewData["Title"] = "Products";
+    var Image = Model.FirstOrDefault().Image;
+    var Name = Model.FirstOrDefault().Name;
+    var Category = Model.FirstOrDefault().Category;
+    var Description = Model.FirstOrDefault().Description;
+    var Price = Model.FirstOrDefault().Price;
 }
 
 <div id="add-product">
     <form asp-area="Admin" asp-controller="Products" asp-action="Manage" enctype="multipart/form-data" method="post">
         <div class="panel">
             <div class="form-floating">
-                <label class="form-label" asp-for="FirstOrDefault().Image"></label>
-                <input class="form-control" asp-for="FirstOrDefault().Image" type="file" />
-                <span class="text-danger" asp-validation-for="FirstOrDefault().Image"></span>
+                <label class="form-label" asp-for="@Image"></label>
+                <input class="form-control" asp-for="@Image type="file" />
+                <span class="text-danger" asp-validation-for="@Image"></span>
             </div>
             <div class="form-floating">
-                <label class="form-label" asp-for="FirstOrDefault().Name"></label>
-                <input class="form-control" asp-for="FirstOrDefault().Name" type="text" />
-                <span asp-validation-for="FirstOrDefault().Name"></span>
+                <label class="form-label" asp-for="@Name"></label>
+                <input class="form-control" asp-for="@Name" type="text" />
+                <span asp-validation-for="@Name"></span>
             </div>
             <div class="form-floating">
-                <label class="form-label" asp-for="FirstOrDefault().Category"></label>
-                <select class="form-control" asp-for="FirstOrDefault().Category">
+                <label class="form-label" asp-for="@Category"></label>
+                <select class="form-control" asp-for="@Category">
                     <option value="Платна">Платна</option>
                     <option value="Рисунки">Рисунки</option>
                     <option value="Принтове">Принтове</option>
                 </select>
             </div>
             <div class="form-floating">
-                <label class="form-label" asp-for="FirstOrDefault().Description"></label>
-                <input class="form-control" asp-for="FirstOrDefault().Description" type="text" />
-                <span asp-validation-for="FirstOrDefault().Description"></span>
+                <label class="form-label" asp-for="@Description"></label>
+                <input class="form-control" asp-for="@Description" type="text" />
+                <span asp-validation-for="@Description"></span>
             </div>
             <div class="form-floating">
-                <label class="form-label" asp-for="FirstOrDefault().Price"></label>
-                <input class="form-control" asp-for="FirstOrDefault().Price" type="text" />
-                <span asp-validation-for="FirstOrDefault().Price"></span>
+                <label class="form-label" asp-for="@Price"></label>
+                <input class="form-control" asp-for="@Price" type="text" />
+                <span asp-validation-for="@Price"></span>
             </div>
             <div asp-validation-summary="ModelOnly"></div>
             <div class="submit-button-container">

@@ -47,7 +47,6 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.AccessDeniedPath = "/Main/Home/AccessDenied";
     options.LoginPath = "/Main/User/Login";
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(CookieConstants.IdentityCookieExpirationMinutes);
 });
 
 builder.Services.AddApplicationServices();
@@ -91,9 +90,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseCartItemsLoader();
 
 app.MapAreaControllerRoute("Main", "Main", "{area=Main}/{controller=Home}/{action=Index}/{id?}");
 app.MapAreaControllerRoute("Admin", "Admin", "Admin/{controller=Home}/{action=Info}/{id?}");

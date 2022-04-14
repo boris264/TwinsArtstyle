@@ -344,3 +344,33 @@ td{
     font-size: 25px;
     border-radius: 15px;
 }
+
+.message{
+    height: 500px;
+    max-height: 500px;
+    margin: 0 auto;
+}
+
+.message-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 500px;
+    max-height: 500px;
+    width: 500px;
+    max-width: 500px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 30px;
+    text-align: center;
+    word-break: break-word;
+}
+.message-content > h1 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 30px;
+    color: #333;
+}
+
+
+.message-body{
+    font-size: 23px;
+}

@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TwinsArtstyle.Infrastructure.Interfaces;
 using TwinsArtstyle.Infrastructure.Models;
 using TwinsArtstyle.Services.Constants;
@@ -61,6 +56,7 @@ namespace TwinsArtstyle.Services.Implementation
             return await _repository.All<Message>()
                 .Select(m => new MessageViewModel()
                 {
+                    Id = m.Id,
                     User = new UserViewModel()
                     {
                         FirstName = m.User.FirstName,
@@ -71,6 +67,27 @@ namespace TwinsArtstyle.Services.Implementation
                     Title = m.Title,
                     Content = m.Body
                 }).ToListAsync();
+        }
+
+        public async Task<MessageViewModel> GetMessage(string messageId)
+        {
+            return await _repository.All<Message>()
+                .Where(m => m.Id.ToString() == messageId)
+                .Select(m => new MessageViewModel()
+                {
+                    Id = m.Id,
+                    User = new UserViewModel()
+                    {
+                        Email = m.User.Email,
+                        FirstName = m.User.FirstName,
+                        LastName = m.User.LastName,
+                        PhoneNumber = m.User.PhoneNumber,
+                    },
+                    Title = m.Title,
+                    Content = m.Body
+
+                })
+                .FirstOrDefaultAsync();
         }
     }
 }

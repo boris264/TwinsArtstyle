@@ -1,0 +1,18 @@
+﻿@model MessageViewModel
+
+@{
+    ViewData["Title"] = @Model.Title;
+}
+
+<div class="message">
+    <div class="panel">
+        <div class="message-content">
+            <h1>Title</h1>
+            <span class="title">@Model.Title</span>
+            <hr />
+            <span class="message-body">
+                @Model.Content
+            </spanc>
+        </div>
+    </div>
+</div>

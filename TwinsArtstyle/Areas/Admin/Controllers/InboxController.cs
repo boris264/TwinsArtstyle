@@ -17,5 +17,17 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
             var messages = await _inboxService.GetAllMessages();
             return View(messages);
         }
+
+        public async Task<IActionResult> Details(string messageId)
+        {
+            var message = await _inboxService.GetMessage(messageId);
+
+            if(message != null)
+            {
+                return View(message);
+            }
+
+            return RedirectToAction(nameof(All));
+        }
     }
 }

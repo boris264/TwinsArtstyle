@@ -12,6 +12,7 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
 {
     public class ProductsController : AdminController
     {
+        private IReadOnlyList<string> allowedFileExtension = new List<string>() { ".jpg", ".jpeg", ".png" };
         private readonly int productImageWidth = 200;
         private readonly IProductService _productService;
         private readonly IWebHostEnvironment _webHostEnv;
@@ -87,6 +88,14 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
                 if (productViewModel.Image?.Length > 0)
                 {
                     var imageName = Path.GetFileName(productViewModel.Image.FileName);
+                    var fileExtension = Path.GetExtension(imageName);
+
+                    if (!allowedFileExtension.Any(fe => fe == fileExtension))
+                    {
+
+                        return RedirectToAction(nameof(Manage));
+                    }
+
                     var imagePath = $"{_webHostEnv.WebRootPath}/images/{imageName}";
                     var requestImageStream = productViewModel.Image.OpenReadStream();
 
@@ -132,7 +141,7 @@ namespace TwinsArtstyle.Areas.Admin.Controllers
                 }
             }
 
-            return View(productViewModel);
+            return RedirectToAction(nameof(Manage));
         }
 
         private byte[] ReduceImageDimensions(Stream requestImageStream, string savePath)

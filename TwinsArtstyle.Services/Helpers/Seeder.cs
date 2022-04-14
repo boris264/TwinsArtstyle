@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using TwinsArtstyle.Infrastructure.Interfaces;
@@ -46,7 +47,6 @@ namespace TwinsArtstyle.Services.Helpers
 
             if (await userManager.FindByEmailAsync(email) == null)
             {
-
                 var user = new User()
                 {
                     Cart = new Cart(),
@@ -62,6 +62,8 @@ namespace TwinsArtstyle.Services.Helpers
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, RoleType.Admininstrator);
+                    await userManager.AddClaimAsync(user, new Claim(ClaimType.FullName, $"{firstName} {lastName}"));
+                    await userManager.AddClaimAsync(user, new Claim(ClaimType.CartId, user.Cart.Id.ToString()));
                     logger.LogInformation("Successfully seeded an admin user!");
                 }
                 else
@@ -69,8 +71,10 @@ namespace TwinsArtstyle.Services.Helpers
                     logger.LogInformation($"Seeding of admin user failed! Errors: {string.Join(", ", result.Errors)}");
                 }
             }
-
-            logger.LogInformation("Admin user already exists.");
+            else
+            {
+                logger.LogInformation("Admin user already exists.");
+            }
         }
 
         private async Task SeedProducts(IRepository repository)
@@ -112,7 +116,7 @@ namespace TwinsArtstyle.Services.Helpers
                 var canvas = new Category()
                 { 
                     Id = new Guid("efcfe35b-c08a-4915-9321-1f6e6d4d258a"),
-                    Name = "Принтове"
+                    Name = "Платна"
                 };
 
                 await repository.Add(print);

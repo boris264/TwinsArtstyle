@@ -22,16 +22,6 @@
                 <a asp-area="Main" asp-controller="Home" asp-action="Index" class="nav-text">Home</a>
                 <i class="bi bi-house-door-fill icon"></i>
             </div>
-            <div class="top-nav-item border-right pointer-cursor">
-                <i class="bi bi-basket-fill icon"></i>
-                <span class="nav-text">Orders</span>
-                <i class="bi bi-arrow-down-short icon"></i>
-            </div>
-            <div class="top-nav-item border-right pointer-cursor">
-                <i class="bi bi-inbox-fill icon"></i>
-                <span class="nav-text">Inbox</span>
-                <i class="bi bi-arrow-down-short icon"></i>
-            </div>
             <div class="top-nav-item pointer-cursor">
                 <i class="bi bi-person-fill icon" id="profile-icon"></i>
                 <span id="admin-profile" class="nav-text">@User.Identity.Name</span>
@@ -39,9 +29,6 @@
         </div>
     </div>
     <div class="left-menu-bar">
-        <div class="item">
-            <span class="left-nav-text pointer-cursor">Info</span>
-        </div>
         <div class="item">
             <a asp-area="Admin" asp-controller="Products" asp-action="Manage" class="left-nav-text pointer-cursor">Products</a>
         </div>

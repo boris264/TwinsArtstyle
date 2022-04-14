@@ -158,9 +158,11 @@ namespace TwinsArtstyle.Areas.Main.Controllers
         {
             var user = await _userManager.FindByEmailAsync(userEmail);
             var userCartProducts = await _cartService.GetProductsForUser(user.Id);
+            var options = new DistributedCacheEntryOptions();
 
+            options.SetSlidingExpiration(TimeSpan.FromMinutes(CacheConstants.CacheCartExpirationMinutes));
             await _cache
-                .SetAsync(user.CartId.ToString(), _cacheSerializer.SerializeToByteArray(userCartProducts));
+                    .SetAsync(user.CartId.ToString(), _cacheSerializer.SerializeToByteArray(userCartProducts), options);
         }
     }
 }
