@@ -39,6 +39,9 @@ namespace TwinsArtstyle.Services.Implementation
             {
                 try
                 {
+                    var userAddresses = _repository.All<Address>()
+                        .Where(a => a.User == user);
+                    _repository.RemoveRange(userAddresses);
                     _repository.Remove(user);
                     await _cartService.DeleteCart(user.CartId);
                     result.Success = true;
