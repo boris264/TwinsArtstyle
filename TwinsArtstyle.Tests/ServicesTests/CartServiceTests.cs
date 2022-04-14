@@ -67,7 +67,7 @@ namespace TwinsArtstyle.Tests.ServicesTests
             var cartId = new Guid();
             var productId = "3203980b-1021-46f9-966b-70f13c4dc5d6";
             var result = await cartService.AddToCart(cartId.ToString(), productId.ToString(), 3);
-            Assert.That(result.ErrorMessage, Is.EqualTo("Invalid Cart and/or Product Id!"));
+            Assert.That(result.ErrorMessage, Is.EqualTo("Invalid Cart Id!"));
         }
 
         [Test]

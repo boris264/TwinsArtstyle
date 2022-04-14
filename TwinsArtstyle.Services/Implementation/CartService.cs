@@ -81,7 +81,7 @@ namespace TwinsArtstyle.Services.Implementation
                         await repository.Add(new CartProductCount()
                         {
                             CartId = new Guid(cartId),
-                            Product = productExists,
+                            ProductId = productExists.Id,
                             Count = count
                         });
                     }
@@ -92,6 +92,10 @@ namespace TwinsArtstyle.Services.Implementation
                 catch (DbUpdateException)
                 {
                     operationResult.ErrorMessage = Messages.DbUpdateFailed;
+                }
+                catch (InvalidOperationException)
+                {
+                    operationResult.ErrorMessage = "Invalid Cart Id!";
                 }
 
                 return operationResult;

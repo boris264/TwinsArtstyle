@@ -28,7 +28,7 @@ namespace TwinsArtstyle.Tests.ServicesTests
             };
 
             string userId = "03fcf816-15f5-4df5-adc8-16f6ff504f3d";
-
+            var addItemsToCart = await cartService.AddToCart("42f486e2-8e8d-4cdb-afd7-b15ecfd7b5c5", "1fc61825-03e6-4446-9375-5b8bf75e2d83", 3);
             var result = await orderService.Add(orderDTO, userId);
 
             Assert.That(result.Success, Is.True);
