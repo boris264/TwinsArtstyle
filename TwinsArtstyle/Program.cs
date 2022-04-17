@@ -93,6 +93,6 @@ app.UseAuthorization();
 app.UseCartItemsLoader();
 
 app.MapAreaControllerRoute("Main", "Main", "{area=Main}/{controller=Home}/{action=Index}/{id?}");
-app.MapAreaControllerRoute("Admin", "Admin", "Admin/{controller=Home}/{action=Info}/{id?}");
+app.MapAreaControllerRoute("Admin", "Admin", "Admin/{controller=Products}/{action=Manage}/{id?}");
 
 app.Run();

@@ -93,6 +93,7 @@ namespace TwinsArtstyle.Services.Implementation
                 user.FirstName = userViewModel.FirstName;
                 user.LastName = userViewModel.LastName;
                 user.Email = userViewModel.Email;
+                user.UserName = userViewModel.Email;
                 user.PhoneNumber = userViewModel.PhoneNumber;
 
                 return await _userManager.UpdateAsync(user);
